@@ -12,7 +12,7 @@ def create_app():
     # Enable testing mode:
     app.config['TESTING'] = True
     # Create key for securely signing the session cookie:
-    app.config['SECRET_KEY'] = 'test' # CHANGE 'test' UPON DEPLOYMENT
+    app.config['SECRET_KEY'] = 'test' # CHANGE 'test' UPON DEPLOYMENT / PRODUCTION
 
     # Alternative syntax:
     # app.config.update(
