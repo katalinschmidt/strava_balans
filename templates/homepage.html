@@ -7,10 +7,25 @@
 <!DOCTYPE html>
 <html>
     <body>
-        {% block BODY %}
+        {% block body %}
         
         <h1>This is the homepage!</h1>
         
+        <div class="container">
+            <a href="/strava_login" > 
+            <!-- <button class="btn" onclick="strava_login();"> -->
+                <img src="../static/images/coonect_with_strava.png" class="img-fluid" alt="Connect with Strava" id="strava-btn" />
+            <!-- </button> -->
+            </a>
+        </div>
+
+        {% endblock %}
+
+        <!-- JavaScript here -->
+        {% block script %}
+        <script>
+
+        </script>
         {% endblock %}
     </body>
 </html>
