@@ -1,6 +1,6 @@
 """Create and run Flask web app"""
 
-# 'flask' is the micro web app framework, and 'Flask' is a Python class. 
+# 'flask' is the micro web app framework, and 'Flask' is a Python class 
 from flask import Flask
 
 
@@ -8,7 +8,7 @@ def create_app():
     # Create an instance of the class 'Flask':
     app = Flask(__name__)
     
-    # App requires configuration. Here 'config' is a subclass of a dict, i.e. multiple key/value pairs:
+    # Apps require configuration. Here 'config' is a subclass of a dict, i.e. multiple key/value pairs:
     # Enable testing mode:
     app.config['TESTING'] = True
     # Create key for securely signing the session cookie:
@@ -23,6 +23,10 @@ def create_app():
     # ASK ABOUT THE FOLLOWING:
     # app.config.from_object('yourapplication.default_settings')
     # app.config.from_envvar('YOURAPPLICATION_SETTINGS')
+
+    # Import & register your Blueprint (to extend your web app):
+    from views import views
+    app.register_blueprint(views, url_prefix="/")
 
     return app
 

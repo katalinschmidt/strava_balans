@@ -1,0 +1,16 @@
+<!-- Extend / Import basic templating from 'base.html' -->
+{% extends 'base.html' %}
+
+<!-- Within each page's <html> : 
+{% block NAME %} your_page's_custom_stuff_here {% endblock %} -->
+
+<!DOCTYPE html>
+<html>
+    <body>
+        {% block BODY %}
+        
+        <h1>This is the homepage!</h1>
+        
+        {% endblock %}
+    </body>
+</html>
