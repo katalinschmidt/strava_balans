@@ -22,9 +22,6 @@ def show_homepage():
 def user_login():
     """Check if user is in session & handle login accordingly"""
     
-    # FIXME: Next line is for testing only! Delete after testing is complete
-    # session['access_token'] = None'
-
     if session.get('access_token', None):
         return render_template("activities.html")       
     
@@ -39,6 +36,6 @@ def connect_to_api():
 
     OAUTH_CODE = auth.get_oauth_code()
     TOKENS = auth.exchange_tokens(OAUTH_CODE)
-    auth.save_tokens(TOKENS)
+    auth.save_tokens(TOKENS) # FIXME -> Refactor this into a separate function? 
 
     return render_template("activities.html")

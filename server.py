@@ -38,7 +38,8 @@ def create_app():
 app = create_app()
 
 
-# Run the app only if this file is called directly (and not imported):
+# Run the app only if this file is called directly:
 # Keep debug set to true while developing
 if __name__ == "__main__":
+    # connect_to_db(app) -> Uncomment if assertion error / sqlalchemy __init__app
     app.run(debug=True)
