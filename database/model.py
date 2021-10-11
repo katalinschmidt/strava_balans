@@ -19,8 +19,8 @@ class Athlete(db.Model):
     lname = db.Column(db.String, nullable=False)
     profile_photo = db.Column(db.String)
 
-    # goals = db.relationship("Goal", back_populates="athlete")
-    # custom_trng_plans = db.relationship("Custom_Trng_Plan", backref="athlete")
+    goals = db.relationship("Goal", back_populates="athlete")
+    custom_trng_plans = db.relationship("Custom_Trng_Plan", back_populates="athlete")
 
     def __repr__(self):
         return f"< Athlete: {self.fname} - {self.athlete_id} >"
@@ -32,11 +32,12 @@ class Goal(db.Model):
     __tablename__ = "goals"
 
     goal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    athlete_id = db.Column(db.Integer, db.ForeignKey("athletes.athlete_id"))
+    athlete_id = db.Column(db.Integer, db.ForeignKey("athletes.athlete_id")) # Foreign Keys must go in the child class. 
     goal_name = db.Column(db.String)
     goal_date = db.Column(db.DateTime)
 
-    # athlete = db.relationship("Athlete", back_populates="goals")
+    athlete = db.relationship("Athlete", back_populates="goals")
+    custom_trng_plan = db.relationship("Custom_Trng_Plan", back_populates="goals")
 
     def __repr__(self):
         return f"< Goal: {self.goal_name} - {self.goal_date} - {self.athlete_id} >"
@@ -54,9 +55,9 @@ class Custom_Trng_Plan(db.Model):
     day = db.Column(db.Integer)
     trng_item = db.Column(db.String)
 
-    # athlete = db.relationship("Athlete", back_populates="custom_trng_plan")
-    # goals = db.relationship("Goal", back_populates="custom_trng_plan")
-    # default_trng_plan = db.relationship("Default_Trng_Plan", back_populates="custom_trng_plan")
+    athlete = db.relationship("Athlete", back_populates="custom_trng_plans")
+    goals = db.relationship("Goal", back_populates="custom_trng_plan")
+    default_trng_plan = db.relationship("Default_Trng_Plan", back_populates="custom_trng_plans")
 
     def __repr__(self):
         return f"< Custom_Trng_Plan: {self.athlete_id} - {self.day} - {self.trng_item} >"
@@ -72,7 +73,7 @@ class Default_Trng_Plan(db.Model):
     day = db.Column(db.Integer)
     trng_item = db.Column(db.String)
 
-    # custom_trng_plans = db.relationship("Custom_Trng_Plan", backref="default_trng_plan")
+    custom_trng_plans = db.relationship("Custom_Trng_Plan", back_populates="default_trng_plan")
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///strava_balans", echo=True):
