@@ -14,22 +14,13 @@ def create_app():
     # Create key for securely signing the session cookie:
     app.config['SECRET_KEY'] = 'test' # CHANGE 'test' UPON DEPLOYMENT / PRODUCTION
 
-    # Alternative syntax:
-    # app.config.update(
-    #     TESTING = True,
-    #     SECRET_KEY = 'test'
-    # )
-
     # ASK ABOUT THE FOLLOWING:
     # app.config.from_object('yourapplication.default_settings')
     # app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
     # Import & register your Blueprint (to extend your web app):
     from views import views
-    # from auth import auth # FIXME: Remove if strava_auth.py is good!
-
     app.register_blueprint(views, url_prefix="/")
-    # app.register_blueprint(auth, url_prefix="/") # FIXME: Remove if strava_auth.py is good!
 
     return app
 
@@ -41,5 +32,5 @@ app = create_app()
 # Run the app only if this file is called directly:
 # Keep debug set to true while developing
 if __name__ == "__main__":
-    # connect_to_db(app) -> Uncomment if assertion error / sqlalchemy __init__app
+    # connect_to_db(app) -> Uncomment if assertion error / sqlalchemy __init__app / advice from Shane
     app.run(debug=True)

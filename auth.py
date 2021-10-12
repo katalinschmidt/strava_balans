@@ -13,6 +13,7 @@ import os
 # Creating environmental variables allows us to hide sensitive data:
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
+REFRESH_TOKEN = os.environ['REFRESH_TOKEN']
 REDIRECT_URI = os.environ['REDIRECT_URI']
 
 # Global variables are created outside of functions, so that they can be accessed everywhere:
@@ -43,9 +44,6 @@ def get_oauth_code():
     """Parse oauth code from URL for access to STRAVA API"""
 
     OAUTH_CODE = request.args.get('code', None)
-
-    if not OAUTH_CODE:
-        return Response('Error: Missing authorization', status=400)
     
     return OAUTH_CODE
 
@@ -60,24 +58,57 @@ def exchange_tokens(OAUTH_CODE):
             'grant_type': 'authorization_code'
             }
 
-    # TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
-    TOKENS = requests.post(url=STRAVA_TOKEN_URL, data=data).json()
+    TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
+    
+    # FIXME: Save athlete_id to session, call save_tokens() here instead of in views.py?
 
     return TOKENS
 
 
-def save_tokens(TOKENS):
+def refresh_tokens():
+    """Refresh tokens"""
+
+    data = {
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+            # 'refresh_token': REFRESH_TOKEN,
+            'refresh_token': session['refresh_token'],
+            'grant_type': 'refresh_token'
+            }
+
+    TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
+
+    return TOKENS
+
+
+def save_tokens(TOKENS, refresh=False):
     """Save tokens to session & database"""
 
-    session['athlete_id'] = TOKENS['athlete']['id']
+    if not refresh:
+        session['athlete_id'] = TOKENS['athlete']['id']
+    
+    session.clear()
     session['access_token'] = TOKENS['access_token']
     session['refresh_token'] = TOKENS['refresh_token']
     session['expires_at'] = TOKENS['expires_at']
 
-    # if not crud.get_athlete(TOKENS['athlete']['id']):
-    #     crud.create_athlete(
-    #                         TOKENS['athlete']['id'],
-    #                         TOKENS['athlete']['firstname'],
-    #                         TOKENS['athlete']['lastname'],
-    #                         TOKENS['athlete']['profile'],
-    #                        ) 
+
+def get_activites():
+    """Get user's activities using tokens stored in database"""
+
+    ACCESS_TOKEN = session.get("access_token", None)
+
+    headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN}
+
+    params = {
+            'per_page': '200', 
+            'page': '1'
+            }
+
+    dataset = requests.get(API_BASE_URL, headers=headers, params=params).json()
+
+    print("*"*20)
+    print("DATASET")
+    print(dataset)
+
+    return dataset
