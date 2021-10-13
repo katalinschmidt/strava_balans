@@ -6,26 +6,89 @@
 
 <!DOCTYPE html>
 <html>
+    <head>
+        {% block head_script %}
+        <!-- JS Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <style> #activities-map {height: 1000px;} </style>
+        
+        <!-- MVP Bootstrap Table -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+        {% endblock %}
+    </head>
     <body>
         {% block body %}
 
         <h1>This is your activities page!</h1>
         
-        <div class="container">
-            <p>Map goes here...</p>
+        <!-- MVP -->
+        <table class="table table-striped table-bordered table-sm" id="sortTable" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Date of Activity</th>
+                    <th>Activity Type</th>
+                    <th>Activity Name</th>
+                    <th>Distance</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for arrays in all_activities %}
+                    {% for data in arrays %}
+                    <tr class = item>
+                        <td> {{data['start_date_local']}} </td>
+                        <td> {{data['type']}} </td>
+                        <td> {{data['name']}} </td>
+                        <td> {{data['distance']}} </td>
+                        <td> {{data['elapsed_time']}} </td>                     
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+            $('#sortTable').DataTable();
+        </script>
+        <!-- End MVP -->
+
+        <!-- For MVP+1 / Leaflet: -->
+        <div class="container" hidden>
+            {% for arrays in all_activities %}
+                {% for data in arrays %}
+                <ol>
+                    <li id="activity-date"> {{data['start_date_local']}} </li>
+                    <li id="activity-type"> {{data['type']}} </li>
+                    <li class="activity-name"> {{data['name']}} </li>
+                    <li id="activity-distance"> {{data['distance']}} </li>
+                    <li id="activity-elapsed-time"> {{data['elapsed_time']}} </li>
+                    <li class="activity-polyline"> {{data['map']['summary_polyline']}} </li>
+                </ol>
+                {% endfor %}
+            {% endfor %}
         </div>
 
-        {% endblock %}
+        <div class="container" id="activities-map">
+            <!-- Map renders here -->
+        </div>
+        <!-- End MVP+1 -->
 
-        <!-- JavaScript here -->
-        {% block script %}
-        <script>
-            function getActivities(athlete_id) {
-
-            }
-
-            athlete_id = session['athlete_id']
-        </script>
         {% endblock %}
     </body>
+
+    <footer>
+        {% block footer_script %}
+        <script type="module" src="../static/leaflet_util.js"></script>
+        <script type="module" src="../static/leaflet.js"></script>
+        {% endblock %}
+    </footer>
 </html>

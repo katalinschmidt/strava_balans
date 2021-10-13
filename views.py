@@ -4,6 +4,8 @@
 from flask import Blueprint, session, render_template, redirect
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
+# Use the 'datetime' modul to format dates received in your API JSON data
+from datetime import datetime
 # Use the 'time' module to check the validity of your API token
 import time
 
@@ -27,14 +29,12 @@ def user_login():
     # session.clear()
 
     if session.get('access_token', None):
-
         if session['expires_at'] < time.time():
             TOKENS = auth.refresh_tokens()
             auth.save_tokens(TOKENS, refresh=True) # FIXME -> Call this within auth.py?
 
-        return redirect('/athlete_home')
+        return redirect('/athlete_home')   
     
-
     else:
         return auth.prompt_strava_login()
 
@@ -56,6 +56,17 @@ def connect_to_api():
 def show_athlete_home():
     """Show athlete's homepage with athlete's activities"""
 
-    activities = auth.get_activites()
+    all_activities = auth.get_activites()
 
-    return render_template("activities.html")
+    # Clean up data for rendering:
+    for arrays in all_activities:
+        for data in arrays:
+            data['start_date_local'] = datetime.strptime(data['start_date_local'], '%Y-%m-%dT%H:%M:%SZ')
+            data['start_date_local'] = data['start_date_local'].strftime("%Y %m %d")
+
+            data['distance'] = data['distance'] * 0.000621
+            data['distance'] = round(data['distance'], 2)
+
+            data['elapsed_time'] = time.strftime("%H:%M:%S", time.gmtime(data['elapsed_time']))
+
+    return render_template("activities.html", all_activities=all_activities)

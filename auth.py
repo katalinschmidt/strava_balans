@@ -13,7 +13,6 @@ import os
 # Creating environmental variables allows us to hide sensitive data:
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
-REFRESH_TOKEN = os.environ['REFRESH_TOKEN']
 REDIRECT_URI = os.environ['REDIRECT_URI']
 
 # Global variables are created outside of functions, so that they can be accessed everywhere:
@@ -71,7 +70,6 @@ def refresh_tokens():
     data = {
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,
-            # 'refresh_token': REFRESH_TOKEN,
             'refresh_token': session['refresh_token'],
             'grant_type': 'refresh_token'
             }
@@ -82,7 +80,7 @@ def refresh_tokens():
 
 
 def save_tokens(TOKENS, refresh=False):
-    """Save tokens to session & database"""
+    """Save tokens to session"""
 
     if not refresh:
         session['athlete_id'] = TOKENS['athlete']['id']
@@ -96,19 +94,32 @@ def save_tokens(TOKENS, refresh=False):
 def get_activites():
     """Get user's activities using tokens stored in database"""
 
-    ACCESS_TOKEN = session.get("access_token", None)
+    all_activities = []
+    page_num = 1
+    
+    while True:
+        ACCESS_TOKEN = session.get("access_token", None)        
 
-    headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN}
+        headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN}
 
-    params = {
-            'per_page': '200', 
-            'page': '1'
-            }
+        params = {
+                'access_token': ACCESS_TOKEN,
+                'per_page': '200',
+                'page': page_num
+                }
 
-    dataset = requests.get(API_BASE_URL, headers=headers, params=params).json()
+        data = requests.get(API_BASE_URL, params=params).json()
+        
+        if len(data) == 0:
+            break
+        
+        page_num += 1
+        all_activities.append(data)
 
-    print("*"*20)
-    print("DATASET")
-    print(dataset)
+    return all_activities
 
-    return dataset
+    # activities = requests.get(API_BASE_URL, headers=headers, params=params).json()
+    # activities = requests.get(API_BASE_URL, headers=headers, params=params)
+    # print(activities[0]) # OUTPUT = Good! Dict of Strava data for one activity
+
+    # return activities
