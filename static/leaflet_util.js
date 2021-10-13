@@ -4,7 +4,7 @@
 *
 */
 
-// console.log("Connected to leaflet_util.js!")
+console.log("Connected to leaflet_util.js!")
 // export function testConnection() {
 //     console.log("CONNECTION SUCCESSFUL")
 // }
