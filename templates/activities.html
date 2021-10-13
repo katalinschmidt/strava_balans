@@ -66,12 +66,12 @@
             {% for arrays in all_activities %}
                 {% for data in arrays %}
                 <ol>
-                    <li id="activity-date"> {{data['start_date_local']}} </li>
-                    <li id="activity-type"> {{data['type']}} </li>
+                    <li class="activity-date"> {{data['start_date_local']}} </li>
+                    <li class="activity-type"> {{data['type']}} </li>
                     <li class="activity-name"> {{data['name']}} </li>
-                    <li id="activity-distance"> {{data['distance']}} </li>
-                    <li id="activity-elapsed-time"> {{data['elapsed_time']}} </li>
-                    <li class="activity-polyline"> {{data['map']['summary_polyline']}} </li>
+                    <li class="activity-distance"> {{data['distance']}} </li>
+                    <li class="activity-elapsed-time"> {{data['elapsed_time']}} </li>
+                    <li class="activity-polyline" id="activity-polyline"> {{data['map']['summary_polyline']}} </li>
                 </ol>
                 {% endfor %}
             {% endfor %}
