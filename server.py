@@ -2,6 +2,7 @@
 
 # 'flask' is the micro web app framework, and 'Flask' is a Python class 
 from flask import Flask
+from database.model import connect_to_db
 
 
 def create_app():
@@ -27,10 +28,11 @@ def create_app():
 
 # Call function to create the web app:
 app = create_app()
-
+connect_to_db(app)
 
 # Run the app only if this file is called directly:
 # Keep debug set to true while developing
 if __name__ == "__main__":
-    # connect_to_db(app) -> Uncomment if assertion error / sqlalchemy __init__app / advice from Shane
+    # from database.model import connect_to_db
+    # connect_to_db(app)
     app.run(debug=True)

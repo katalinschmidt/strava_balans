@@ -7,7 +7,8 @@ import sys
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_PATH)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-from model import db, connect_to_db, Athlete, Goal, Custom_Trng_Plan, Default_Trng_Plan
+from database.model import db, Athlete, Goal, Custom_Trng_Plan, Default_Trng_Plan
+# from database.model import connect_to_db
 
 def create_athlete(athlete_id, fname, lname, profile_photo):
     """Create and return athlete."""
@@ -109,5 +110,6 @@ def get_default_trng_plan(plan_name):
 # Execute the following only when 'crud.py' is called directly / run directly from the terminal:
 if __name__ == "__main__":
     # This code is for connecting nested directories/files/making variables accessable:
+    from database.model import connect_to_db
     from server import app
     connect_to_db(app)

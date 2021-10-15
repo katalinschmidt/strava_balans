@@ -52,6 +52,7 @@ def connect_to_api():
     return redirect('/athlete_home')
 
 
+# FIXME: Refactor this to be exclusively in leaflet.js! Ask about passing session['access_token'].
 # Route to pass API data to JS file:
 @views.route('/athlete_data.json')
 def get_athlete_data():

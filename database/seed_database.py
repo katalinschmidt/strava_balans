@@ -1,14 +1,15 @@
 """Script to seed database."""
 
-from server import app
-from model import db, connect_to_db
-from crud import create_default_trng_plan
-import json
 import os
 import sys
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_PATH)
+
+from server import app
+from model import db, connect_to_db
+from crud import create_default_trng_plan
+import json
 
 os.system("dropdb strava_balans")
 os.system("createdb strava_balans")

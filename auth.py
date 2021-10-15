@@ -1,7 +1,9 @@
 """This file contains the methods for handling low-level access to the Strava API"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import Blueprint, redirect, Response, request, session 
+from flask import Blueprint, redirect, Response, request, session
+# 'crud' contains the self-made functions that add data to the database
+from database import crud
 # 'urllib.parse' is a module that provides functions for manipulating URLs
 import urllib.parse
 # 'requests' is a library that simplifies how you send HTTP requests
@@ -58,8 +60,7 @@ def exchange_tokens(OAUTH_CODE):
             }
 
     TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
-    
-    # FIXME: Save athlete_id to session, call save_tokens() here instead of in views.py?
+    # FIXME: Call save_tokens() here instead of in views.py?
 
     return TOKENS
 
@@ -75,15 +76,23 @@ def refresh_tokens():
             }
 
     TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
+    # FIXME: Call save_tokens() here instead of in views.py?
 
     return TOKENS
 
 
 def save_tokens(TOKENS, refresh=False):
-    """Save tokens to session"""
+    """Save tokens to session & db"""
 
     if not refresh:
         session['athlete_id'] = TOKENS['athlete']['id']
+        crud.create_athlete(
+                            TOKENS['athlete']['id'],
+                            TOKENS['athlete']['firstname'],
+                            TOKENS['athlete']['lastname'],
+                            TOKENS['athlete']['profile'],
+                            )
+        # FIXME: Method for updating profile photo if profile photo has changed on Strava
     
     session.clear()
     session['access_token'] = TOKENS['access_token']
@@ -91,6 +100,7 @@ def save_tokens(TOKENS, refresh=False):
     session['expires_at'] = TOKENS['expires_at']
 
 
+# FIXME: Move this function to leaflet.js!
 def get_activites():
     """Get user's activities using tokens stored in database"""
 
