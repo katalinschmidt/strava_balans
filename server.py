@@ -2,6 +2,7 @@
 
 # 'flask' is the micro web app framework, and 'Flask' is a Python class 
 from flask import Flask
+# 'connect_to_db' is a self-made func in database/model.py
 from database.model import connect_to_db
 
 

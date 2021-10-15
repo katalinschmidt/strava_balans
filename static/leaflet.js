@@ -6,7 +6,9 @@
 
 console.log("Connected to leaflet.js!")
 // import { testConnection } from "./leaflet_util.js";
-// testConnection()
+// testConnection();
+// import testConnection from './leaflet_tilelayer.js';
+// testConnection();
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // const activity = document.querySelectorAll('.activity-name');
@@ -29,11 +31,34 @@ function renderLeaflet() {
     // & view is set Bay Area, CA
     const map = L.map('activities-map').setView([37.487846, -122.236115], 12);
 
+    let myFilter = [
+        'contrast:130%',
+        'grayscale:80%',
+        'hue:200deg',
+        'invert:100%',
+   ]
+    // let myFilter = [
+    //     'blur:0px',
+    //     'brightness:95%',
+    //     'contrast:130%',
+    //     'grayscale:20%',
+    //     'hue:290deg',
+    //     'opacity:100%',
+    //     'invert:100%',
+    //     'saturate:300%',
+    //     'sepia:10%',
+    // ];
+
     // Tiles are the images of the map itself.
     // OpenStreetMap requires an attribution for using its tiles:
-    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const tiles = L.tileLayer(tileUrl, {attribution});
+    // const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    // const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    // const tiles = L.tileLayer(tileUrl, {attribution});
+
+    // TESTING -> Custom map:
+    let tiles = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                                        filter: myFilter});
 
     // Add tiles to map:
     tiles.addTo(map);

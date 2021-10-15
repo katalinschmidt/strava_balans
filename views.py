@@ -28,6 +28,7 @@ def show_homepage():
 def user_login():
     """Check if user is in session & handle login accordingly"""
 
+    # Remove this line after debugging:
     # session.clear()
 
     if session.get('access_token', None):
