@@ -108,18 +108,14 @@ def get_activites():
                 'page': page_num
                 }
 
-        data = requests.get(API_BASE_URL, params=params).json()
+        activities = requests.get(API_BASE_URL, headers=headers, params=params).json()
         
-        if len(data) == 0:
+        if len(activities) == 0:
             break
         
         page_num += 1
-        all_activities.append(data)
+        all_activities.append(activities)
+    # from pprint import pprint
+    # pprint(all_activities[0][0])
 
     return all_activities
-
-    # activities = requests.get(API_BASE_URL, headers=headers, params=params).json()
-    # activities = requests.get(API_BASE_URL, headers=headers, params=params)
-    # print(activities[0]) # OUTPUT = Good! Dict of Strava data for one activity
-
-    # return activities

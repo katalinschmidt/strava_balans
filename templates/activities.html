@@ -44,7 +44,7 @@
             <tbody>
                 {% for arrays in all_activities %}
                     {% for data in arrays %}
-                    <tr class = item>
+                    <tr class = strava-data>
                         <td> {{data['start_date_local']}} </td>
                         <td> {{data['type']}} </td>
                         <td> {{data['name']}} </td>
@@ -60,8 +60,10 @@
             $('#sortTable').DataTable();
         </script>
         <!-- End MVP -->
-
+  
         <!-- For MVP+1 / Leaflet: -->
+
+        <!-- Data for map here -->
         <div class="container" hidden>
             {% for arrays in all_activities %}
                 {% for data in arrays %}
@@ -71,7 +73,7 @@
                     <li class="activity-name"> {{data['name']}} </li>
                     <li class="activity-distance"> {{data['distance']}} </li>
                     <li class="activity-elapsed-time"> {{data['elapsed_time']}} </li>
-                    <li class="activity-polyline" id="activity-polyline"> {{data['map']['summary_polyline']}} </li>
+                    <li class="activity-polyline"> {{data['map']['summary_polyline']}} </li>
                 </ol>
                 {% endfor %}
             {% endfor %}

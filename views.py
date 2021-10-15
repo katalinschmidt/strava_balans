@@ -2,6 +2,8 @@
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
 from flask import Blueprint, session, render_template, redirect
+# 'jsonify' is used to pass the API result from Python to JS (as JSON)
+from flask import jsonify
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
 # Use the 'datetime' modul to format dates received in your API JSON data
@@ -50,8 +52,15 @@ def connect_to_api():
     return redirect('/athlete_home')
 
 
-# Strava handles authentication here,
-# i.e. if user knows route but is not logged in, Strava renders error page
+# Route to pass API data to JS file:
+@views.route('/athlete_data.json')
+def get_athlete_data():
+
+    return jsonify(auth.get_activites())
+
+
+# Strava handles authentication here...
+# If user knows route but is not logged in, Strava renders error page
 @views.route('/athlete_home')
 def show_athlete_home():
     """Show athlete's homepage with athlete's activities"""

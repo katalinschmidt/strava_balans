@@ -101,6 +101,8 @@ polyline.decode = function(str, precision) {
         lat += latitude_change;
         lng += longitude_change;
 
+        // PERSONAL EDIT TO DEBUG 'TypeError: null is not an object (evaluating 't[0]')':
+        // console.log([lat / factor, lng / factor]);
         coordinates.push([lat / factor, lng / factor]);
         // PERSONAL EDIT TO FIX FLIPPED LAT/LONG:
         // coordinates.push([lng / factor, lat / factor]);
