@@ -27,13 +27,11 @@ def create_app():
     return app
 
 
-# Call function to create the web app:
+# Call function to create the web app & connect to database:
 app = create_app()
 connect_to_db(app)
 
 # Run the app only if this file is called directly:
 # Keep debug set to true while developing
 if __name__ == "__main__":
-    # from database.model import connect_to_db
-    # connect_to_db(app)
     app.run(debug=True)

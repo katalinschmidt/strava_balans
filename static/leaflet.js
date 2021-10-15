@@ -31,11 +31,13 @@ function renderLeaflet() {
     // & view is set Bay Area, CA
     const map = L.map('activities-map').setView([37.487846, -122.236115], 12);
 
+    // FIXME -> Add user manipulation here:
     let myFilter = [
         'contrast:130%',
         'grayscale:80%',
         'hue:200deg',
         'invert:100%',
+        'saturate:175%'
    ]
     // let myFilter = [
     //     'blur:0px',
@@ -51,11 +53,6 @@ function renderLeaflet() {
 
     // Tiles are the images of the map itself.
     // OpenStreetMap requires an attribution for using its tiles:
-    // const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-    // const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    // const tiles = L.tileLayer(tileUrl, {attribution});
-
-    // TESTING -> Custom map:
     let tiles = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                                         {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                                         filter: myFilter});
@@ -66,6 +63,10 @@ function renderLeaflet() {
     // jQuery syntax -> Making AJAX call to server:
     $.get('/athlete_data.json', res => {
         // Get API data:
+        if (res == "API rate limit reached") {
+            window.alert("Oops! Sorry, something went wrong when loading your data!") 
+        }
+        
         const all_activities = res;
 
         // Iterate through all Strava data:

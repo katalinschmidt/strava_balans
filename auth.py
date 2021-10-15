@@ -1,7 +1,7 @@
 """This file contains the methods for handling low-level access to the Strava API"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import redirect, request, session
+from flask import Response, redirect, request, session
 # 'crud' contains the self-made functions that add data to the database
 from database import crud
 # 'urllib.parse' is a module that provides functions for manipulating URLs
@@ -45,7 +45,7 @@ def get_oauth_code():
     """Parse oauth code from URL for access to STRAVA API"""
 
     OAUTH_CODE = request.args.get('code', None)
-    
+
     return OAUTH_CODE
 
 
@@ -86,12 +86,14 @@ def save_tokens(TOKENS, refresh=False):
 
     if not refresh:
         session['athlete_id'] = TOKENS['athlete']['id']
-        crud.create_athlete(
-                            TOKENS['athlete']['id'],
-                            TOKENS['athlete']['firstname'],
-                            TOKENS['athlete']['lastname'],
-                            TOKENS['athlete']['profile'],
-                            )
+
+        if not crud.get_athlete(TOKENS['athlete']['id']):
+            crud.create_athlete(
+                                TOKENS['athlete']['id'],
+                                TOKENS['athlete']['firstname'],
+                                TOKENS['athlete']['lastname'],
+                                TOKENS['athlete']['profile'],
+                                )
         # FIXME: Method for updating profile photo if profile photo has changed on Strava
     
     session.clear()
@@ -101,12 +103,13 @@ def save_tokens(TOKENS, refresh=False):
 
 
 # FIXME: Move this function to leaflet.js!
-def get_activites():
+def get_activities():
     """Get user's activities using tokens stored in database"""
 
     all_activities = []
     page_num = 1
     
+    # To go through the full set of results, iterate until an empty page is returned:
     while True:
         ACCESS_TOKEN = session.get("access_token", None)        
 
@@ -118,14 +121,15 @@ def get_activites():
                 'page': page_num
                 }
 
-        activities = requests.get(API_BASE_URL, headers=headers, params=params).json()
+        res = requests.get(API_BASE_URL, headers=headers, params=params)
+        if res.status_code == 429:
+            return ("Response 429")
         
+        activities = res.json()
         if len(activities) == 0:
             break
         
         page_num += 1
         all_activities.append(activities)
-    # from pprint import pprint
-    # pprint(all_activities[0][0])
 
     return all_activities

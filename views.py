@@ -32,12 +32,12 @@ def user_login():
     # session.clear()
 
     if session.get('access_token', None):
+        # If user in session, check for expiration:
         if session['expires_at'] < time.time():
+            print("TOKEN expired!")
             TOKENS = auth.refresh_tokens()
             auth.save_tokens(TOKENS, refresh=True) # FIXME -> Call this within auth.py?
-
         return redirect('/athlete_home')   
-    
     else:
         return auth.prompt_strava_login()
 
@@ -57,8 +57,13 @@ def connect_to_api():
 # Route to pass API data to JS file:
 @views.route('/athlete_data.json')
 def get_athlete_data():
+    res = auth.get_activities()
 
-    return jsonify(auth.get_activites())
+    if res == "Response 429":
+        print("API rate limit reached")
+        return jsonify("API rate limit reached")
+
+    return jsonify(res)
 
 
 # Strava handles authentication here...
@@ -67,17 +72,19 @@ def get_athlete_data():
 def show_athlete_home():
     """Show athlete's homepage with athlete's activities"""
 
-    all_activities = auth.get_activites()
+    # CODE COMMENTED OUT = MVP
+    # all_activities = auth.get_activities()
 
     # Clean up data for rendering:
-    for arrays in all_activities:
-        for data in arrays:
-            data['start_date_local'] = datetime.strptime(data['start_date_local'], '%Y-%m-%dT%H:%M:%SZ')
-            data['start_date_local'] = data['start_date_local'].strftime("%Y %m %d")
+    # for arrays in all_activities:
+    #     for data in arrays:
+    #         data['start_date_local'] = datetime.strptime(data['start_date_local'], '%Y-%m-%dT%H:%M:%SZ')
+    #         data['start_date_local'] = data['start_date_local'].strftime("%Y %m %d")
 
-            data['distance'] = data['distance'] * 0.000621
-            data['distance'] = round(data['distance'], 2)
+    #         data['distance'] = data['distance'] * 0.000621
+    #         data['distance'] = round(data['distance'], 2)
 
-            data['elapsed_time'] = time.strftime("%H:%M:%S", time.gmtime(data['elapsed_time']))
+    #         data['elapsed_time'] = time.strftime("%H:%M:%S", time.gmtime(data['elapsed_time']))
 
-    return render_template("activities.html", all_activities=all_activities)
+    # return render_template("activities.html", all_activities=all_activities)
+    return render_template("activities.html")
