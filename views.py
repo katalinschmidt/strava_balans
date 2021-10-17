@@ -6,8 +6,6 @@ from flask import Blueprint, session, render_template, redirect
 from flask import jsonify
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
-# Use the 'datetime' modul to format dates received in your API JSON data
-from datetime import datetime
 # Use the 'time' module to check the validity of your API token
 import time
 
@@ -21,7 +19,7 @@ views = Blueprint('views', __name__)
 def show_homepage():
     """Show homepage"""
 
-    return render_template("homepage.html")
+    return render_template("index.html")
 
 
 @views.route('/login')
@@ -34,11 +32,12 @@ def user_login():
     if session.get('access_token', None):
         # If user in session, check for expiration:
         if session['expires_at'] < time.time():
-            print("TOKEN expired!")
-            TOKENS = auth.refresh_tokens()
-            auth.save_tokens(TOKENS, refresh=True) # FIXME -> Call this within auth.py?
-        return redirect('/athlete_home')   
+            tokens = auth.refresh_tokens()
+            auth.save_tokens(tokens, refresh=True)
+        # If user in session, redirect directly to profile page:
+        return redirect('/athlete_profile')   
     else:
+        # If user not in session, prompt 'login' via Strava:
         return auth.prompt_strava_login()
 
 
@@ -46,45 +45,31 @@ def user_login():
 def connect_to_api():
     """Connect to Strava API"""
 
-    OAUTH_CODE = auth.get_oauth_code()
-    TOKENS = auth.exchange_tokens(OAUTH_CODE) # FIXME -> Call this within auth.py?
-    auth.save_tokens(TOKENS) # FIXME -> Call this within auth.py?
+    oauth_code = auth.get_oauth_code()
 
-    return redirect('/athlete_home')
+    # If user does not authenticate via Strava, redirect to homepage:
+    if not oauth_code:
+        return redirect('/')
+
+    tokens = auth.exchange_tokens(oauth_code)
+    auth.save_tokens(tokens)
+
+    return redirect('/athlete_profile')
+
+
+# @auth.auth_required is a self-made decorator that protects route by checking for user in session
+@views.route('/athlete_profile')
+@auth.auth_required
+def show_athlete_profile():
+    """Show athlete's homepage / profile"""
+
+    return render_template("profile.html")
 
 
 # FIXME: Refactor this to be exclusively in leaflet.js! Ask about passing session['access_token'].
-# Route to pass API data to JS file:
 @views.route('/athlete_data.json')
 def get_athlete_data():
+    """Pass API data to JS file"""
+    
     res = auth.get_activities()
-
-    if res == "Response 429":
-        print("API rate limit reached")
-        return jsonify("API rate limit reached")
-
     return jsonify(res)
-
-
-# Strava handles authentication here...
-# If user knows route but is not logged in, Strava renders error page
-@views.route('/athlete_home')
-def show_athlete_home():
-    """Show athlete's homepage with athlete's activities"""
-
-    # CODE COMMENTED OUT = MVP
-    # all_activities = auth.get_activities()
-
-    # Clean up data for rendering:
-    # for arrays in all_activities:
-    #     for data in arrays:
-    #         data['start_date_local'] = datetime.strptime(data['start_date_local'], '%Y-%m-%dT%H:%M:%SZ')
-    #         data['start_date_local'] = data['start_date_local'].strftime("%Y %m %d")
-
-    #         data['distance'] = data['distance'] * 0.000621
-    #         data['distance'] = round(data['distance'], 2)
-
-    #         data['elapsed_time'] = time.strftime("%H:%M:%S", time.gmtime(data['elapsed_time']))
-
-    # return render_template("activities.html", all_activities=all_activities)
-    return render_template("activities.html")

@@ -9,6 +9,15 @@
     <body>
         {% block body %}
         
+        <!-- Flashes will show for unauthenticated users -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{ msg }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <h1>This is the homepage!</h1>
         
         <div class="container">

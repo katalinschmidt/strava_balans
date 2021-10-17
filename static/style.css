@@ -1,3 +1,85 @@
+/* STYLING FULL SCREEN MAP -> Fix space on L&R...padding does nth, margin pulls left */
+html, body, #activities-map {
+    height: 100%;
+    width: 100%;
+    position: fixed; /* This puts map behind navbar, i.e. unreactive to clicks */
+    z-index: -1;
+}
+
+body {
+    background-color: black;
+}
+/* END STYLING FULL SCREEN MAP */
+
+
+
+/* STYLING NAVBAR */
+#body-row {
+    margin-left:0;
+    margin-right:0;
+}
+#sidebar-container {
+    min-height: 100vh;   
+    background-color: #242526;
+    padding: 0;
+}
+
+/* Sidebar sizes when expanded and collapsed */
+.sidebar-expanded {
+    width: 15%;
+}
+.sidebar-collapsed {
+    width: 10%;
+}
+
+/* Menu item*/
+#sidebar-container .list-group a {
+    height: 50px;
+    color: orange;
+}
+
+/* Submenu item*/
+#sidebar-container .list-group .sidebar-submenu a {
+    height: 45px;
+    padding-left: 30px;
+}
+.sidebar-submenu {
+    font-size: 0.9rem;
+}
+
+/* Separators */
+.sidebar-separator-title {
+    background-color: orange;
+    height: 35px;
+}
+.sidebar-separator {
+    background-color: #333;
+    height: 25px;
+}
+.logo-separator {
+    background-color: #333;    
+    height: 60px;
+}
+
+/* Closed submenu icon */
+#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+  content: " \f0d7";
+  display: inline;
+  text-align: right;
+  padding-left: 10px;
+}
+/* Opened submenu icon */
+#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+  content: " \f0da";
+  display: inline;
+  text-align: right;
+  padding-left: 10px;
+}
+/* END STYLING NAVBAR */
+
+
+
+/* STYLING MAP ACTIVITY DETAILS */
 .styled-popup {
     list-style: none;
     padding: 0;
@@ -27,3 +109,4 @@
 .styled-popup li:nth-child(6)::before {
     content: "🔗 ";
 }
+/* END STYLING MAP ACTIVITY DETAILS */

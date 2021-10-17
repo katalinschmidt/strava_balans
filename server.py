@@ -29,7 +29,7 @@ def create_app():
 
 # Call function to create the web app & connect to database:
 app = create_app()
-connect_to_db(app)
+connect_to_db(app) #FIXME: This is appearing in text when executing server.py
 
 # Run the app only if this file is called directly:
 # Keep debug set to true while developing

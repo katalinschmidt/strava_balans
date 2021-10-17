@@ -1,21 +1,8 @@
 /*
-* 
 *   Render JavaScript Leaflet with Strava activities
-*
 */
 
-console.log("Connected to leaflet.js!")
-// import { testConnection } from "./leaflet_util.js";
-// testConnection();
-// import testConnection from './leaflet_tilelayer.js';
-// testConnection();
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-// const activity = document.querySelectorAll('.activity-name');
-// const polyline = document.querySelectorAll('.activity-polyline');
-
-// console.log(activity) // OUTPUT = Good! NodeList of activity names
-// console.log(polyline) // OUTPUT = Good! NodeList of polylines
+console.log("Connected to leaflet.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import polyline from './leaflet_util.js';
 
@@ -63,49 +50,49 @@ function renderLeaflet() {
     // jQuery syntax -> Making AJAX call to server:
     $.get('/athlete_data.json', res => {
         // Get API data:
-        if (res == "API rate limit reached") {
+        if (res == "error code") {
             window.alert("Oops! Sorry, something went wrong when loading your data!") 
-        }
-        
-        const all_activities = res;
+        } else {
+            const all_activities = res;
 
-        // Iterate through all Strava data:
-        for (const activities_array of all_activities) {
-            for (const activity of activities_array) {
-                // Get polyline (for those activities that have one) & decode:
-                // 'polyline.decode' is a helper function from leaflet_util.js (edited for accurate lat/long order)
-                let activity_polyline = activity['map']['summary_polyline']; 
-                if (activity_polyline != null) {
-                    activity_polyline = polyline.decode(activity_polyline);
+            // Iterate through all Strava data:
+            for (const activities_array of all_activities) {
+                for (const activity of activities_array) {
+                    // Get polyline (for those activities that have one) & decode:
+                    // 'polyline.decode' is a helper function from leaflet_util.js (edited for accurate lat/long order)
+                    let activity_polyline = activity['map']['summary_polyline']; 
+                    if (activity_polyline != null) {
+                        activity_polyline = polyline.decode(activity_polyline);
 
-                    // Add each decoded polyline to map:
-                    L.polyline(
-                        activity_polyline,
-                        {color: "red",
-                        weight: 4,
-                        opacity: .7,
-                        lineJoin: 'round'}
-                    ).addTo(map)
-                    // Add pop-up of activity details to route:
-                    .bindPopup(() => {
-                        const activity_date = (activity['start_date_local'].substring(0, 10));
-                        const activity_name = activity['name'];
-                        const activity_type = activity['type'];
-                        const activity_duration = toHHMMSS(activity['elapsed_time']);
-                        const activity_distance = (activity['distance'] * 0.000621).toFixed(2);
-                        const activity_link = "https://www.strava.com/activities/" + activity['id'];
-                        
-                        return (`
-                        <ul class="styled-popup">
-                            <li>${activity_date}</li>    
-                            <li>${activity_name}</li>
-                            <li>${activity_type}</li>
-                            <li>${activity_duration}</li>
-                            <li>${activity_distance} mi</li>
-                            <li><a href=${activity_link} target="_blank">See this on Strava</a></li>
-                        </ul>
-                        `);
-                    });
+                        // Add each decoded polyline to map:
+                        L.polyline(
+                            activity_polyline,
+                            {color: "red",
+                            weight: 4,
+                            opacity: .7,
+                            lineJoin: 'round'}
+                        ).addTo(map)
+                        // Add pop-up of activity details to route:
+                        .bindPopup(() => {
+                            const activity_date = (activity['start_date_local'].substring(0, 10));
+                            const activity_name = activity['name'];
+                            const activity_type = activity['type'];
+                            const activity_duration = toHHMMSS(activity['elapsed_time']);
+                            const activity_distance = (activity['distance'] * 0.000621).toFixed(2);
+                            const activity_link = "https://www.strava.com/activities/" + activity['id'];
+                            
+                            return (`
+                            <ul class="styled-popup">
+                                <li>${activity_date}</li>    
+                                <li>${activity_name}</li>
+                                <li>${activity_type}</li>
+                                <li>${activity_duration}</li>
+                                <li>${activity_distance} mi</li>
+                                <li><a href=${activity_link} target="_blank">See this on Strava</a></li>
+                            </ul>
+                            `);
+                        });
+                    }
                 }
             }
         }

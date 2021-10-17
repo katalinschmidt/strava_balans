@@ -1,13 +1,8 @@
 /*
-* 
 *   Customize the appearance of the JS Leaflet
-*
 */
 
-console.log("Connected to leaflet_tilelayer.js!")
-// export default function testConnection() {
-//     console.log("CONNECTION SUCCESSFUL")
-// }
+console.log("Connected to leaflet_tilelayer.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // https://leafletjs.com/plugins.html#non-map-base-layers

@@ -1,7 +1,7 @@
 """This file contains the methods for handling low-level access to the Strava API"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import Response, redirect, request, session
+from flask import flash, Response, redirect, request, session
 # 'crud' contains the self-made functions that add data to the database
 from database import crud
 # 'urllib.parse' is a module that provides functions for manipulating URLs
@@ -24,6 +24,20 @@ STRAVA_TOKEN_URL = "https://www.strava.com/oauth/token"
 API_BASE_URL = "https://www.strava.com/api/v3/athlete/activities"
 
 
+# login_required is a self-made func / decorator for protecting routes.
+def login_required(orig_func):
+    def wrapper(*args, **kwargs): #'args' & 'kwargs' allows us to accept any num of positional / keyword arguments for our func. The are names purely by convention.
+        auth_given = session.get("access_token", None)
+
+        if auth_given:
+            return orig_func(*args, **kwargs)
+        
+        if not auth_given:
+            flash("Please log in with Strava to access this page.")
+            return redirect('/')
+    return wrapper
+
+
 def prompt_strava_login():
         """Prompt user to authorize connection to Strava"""
 
@@ -44,25 +58,23 @@ def prompt_strava_login():
 def get_oauth_code():
     """Parse oauth code from URL for access to STRAVA API"""
 
-    OAUTH_CODE = request.args.get('code', None)
+    oauth_code = request.args.get('code', None)
 
-    return OAUTH_CODE
+    return oauth_code
 
 
-def exchange_tokens(OAUTH_CODE):
+def exchange_tokens(oauth_code):
     """Exchange oauth code for access tokens"""
 
     data = {
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,
-            'code': OAUTH_CODE,
+            'code': oauth_code,
             'grant_type': 'authorization_code'
             }
 
-    TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
-    # FIXME: Call save_tokens() here instead of in views.py?
-
-    return TOKENS
+    tokens = requests.post(STRAVA_TOKEN_URL, data=data).json()
+    return tokens
 
 
 def refresh_tokens():
@@ -75,31 +87,31 @@ def refresh_tokens():
             'grant_type': 'refresh_token'
             }
 
-    TOKENS = requests.post(STRAVA_TOKEN_URL, data=data).json()
-    # FIXME: Call save_tokens() here instead of in views.py?
-
-    return TOKENS
+    tokens = requests.post(STRAVA_TOKEN_URL, data=data).json()
+    return tokens
 
 
-def save_tokens(TOKENS, refresh=False):
+def save_tokens(tokens, refresh=False):
     """Save tokens to session & db"""
 
     if not refresh:
-        session['athlete_id'] = TOKENS['athlete']['id']
+        session['athlete_id'] = tokens['athlete']['id']
 
-        if not crud.get_athlete(TOKENS['athlete']['id']):
+        print(crud.get_athlete(tokens['athlete']['id']))
+        if not crud.get_athlete(tokens['athlete']['id']):
+            print("Athlete not in db. Adding now...")
             crud.create_athlete(
-                                TOKENS['athlete']['id'],
-                                TOKENS['athlete']['firstname'],
-                                TOKENS['athlete']['lastname'],
-                                TOKENS['athlete']['profile'],
+                                tokens['athlete']['id'],
+                                tokens['athlete']['firstname'],
+                                tokens['athlete']['lastname'],
+                                tokens['athlete']['profile'],
                                 )
         # FIXME: Method for updating profile photo if profile photo has changed on Strava
     
     session.clear()
-    session['access_token'] = TOKENS['access_token']
-    session['refresh_token'] = TOKENS['refresh_token']
-    session['expires_at'] = TOKENS['expires_at']
+    session['access_token'] = tokens['access_token']
+    session['refresh_token'] = tokens['refresh_token']
+    session['expires_at'] = tokens['expires_at']
 
 
 # FIXME: Move this function to leaflet.js!
@@ -109,7 +121,7 @@ def get_activities():
     all_activities = []
     page_num = 1
     
-    # To go through the full set of results, iterate until an empty page is returned:
+    # Iterate until an empty page is returned, to go through the full set of results:
     while True:
         ACCESS_TOKEN = session.get("access_token", None)        
 
@@ -122,14 +134,15 @@ def get_activities():
                 }
 
         res = requests.get(API_BASE_URL, headers=headers, params=params)
-        if res.status_code == 429:
-            return ("Response 429")
+        if res.status_code != 200: # FIXME: Add 201, if editing/creating activities
+            return ("error code")
         
         activities = res.json()
-        if len(activities) == 0:
-            break
+        # if len(activities) == 0:
+        #     break
         
-        page_num += 1
+        # page_num += 1
         all_activities.append(activities)
+        break # FIXME: Remove & uncomment other lines after debugging!
 
     return all_activities

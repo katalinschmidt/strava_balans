@@ -1,13 +1,8 @@
 /*
-* 
 *   Utility functions for decoding Strava-provided polyline
-*
 */
 
-console.log("Connected to leaflet_util.js!")
-// export default function testConnection() {
-//     console.log("CONNECTION SUCCESSFUL")
-// }
+console.log("Connected to leaflet_util.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // https://www.npmjs.com/package/@mapbox/polyline
