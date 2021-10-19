@@ -16,7 +16,10 @@ function renderLeaflet() {
     // Create a map object:
     // Note that 'L' is an abbrv. for 'Leaflet' (defined in HTML script tag) 
     // & view is set Bay Area, CA
-    const map = L.map('activities-map').setView([37.487846, -122.236115], 12);
+    const map = L.map('activities-map', {zoomControl: false}).setView([37.487846, -122.236115], 12);
+
+    // Move map zoom controls (from default 'topleft'):
+    L.control.zoom({ position: 'topright' }).addTo(map);
 
     // FIXME -> Add user manipulation here:
     let myFilter = [

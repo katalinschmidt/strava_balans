@@ -57,9 +57,9 @@ def connect_to_api():
     return redirect('/athlete_profile')
 
 
-# @auth.auth_required is a self-made decorator that protects route by checking for user in session
+# @auth.login_required is a self-made decorator that protects route by checking for user in session
 @views.route('/athlete_profile')
-@auth.auth_required
+@auth.login_required
 def show_athlete_profile():
     """Show athlete's homepage / profile"""
 
@@ -70,6 +70,14 @@ def show_athlete_profile():
 @views.route('/athlete_data.json')
 def get_athlete_data():
     """Pass API data to JS file"""
-    
+
     res = auth.get_activities()
     return jsonify(res)
+
+
+@views.route('/training')
+# @auth.login_required
+def show_trng_plan():
+    """Show athlete's training plan"""
+
+    return "<h1>TEST</h1>"

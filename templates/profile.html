@@ -30,101 +30,66 @@
   
         <!-- For MVP+1: -->
     
-        <!-- Collabsible sidebar / navbar -->
-        <!-- Bootstrap row -->
-        <div class="row" id="body-row">
-            <!-- Sidebar -->
-            <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
-                <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
-                <!-- Bootstrap List Group -->
-                <ul class="list-group">
-                    <!-- Separator with title -->
-                    <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-                        <small>MAIN MENU</small>
+        <!-- Navbar -->
+        <div id="nav-control">
+            <a href="#" data-bs-toggle="collapse" data-bs-target="#full-navbar">
+                <img src="../static/images/balans_logo.png" class="rounded-circle" width="32" height="32"/>
+            </a> <!-- here we toggle the 'collapse' show/hide setting of the element #full-navbar -->
+        </div>
+
+        <div class="flex-column collapse" id="full-navbar"> <!-- 'flex' allows for better management of the layout, alignment, sizing of grid columns, navigation, components, etc. -->
+            <div class="sidebar-expanded">
+                <a href="/" class="text-decoration-none"> <!-- 'text-dec-none' removes hyperlink formatting -->
+                    <!-- <img src="../static/images/balans_logo.png" class="rounded-circle" width="32" height="32"/> -->
+                    <!-- <span class="nav-title">Main Menu</span> -->
+                    <div class="nav-title">Main Menu</div>
+                </a>
+                <hr> <!-- This adds a line break -->
+                <ul class="nav-items">
+                    <!-- Main Menu Items -->
+                    <li class="nav-item"> 
+                        <a href="#map-options" data-bs-toggle="collapse" class="text-decoration-none">
+                            Map Options
+                        </a> <!-- 'data-bs-toggle' allows us to show/hide the collapsed submenu -->
                     </li>
-                    <!-- /END Separator -->
-                    <!-- Menu with submenu -->
-                    <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-dashboard fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Dashboard</span>
-                            <span class="submenu-icon ml-auto"></span>
-                        </div>
-                    </a>
-                    <!-- Submenu content -->
-                    <div id='submenu1' class="collapse sidebar-submenu">
-                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                            <span class="menu-collapsed">Chahgag</span>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                            <span class="menu-collapsed">Reports</span>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                            <span class="menu-collapsed">Tables</span>
-                        </a>
-                    </div>
-                    <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-user fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Profile</span>
-                            <span class="submenu-icon ml-auto"></span>
-                        </div>
-                    </a>
-                    <!-- Submenu content -->
-                    <div id='submenu2' class="collapse sidebar-submenu">
-                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                            <span class="menu-collapsed">Settings</span>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                            <span class="menu-collapsed">Password</span>
-                        </a>
-                    </div>
-                    <a href="#" class="bg-dark list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-tasks fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Tasks</span>
-                        </div>
-                    </a>
-                    <!-- Separator with title -->
-                    <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-                        <small>OPTIONS</small>
+                        <!-- Submenu Items for Map Options^ -->
+                        <ul class="collapse" id="map-options"> <!-- 'collapse' adds the desired functionality and lack of 'show' explicity determines this to be hidden first -->
+                            <hr>
+                            <li>
+                                <a href="#" class="text-decoration-none">Sort</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none">Customize</a>
+                            </li>
+                            <hr>
+                        </ul>
+                    <li class="nav-item">
+                        <a href="/training" class="text-decoration-none">Training Plan</a>
                     </li>
-                    <!-- /END Separator -->
-                    <a href="#" class="bg-dark list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-calendar fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Calendar</span>
-                        </div>
-                    </a>
-                    <a href="#" class="bg-dark list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-envelope-o fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Messages <span class="badge badge-pill badge-primary ml-2">5</span></span>
-                        </div>
-                    </a>
-                    <!-- Separator without title -->
-                    <li class="list-group-item sidebar-separator menu-collapsed"></li>
-                    <!-- /END Separator -->
-                    <a href="#" class="bg-dark list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-question fa-fw mr-3"></span>
-                            <span class="menu-collapsed">Help</span>
-                        </div>
-                    </a>
-                    <a href="#top" data-toggle="sidebar-colapse" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
-                        <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span id="collapse-icon" class="fa fa-2x mr-3"></span>
-                            <span id="collapse-text" class="menu-collapsed">Collapse</span>
-                        </div>
-                    </a>
-                </ul><!-- List Group END-->
-        </div>sidebar-container END
-        
+                    <li class="nav-item">
+                        <a href="#" class="text-decoration-none">Diet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="text-decoration-none">Journal</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="links">
+                    <li class="nav-item">
+                        <a href="https://www.strava.com/dashboard" class="text-decoration-none">Go to Strava</a>
+                    </li>  
+                    <li class="nav-item">
+                        <a href="#" class="text-decoration-none">Learn About the Dev</a>
+                    </li>                
+                </ul>
+            </div>
+        </div>              
+ 
         <!-- JS Leaflet -->
-        <div class="container" id="activities-map">
+        <div id="activities-map">
             <!-- Map renders here -->
         </div>
-        
+
         <!-- End MVP+1 -->
 
         {% endblock %}
@@ -136,8 +101,6 @@
         <script type="module" src="../static/leaflet_tilelayer.js"></script>
         <script type="module" src="../static/leaflet_util.js"></script>
         <script type="module" src="../static/leaflet.js"></script>
-        <!-- MVP+1 Bootstrap Sidebar / Navbar -->
-        <script src="../static/navbar.js"></script>
         {% endblock %}
     </footer>
 </html>

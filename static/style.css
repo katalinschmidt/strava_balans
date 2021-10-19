@@ -2,8 +2,8 @@
 html, body, #activities-map {
     height: 100%;
     width: 100%;
-    position: fixed; /* This puts map behind navbar, i.e. unreactive to clicks */
-    z-index: -1;
+    position: fixed;
+    z-index: -1; /* -1 puts map behind navbar, i.e. unreactive to clicks & +1 hides navbar */
 }
 
 body {
@@ -14,66 +14,53 @@ body {
 
 
 /* STYLING NAVBAR */
-#body-row {
-    margin-left:0;
-    margin-right:0;
+#nav-control {
+    margin: 1%;
+    position: absolute;
+    z-index: 1; /* Place toggler above navbar & map */
 }
-#sidebar-container {
-    min-height: 100vh;   
-    background-color: #242526;
+
+.flex-column {
+    background-color: #152828;
+    height: 100vh;
+    width: 15vw;
+    position: absolute; /* Place navbar on top of map */
+}
+
+.sidebar-expanded {
+    padding: 5%;
+}
+
+.sidebar-expanded li {
+    line-height: 2.5em;
+}
+
+.text-decoration-none, #map-options, hr {
+    color: white;
+}
+
+.sidebar-expanded .nav-title {
+    font-size: x-large;
+    text-align: center;
+}
+.sidebar-expanded .nav-items {
+    list-style: none;
+    height: 80vh;
+    padding: 0;
+}
+.sidebar-expanded #map-options {
+    list-style: none;
     padding: 0;
 }
 
-/* Sidebar sizes when expanded and collapsed */
-.sidebar-expanded {
-    width: 15%;
+.links {
+    padding: 0;
 }
-.sidebar-collapsed {
-    width: 10%;
+.links li:nth-child(1)::before {
+    content: "🔗 ";
 }
-
-/* Menu item*/
-#sidebar-container .list-group a {
-    height: 50px;
-    color: orange;
-}
-
-/* Submenu item*/
-#sidebar-container .list-group .sidebar-submenu a {
-    height: 45px;
-    padding-left: 30px;
-}
-.sidebar-submenu {
-    font-size: 0.9rem;
-}
-
-/* Separators */
-.sidebar-separator-title {
-    background-color: orange;
-    height: 35px;
-}
-.sidebar-separator {
-    background-color: #333;
-    height: 25px;
-}
-.logo-separator {
-    background-color: #333;    
-    height: 60px;
-}
-
-/* Closed submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
-  content: " \f0d7";
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
-}
-/* Opened submenu icon */
-#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
-  content: " \f0da";
-  display: inline;
-  text-align: right;
-  padding-left: 10px;
+.links li:nth-child(2)::before {
+    content: "👩‍💻 ";
 }
 /* END STYLING NAVBAR */
 
