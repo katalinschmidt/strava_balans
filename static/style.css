@@ -1,9 +1,10 @@
-/* STYLING FULL SCREEN MAP -> Fix space on L&R...padding does nth, margin pulls left */
+/* STYLING FULL SCREEN MAP */
+/* Resize map to be fullscreen and place under toggler/sidebar */
 html, body, #activities-map {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: -1; /* -1 puts map behind navbar, i.e. unreactive to clicks & +1 hides navbar */
+    z-index: -1;
 }
 
 body {
@@ -14,52 +15,49 @@ body {
 
 
 /* STYLING NAVBAR */
-#nav-control {
-    margin: 1%;
-    position: absolute;
-    z-index: 1; /* Place toggler above navbar & map */
+/* Customize size of offcanvas sidebar */
+.offcanvas-backdrop {
+    width: 15%;
 }
-
-.flex-column {
+#sidebar {
     background-color: #152828;
-    height: 100vh;
-    width: 15vw;
-    position: absolute; /* Place navbar on top of map */
+    width: 15%;
 }
 
-.sidebar-expanded {
-    padding: 5%;
+/* Add padding around logo toggler & place above map */
+#toggler {
+    height: 6vh;
+    width: 3vw;
+    padding: 1%;
+    position: absolute;
+    z-index: 1;
 }
 
-.sidebar-expanded li {
-    line-height: 2.5em;
+/* Match sizing of both logos using shared id */
+#logo {
+    height: 4vh;
+    width: 2vw;
+    /* height: 6vh;
+    width: 3vw; */
 }
 
-.text-decoration-none, #map-options, hr {
+/* Remove hyperlink formatting */
+li a, hr {
+    text-decoration: none;
     color: white;
 }
 
-.sidebar-expanded .nav-title {
-    font-size: x-large;
-    text-align: center;
-}
-.sidebar-expanded .nav-items {
-    list-style: none;
-    height: 80vh;
+/* Left-align main menu list items & add spacing */
+ul {
     padding: 0;
-}
-.sidebar-expanded #map-options {
-    list-style: none;
-    padding: 0;
+    line-height: 3em;
 }
 
-.links {
-    padding: 0;
-}
-.links li:nth-child(1)::before {
+/* Customize bullet pts for links */
+.links li:nth-child(2)::before {
     content: "🔗 ";
 }
-.links li:nth-child(2)::before {
+.links li:nth-child(3)::before {
     content: "👩‍💻 ";
 }
 /* END STYLING NAVBAR */

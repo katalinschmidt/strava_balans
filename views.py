@@ -57,7 +57,6 @@ def connect_to_api():
     return redirect('/athlete_profile')
 
 
-# @auth.login_required is a self-made decorator that protects route by checking for user in session
 @views.route('/athlete_profile')
 @auth.login_required
 def show_athlete_profile():
@@ -68,6 +67,7 @@ def show_athlete_profile():
 
 # FIXME: Refactor this to be exclusively in leaflet.js! Ask about passing session['access_token'].
 @views.route('/athlete_data.json')
+@auth.login_required
 def get_athlete_data():
     """Pass API data to JS file"""
 
@@ -76,7 +76,7 @@ def get_athlete_data():
 
 
 @views.route('/training')
-# @auth.login_required
+@auth.login_required
 def show_trng_plan():
     """Show athlete's training plan"""
 

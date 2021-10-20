@@ -2,6 +2,8 @@
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
 from flask import flash, Response, redirect, request, session
+# 'functools' is Flask's preferred library for decorators / wrappers (see login_required)
+from functools import wraps
 # 'crud' contains the self-made functions that add data to the database
 from database import crud
 # 'urllib.parse' is a module that provides functions for manipulating URLs
@@ -24,17 +26,20 @@ STRAVA_TOKEN_URL = "https://www.strava.com/oauth/token"
 API_BASE_URL = "https://www.strava.com/api/v3/athlete/activities"
 
 
-# login_required is a self-made func / decorator for protecting routes.
 def login_required(orig_func):
-    def wrapper(*args, **kwargs): #'args' & 'kwargs' allows us to accept any num of positional / keyword arguments for our func. The are names purely by convention.
-        auth_given = session.get("access_token", None)
+    """Protects routes from unauthorized users"""
+    print("login_required for {}".format(orig_func.__name__))
 
-        if auth_given:
-            return orig_func(*args, **kwargs)
+    @wraps(orig_func)
+    def wrapper():
+        auth_given = session.get("access_token", None)
         
-        if not auth_given:
+        if auth_given:
+            return orig_func()
+        else:
             flash("Please log in with Strava to access this page.")
             return redirect('/')
+    
     return wrapper
 
 
@@ -135,6 +140,9 @@ def get_activities():
 
         res = requests.get(API_BASE_URL, headers=headers, params=params)
         if res.status_code != 200: # FIXME: Add 201, if editing/creating activities
+            print("*"*20)
+            print(res.status_code)
+            print("*"*20)
             return ("error code")
         
         activities = res.json()

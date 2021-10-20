@@ -8,20 +8,14 @@
 <html>
     <head>
         {% block head_script %}
+        
         <!-- JS Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-        <!-- <style> #activities-map {height: 1000px;} </style> -->
-        
-        <!-- MVP Bootstrap Table -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     
-        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+        crossorigin=""></script>       
         
         {% endblock %}
     </head>
@@ -31,59 +25,59 @@
         <!-- For MVP+1: -->
     
         <!-- Navbar -->
-        <div id="nav-control">
-            <a href="#" data-bs-toggle="collapse" data-bs-target="#full-navbar">
-                <img src="../static/images/balans_logo.png" class="rounded-circle" width="32" height="32"/>
-            </a> <!-- here we toggle the 'collapse' show/hide setting of the element #full-navbar -->
+        <!-- Sidebar Toggler (open only)-->
+        <div id="toggler">
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
+            </a>            
         </div>
 
-        <div class="flex-column collapse" id="full-navbar"> <!-- 'flex' allows for better management of the layout, alignment, sizing of grid columns, navigation, components, etc. -->
-            <div class="sidebar-expanded">
-                <a href="/" class="text-decoration-none"> <!-- 'text-dec-none' removes hyperlink formatting -->
-                    <!-- <img src="../static/images/balans_logo.png" class="rounded-circle" width="32" height="32"/> -->
-                    <!-- <span class="nav-title">Main Menu</span> -->
-                    <div class="nav-title">Main Menu</div>
+        <!-- Sidebar -->
+        <!-- Use the data-bs-scroll attribute to toggle <body> scrolling and data-bs-backdrop to toggle the backdrop. -->
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="sidebar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title text-white" id="sidebarLabel">Main Menu</h5>
+                <a href="#" class="text-reset" data-bs-dismiss="offcanvas">
+                    <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
                 </a>
-                <hr> <!-- This adds a line break -->
-                <ul class="nav-items">
-                    <!-- Main Menu Items -->
-                    <li class="nav-item"> 
-                        <a href="#map-options" data-bs-toggle="collapse" class="text-decoration-none">
+            </div>
+            <div class="offcanvas-body">
+                <ul class="menu">
+                    <hr>
+                    <li>
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#map-options">
                             Map Options
-                        </a> <!-- 'data-bs-toggle' allows us to show/hide the collapsed submenu -->
-                    </li>
-                        <!-- Submenu Items for Map Options^ -->
-                        <ul class="collapse" id="map-options"> <!-- 'collapse' adds the desired functionality and lack of 'show' explicity determines this to be hidden first -->
+                        </a>
+                        <ul class="submenu collapse" id="map-options">
                             <hr>
-                            <li>
-                                <a href="#" class="text-decoration-none">Sort</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-decoration-none">Customize</a>
-                            </li>
+                            <li><a href="#" class="submenu-item">Sort Activities</a></li>
+                            <li><a href="#" class="submenu-item">Customize Map</a></li>
                             <hr>
                         </ul>
-                    <li class="nav-item">
-                        <a href="/training" class="text-decoration-none">Training Plan</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-decoration-none">Diet</a>
+                    <li>
+                        <a href="/training">Training Plan</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-decoration-none">Journal</a>
+                    <li>
+                        <a href="#">Diet</a>
+                    </li>
+                    <li>
+                        <a href="#">Journal</a>
                     </li>
                 </ul>
-                <hr>
+                <!-- How to keep links pinned to bottom of sidebar? -->
+                <!-- <div class="separator"></div> -->
                 <ul class="links">
-                    <li class="nav-item">
-                        <a href="https://www.strava.com/dashboard" class="text-decoration-none">Go to Strava</a>
-                    </li>  
-                    <li class="nav-item">
-                        <a href="#" class="text-decoration-none">Learn About the Dev</a>
-                    </li>                
+                    <hr>
+                    <li>
+                        <a href="https://www.strava.com/dashboard">Go to Strava</a>
+                    </li>
+                    <li>
+                        <a href="#">About the Dev</a>
+                    </li>
                 </ul>
             </div>
-        </div>              
+        </div>            
  
         <!-- JS Leaflet -->
         <div id="activities-map">
