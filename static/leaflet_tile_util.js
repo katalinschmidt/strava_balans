@@ -2,7 +2,7 @@
 *   Customize the appearance of the JS Leaflet
 */
 
-console.log("Connected to leaflet_tilelayer.js!");
+console.log("Connected to leaflet_tile_util.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // https://leafletjs.com/plugins.html#non-map-base-layers

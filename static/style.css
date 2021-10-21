@@ -4,7 +4,7 @@ html, body, #activities-map {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: -1;
+    z-index: 1;
 }
 
 body {
@@ -30,7 +30,7 @@ body {
     width: 3vw;
     padding: 1%;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* Match sizing of both logos using shared id */
@@ -95,3 +95,20 @@ ul {
     content: "🔗 ";
 }
 /* END STYLING MAP ACTIVITY DETAILS */
+
+
+/* STYLING TRAINING PLANS PAGE */
+form {
+    background-color: grey;
+    margin: auto; /* Center form on page horizontally */
+    margin-top: 10%; /* Center form on page vertically */
+    width: 30%;
+    padding: 2%; /* Create space between text & div border */
+}
+
+.btn-container {
+    text-align: center;
+    padding: 2%;
+}
+
+/* END STYLING TRAINING PLANS PAGE */

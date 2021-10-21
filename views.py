@@ -1,9 +1,10 @@
 """Create Flask web app routes to render HTML pages of web app"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import Blueprint, session, render_template, redirect
+from flask import Blueprint, session, render_template, redirect, request
 # 'jsonify' is used to pass the API result from Python to JS (as JSON)
 from flask import jsonify
+from werkzeug.wrappers import response
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
 # Use the 'time' module to check the validity of your API token
@@ -74,10 +75,17 @@ def get_athlete_data():
     res = auth.get_activities()
     return jsonify(res)
 
-
-@views.route('/training')
+# Defining two methods here allows us to handle the form input within the same function:
+@views.route('/training', methods=['GET', 'POST'])
 @auth.login_required
 def show_trng_plan():
     """Show athlete's training plan"""
 
-    return "<h1>TEST</h1>"
+    if request.method == 'POST':
+        print("Post method has occurred...")
+        value = request.form.get('value')
+        print(value)
+
+        return "JS data received!"
+
+    return render_template("training.html")

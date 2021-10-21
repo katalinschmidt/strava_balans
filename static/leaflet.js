@@ -4,7 +4,7 @@
 
 console.log("Connected to leaflet.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-import polyline from './leaflet_util.js';
+import polyline from './leaflet_poly_util.js';
 
 // Call function render map:
 renderLeaflet();
@@ -50,7 +50,7 @@ function renderLeaflet() {
     // Add tiles to map:
     tiles.addTo(map);
 
-    // jQuery syntax -> Making AJAX call to server:
+    // jQuery syntax -> Making AJAX call to server (w/o event listener => execute when html page renders):
     $.get('/athlete_data.json', res => {
         // Get API data:
         if (res == "error code") {

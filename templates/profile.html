@@ -22,9 +22,7 @@
     <body>
         {% block body %}
   
-        <!-- For MVP+1: -->
-    
-        <!-- Navbar -->
+        <!-- For MVP+2 / Navbar: -->
         <!-- Sidebar Toggler (open only)-->
         <div id="toggler">
             <a href="#" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
@@ -77,8 +75,10 @@
                     </li>
                 </ul>
             </div>
-        </div>            
+        </div>   
+        <!-- End MVP+2 -->         
  
+        <!-- For MVP+1: -->
         <!-- JS Leaflet -->
         <div id="activities-map">
             <!-- Map renders here -->
@@ -92,8 +92,8 @@
     <footer>
         {% block footer_script %}
         <!-- MVP+1 JS Leaflet / My files -->
-        <script type="module" src="../static/leaflet_tilelayer.js"></script>
-        <script type="module" src="../static/leaflet_util.js"></script>
+        <script type="module" src="../static/leaflet_tile_util.js"></script>
+        <script type="module" src="../static/leaflet_poly_util.js"></script>
         <script type="module" src="../static/leaflet.js"></script>
         {% endblock %}
     </footer>

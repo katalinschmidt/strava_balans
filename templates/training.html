@@ -1,0 +1,63 @@
+<!-- Extend / Import basic templating from 'base.html' -->
+{% extends 'base.html' %}
+
+<!-- Within each page's <html> : 
+{% block NAME %} your_page's_custom_stuff_here {% endblock %} -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head_script %}
+        {% endblock %}
+    </head>
+
+    <body>
+        {% block body %}
+
+        <h class="text-white">This your training plan page!</h>
+        
+        <!-- How to show form only when athlete has no goals in db? Jinja...? -->
+        <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
+        <form id="get-trng-plan">
+            <div class="form-title">
+                <h2>Let's get competitive!</h1>
+            </div>
+            <hr>
+            <div class="form-content">
+                <h4>Pick a training goal:</h2>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trng-goal" value="5K run" id="5k-run">
+                    <label class="form-check-label" for="5k-run">5K run</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trng-goal" value="10K run" id="10k-run">
+                    <label class="form-check-label" for="10k-run">10K run</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trng-goal" value="Half marathon" id="Half marathon" disabled>
+                    <label class="form-check-label" for="Half marathon">Half marathon</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trng-goal" value="Full marathon" id="Full marathon" disabled>
+                    <label class="form-check-label" for="Full marathon">Full marathon</label>
+                </div>
+            </div>
+            <hr>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-light" id="form-submit">OK, build my Custom Plan! 🔥</button>
+            </div>
+            <div class="btn-container">
+                <button type="button" class="btn btn-light" id="form-cancel">Actually, I'm good with where I'm at! 💪</button>                
+            </div>
+        </form>
+
+        {% endblock %}
+    </body>
+
+    <footer>
+        {% block footer_script %}
+        <!-- MVP+2 / My files -->
+        <script type="module" src="../static/trngplan.js"></script>
+        {% endblock %}
+    </footer>
+</html>
