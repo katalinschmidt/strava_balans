@@ -8,6 +8,9 @@
 <html>
     <head>
         {% block head_script %}
+        <!-- FullCalendar -->
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css"/>
         {% endblock %}
     </head>
 
@@ -61,7 +64,7 @@
         <!-- END GOAL FORM -->
 
         <!-- MVP+2 / TRNG PLAN TABLE -->
-        <table class="table" id="custom-plan">
+        <table class="table" id="custom-plan" style="display: none;">
             <thead>
                 <th scope="col">Day</th>
                 <th scope="col">Training Item</th>
@@ -71,6 +74,11 @@
         </table>
         <!-- END TRNG PLAN TABLE -->
 
+        <!-- MVP+3 / CALENDAR -->
+        <div id="calendar">
+            <!-- Calendar renders here -->
+        </div>
+        <!-- END MVP+3 / CALENDAR -->
         {% endblock %}
     </body>
 

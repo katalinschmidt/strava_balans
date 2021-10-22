@@ -101,7 +101,7 @@ ul {
 form {
     background-color: grey;
     margin: auto; /* Center form on page horizontally */
-    margin-top: 10%; /* Center form on page vertically */
+    margin-top: 5%; /* Center form on page vertically */
     width: 30%;
     padding: 2%; /* Create space between text & div border */
 }
