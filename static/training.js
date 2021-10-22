@@ -13,13 +13,17 @@ function openForm() {
     document.getElementById("get-trng-plan").style.display = "block";
 }
 
+function showPlan() {
+    document.getElementById("custom-plan").style.display = "block";
+}
+
 // Close form on click:
 $('#form-cancel').click((res) => {
     console.log("Closing form...");
     closeForm();
 })
 
-// Get form data on submit:
+// Handle form data on submit:
 $('#form-submit').click((res) => {
     console.log("Form submitted!");
     // On form submission, prevent default (page refresh):
@@ -37,14 +41,13 @@ $('#form-submit').click((res) => {
             name: goalName,
             date: goalDate
         },
+        // If form successfully submitted, render custom training plan:
         success: (res) => {
-            // Res is an array of dicts:
-            console.log(res);
-            
+            showPlan();
+
             // Count days until trng goal:
             goalDate = new Date(goalDate);
-            const today = new Date();
-            
+            const today = new Date();           
             // Start by calculating the time difference of the two dates:
             const timeDifference = goalDate.getTime() - today.getTime();          
             // Then use that to calculate the no. of days between the two dates:
@@ -54,14 +57,11 @@ $('#form-submit').click((res) => {
             const totalNumWorkouts = res.length;
             // Subtract daysUntil from totalWorkouts to see how many workouts to render:
             const renderNum = totalNumWorkouts - daysUntil;
-            console.log(renderNum);
 
-            // Loop through workouts & add data to table cells:
+            // Loop through workouts:
             res.forEach((dict) => {  
-                // Begin rendering when dict.day is equal to renderNum: 
+                // And limit rendering to fit number of days between today & goal date: 
                 if (dict.day >= renderNum) {
-                    console.log(`${dict.day} >= ${renderNum}`);
-
                     // Identify table:
                     const table = document.getElementById("custom-plan")
                     // Create table row
@@ -83,10 +83,35 @@ $('#form-submit').click((res) => {
             });
         },
         error: (res) => {
-            console.log("Uh-oh! Something went wrong...");
+            alert("Uh-oh! Something went wrong...");
         }
     });
 
     // Close form after submission:
     closeForm();
+
+    // Render calendar:
+    // renderCalendar("test");
 })
+
+
+// Calendar:
+function renderCalendar(customPlan) {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev, next, today',
+            center: 'title',
+            right: 'dayGridMonth, timeGridWeek, timeGridDay'
+        },
+        events: [
+            {
+                title: 'My Test Activity',
+                start: '2021-10-22'
+                // end: '2021-10-23T16:00:00'
+            }
+        ]
+    });
+    calendar.render();
+}
