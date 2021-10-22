@@ -48,8 +48,18 @@
                         </a>
                         <ul class="submenu collapse" id="map-options">
                             <hr>
-                            <li><a href="#" class="submenu-item">Sort Activities</a></li>
-                            <li><a href="#" class="submenu-item">Customize Map</a></li>
+                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#filter-types" class="submenu-item">Sort Activities</a></li>
+                                <div class="collapse" id="filter-types">
+                                    <a href="#">🏃</a>
+                                    <a href="#">🚴</a>
+                                    <a href="#">🏊</a>
+                                    <a href="#">🏋️</a>
+                                    <a href="#">🥾</a>
+                                </div>
+                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#slider-container" class="submenu-item">Customize Map</a></li>
+                                <div class="collapse" id="slider-container">
+                                    <input type="range">
+                                </div>
                             <hr>
                         </ul>
                     </li>
