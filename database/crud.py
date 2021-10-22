@@ -51,7 +51,7 @@ def get_goal(athlete_id):
     """Return athlete's training goal(s)."""
 
     # Note that this returns a list!
-    return Goal.query.filter(Athlete.athlete_id == athlete_id).all()
+    return Goal.query.filter(Goal.athlete_id == athlete_id).all()
 
 
 def create_custom_trng_plan(athlete_id, goal_id, goal_name):
@@ -74,7 +74,7 @@ def create_custom_trng_plan(athlete_id, goal_id, goal_name):
                                             )
         custom_trng_plan.append(custom_workouts)
         db.session.add_all(custom_trng_plan)
-    
+
     db.session.commit()
 
     return custom_trng_plan

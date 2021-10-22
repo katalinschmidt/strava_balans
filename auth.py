@@ -33,7 +33,7 @@ def login_required(orig_func):
     @wraps(orig_func)
     def wrapper():
         auth_given = session.get("access_token", None)
-        
+
         if auth_given:
             return orig_func()
         else:
@@ -102,7 +102,6 @@ def save_tokens(tokens, refresh=False):
     if not refresh:
         session['athlete_id'] = tokens['athlete']['id']
 
-        print(crud.get_athlete(tokens['athlete']['id']))
         if not crud.get_athlete(tokens['athlete']['id']):
             print("Athlete not in db. Adding now...")
             crud.create_athlete(
@@ -113,7 +112,6 @@ def save_tokens(tokens, refresh=False):
                                 )
         # FIXME: Method for updating profile photo if profile photo has changed on Strava
     
-    session.clear()
     session['access_token'] = tokens['access_token']
     session['refresh_token'] = tokens['refresh_token']
     session['expires_at'] = tokens['expires_at']

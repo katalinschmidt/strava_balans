@@ -4,9 +4,10 @@
 from flask import Blueprint, session, render_template, redirect, request
 # 'jsonify' is used to pass the API result from Python to JS (as JSON)
 from flask import jsonify
-from werkzeug.wrappers import response
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
+#
+import database.crud
 # Use the 'time' module to check the validity of your API token
 import time
 
@@ -28,7 +29,7 @@ def user_login():
     """Check if user is in session & handle login accordingly"""
 
     # Remove this line after debugging:
-    # session.clear()
+    session.clear()
 
     if session.get('access_token', None):
         # If user in session, check for expiration:
@@ -75,7 +76,7 @@ def get_athlete_data():
     res = auth.get_activities()
     return jsonify(res)
 
-# Defining two methods here allows us to handle the form input within the same function:
+# Defining two methods here allows us to handle form input within the same function:
 @views.route('/training', methods=['GET', 'POST'])
 @auth.login_required
 def show_trng_plan():
@@ -83,9 +84,20 @@ def show_trng_plan():
 
     if request.method == 'POST':
         print("Post method has occurred...")
-        value = request.form.get('value')
-        print(value)
 
-        return "JS data received!"
+        athlete_id = session.get("athlete_id")
+        goal_name = request.form.get('name')
+        goal_date = request.form.get('date')
+
+        # Store trng goal in db:
+        database.crud.create_goal(athlete_id, goal_name, goal_date)
+        # Get goal_id:
+        goal_id = database.crud.get_goal(athlete_id)[-1].goal_id
+        
+        # Pass required data to db to create custom plan:
+        custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name)
+        # Return custom_plan to JS file:
+        workout = [workout.toDict() for workout in custom_plan]
+        return jsonify(workout)
 
     return render_template("training.html")

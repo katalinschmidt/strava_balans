@@ -61,7 +61,9 @@ class Custom_Trng_Plan(db.Model):
 
     def __repr__(self):
         return f"< Custom_Trng_Plan: {self.athlete_id} - {self.day} - {self.trng_item} >"
-
+    
+    def toDict(self):
+        return {"day": self.day, "trng_item": self.trng_item}
 
 class Default_Trng_Plan(db.Model):
     """The default plans for all possible training goals."""

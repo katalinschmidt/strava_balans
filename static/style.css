@@ -1,6 +1,6 @@
 /* STYLING FULL SCREEN MAP */
 /* Resize map to be fullscreen and place under toggler/sidebar */
-html, body, #activities-map {
+#activities-map {
     height: 100%;
     width: 100%;
     position: fixed;
@@ -8,7 +8,7 @@ html, body, #activities-map {
 }
 
 body {
-    background-color: black;
+    background-color: orange;
 }
 /* END STYLING FULL SCREEN MAP */
 
@@ -111,4 +111,15 @@ form {
     padding: 2%;
 }
 
+#goal-date {
+    width: 100px;
+    color: black;
+}
+
+#custom-plan {
+    border-style: double;
+    margin: auto;
+    width: 30%;
+    text-align: center;
+}
 /* END STYLING TRAINING PLANS PAGE */
