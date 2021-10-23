@@ -43,11 +43,9 @@ $('#form-submit').click((res) => {
         },
         // If form successfully submitted, render custom training plan:
         success: (res) => {
-            showPlan();
-
             // Count days until trng goal:
             goalDate = new Date(goalDate);
-            const today = new Date();           
+            const today = new Date();      
             // Start by calculating the time difference of the two dates:
             const timeDifference = goalDate.getTime() - today.getTime();          
             // Then use that to calculate the no. of days between the two dates:
@@ -55,32 +53,31 @@ $('#form-submit').click((res) => {
 
             // Calculate total num of workouts in plan:
             const totalNumWorkouts = res.length;
-            // Subtract daysUntil from totalWorkouts to see how many workouts to render:
+            // Subtract daysUntil from totalWorkouts to see how many workouts are left to render:
             const renderNum = totalNumWorkouts - daysUntil;
 
+            // Assign each workout a date, beginning with today:
+            let activityDate = new Date();
             // Loop through workouts:
-            res.forEach((dict) => {  
-                // And limit rendering to fit number of days between today & goal date: 
-                if (dict.day >= renderNum) {
-                    // Identify table:
-                    const table = document.getElementById("custom-plan")
-                    // Create table row
-                    const tr = document.createElement("tr");
-                    // Append row to table:
-                    table.appendChild(tr);
-                    
-                    // Create a table cell for workout day:
-                    const td_day = document.createElement("td");
-                    td_day.textContent = dict.day;
-                    // Create a table cell for workout item:
-                    const td_item = document.createElement("td");
-                    td_item.textContent = dict.trng_item;              
-                    
-                    // Append table cells to table:
-                    tr.appendChild(td_day);
-                    tr.appendChild(td_item);
-                }             
+            res.forEach((obj) => {
+                // And limit assignment to fit number of days between today & goal date: 
+                if (obj.day >= renderNum) {               
+                    // Add date to obj for later access:
+                    obj.date = new Date(activityDate) // JS assigns obj's value by reference, not assign by copy value (e.g. obj.date = activityDate, like with primitive variables)
+                    // Remove time stamp from date (so that it displays as an all-day event in calendar):
+                    obj.date = obj.date.toISOString().split('T')[0];
+
+                    // Add 1 to date for next day's activity:
+                    activityDate.setDate(activityDate.getDate()+1);
+                }
             });
+
+            renderCalendar(res.map(obj => {
+                return {       
+                    title: obj.trng_item,
+                    start: obj.date
+                }
+            }));
         },
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
@@ -89,9 +86,6 @@ $('#form-submit').click((res) => {
 
     // Close form after submission:
     closeForm();
-
-    // Render calendar:
-    // renderCalendar("test");
 })
 
 
@@ -105,13 +99,7 @@ function renderCalendar(customPlan) {
             center: 'title',
             right: 'dayGridMonth, timeGridWeek, timeGridDay'
         },
-        events: [
-            {
-                title: 'My Test Activity',
-                start: '2021-10-22'
-                // end: '2021-10-23T16:00:00'
-            }
-        ]
+        events: customPlan
     });
     calendar.render();
 }
