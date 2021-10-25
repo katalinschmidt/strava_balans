@@ -1,15 +1,20 @@
 """Create Flask web app routes to render HTML pages of web app"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import Blueprint, session, render_template, redirect, request
+from flask import Blueprint, session, render_template, redirect, request, Response
 # 'jsonify' is used to pass the API result from Python to JS (as JSON)
 from flask import jsonify
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
-#
+# 'crud' contains the self-made functions that add data to the database
 import database.crud
+# The 'json' module allows us to deserialize JSON strings into native Python objects
+import json
+# Use the 'datetime' module to transform strings into datetime objects
+from datetime import datetime
 # Use the 'time' module to check the validity of your API token
 import time
+
 
 # Blueprints allow you to break up your application into modules and thereby help organize views / code.
 # Create an instance of the class Blueprint:
@@ -31,7 +36,7 @@ def user_login():
     # Remove this line after debugging:
     session.clear()
 
-    if session.get('access_token', None):
+    if session.get('access_token'):
         # If user in session, check for expiration:
         if session['expires_at'] < time.time():
             tokens = auth.refresh_tokens()
@@ -67,14 +72,18 @@ def show_athlete_profile():
     return render_template("profile.html")
 
 
-# FIXME: Refactor this to be exclusively in leaflet.js! Ask about passing session['access_token'].
-@views.route('/athlete_data.json')
+# Requiring a POST method here means that data will be received/sent more securely:
+@views.route('/athlete_data.json', methods=['POST'])
 @auth.login_required
 def get_athlete_data():
     """Pass API data to JS file"""
 
-    res = auth.get_activities()
-    return jsonify(res)
+    if request.method == 'POST':
+        res = auth.get_activities()
+        return jsonify(res)
+    
+    return Response(405)
+
 
 # Defining two methods here allows us to handle form input within the same function:
 @views.route('/training', methods=['GET', 'POST'])
@@ -88,6 +97,8 @@ def show_trng_plan():
         athlete_id = session.get("athlete_id")
         goal_name = request.form.get('name')
         goal_date = request.form.get('date')
+        # Convert str to datetime obj:
+        goal_date = datetime.strptime(goal_date, '%Y-%m-%d')
 
         # Store trng goal in db:
         database.crud.create_goal(athlete_id, goal_name, goal_date)
@@ -95,9 +106,31 @@ def show_trng_plan():
         goal_id = database.crud.get_goal(athlete_id)[-1].goal_id
         
         # Pass required data to db to create custom plan:
-        custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name)
+        custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date)
+
         # Return custom_plan to JS file:
-        workout = [workout.toDict() for workout in custom_plan]
+        workout = [workout.toDict() for workout in custom_plan] # Jsonify methods requires a dict
         return jsonify(workout)
 
     return render_template("training.html")
+
+
+@views.route('/save_changes', methods=['POST'])
+@auth.login_required
+def save_custom_trng_plan():
+    
+    if request.method == 'POST':
+        print("Saving plan...")
+
+        modified_activity = request.form.get('modifiedActivity')
+        modified_activity = json.loads(modified_activity) 
+       
+        # Parse JSON for req data:
+        custom_plan_id = modified_activity['extendedProps']['custom_plan_id']
+        trng_item = modified_activity['title']
+        date = modified_activity['start']
+       
+        # Pass req data to CRUD function so that changes are saved:
+        database.crud.save_custom_trng_plan_item(custom_plan_id, trng_item, date)
+    
+    return Response(405)

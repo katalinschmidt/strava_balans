@@ -54,6 +54,8 @@ class Custom_Trng_Plan(db.Model):
     default_plan_id = db.Column(db.Integer, db.ForeignKey("default_trng_plans.default_plan_id"))
     day = db.Column(db.Integer)
     trng_item = db.Column(db.String)
+    # TESTING: Add for recording changes to custom plan:
+    date = db.Column(db.DateTime, nullable=True)
 
     athlete = db.relationship("Athlete", back_populates="custom_trng_plans")
     goals = db.relationship("Goal", back_populates="custom_trng_plan")
@@ -63,7 +65,7 @@ class Custom_Trng_Plan(db.Model):
         return f"< Custom_Trng_Plan: {self.athlete_id} - {self.day} - {self.trng_item} >"
     
     def toDict(self):
-        return {"day": self.day, "trng_item": self.trng_item}
+        return {"custom_plan_id": self.custom_plan_id, "date": self.date, "day": self.day, "trng_item": self.trng_item}
 
 class Default_Trng_Plan(db.Model):
     """The default plans for all possible training goals."""

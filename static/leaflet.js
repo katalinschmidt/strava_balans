@@ -51,7 +51,7 @@ function renderLeaflet() {
     tiles.addTo(map);
 
     // jQuery syntax -> Making AJAX call to server (w/o event listener => execute when html page renders):
-    $.get('/athlete_data.json', res => {
+    $.post('/athlete_data.json', res => {
         // Get API data:
         if (res == "error code") {
             window.alert("Oops! Sorry, something went wrong when loading your data!") 

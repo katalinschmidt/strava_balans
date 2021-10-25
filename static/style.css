@@ -69,6 +69,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    line-height: normal;
 }
 
 .styled-popup li {
@@ -104,6 +105,18 @@ form {
     margin-top: 5%; /* Center form on page vertically */
     width: 30%;
     padding: 2%; /* Create space between text & div border */
+}
+
+#open-form {
+    background-color: grey;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 200px;
 }
 
 .btn-container {
