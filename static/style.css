@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: orange;
+    background-color: black;
 }
 /* END STYLING FULL SCREEN MAP */
 
@@ -35,10 +35,10 @@ body {
 
 /* Match sizing of both logos using shared id */
 #logo {
-    height: 4vh;
-    width: 2vw;
-    /* height: 6vh;
-    width: 3vw; */
+    /* height: 4vh;
+    width: 2vw; */
+    height: 35px;
+    width: 35px;
 }
 
 /* Remove hyperlink formatting */
@@ -81,7 +81,7 @@ ul {
     content: "📅 ";
 }
 .styled-popup li:nth-child(2)::before {
-    content: "🏷️ "; /* 📛 */
+    content: "🏷️ "; /* Alt option = 📛 */
 }
 .styled-popup li:nth-child(3)::before {
     content: "💦 ";
@@ -90,7 +90,7 @@ ul {
     content: "⏱️ ";
 }
 .styled-popup li:nth-child(5)::before {
-    content: "📏 "; /* 📍 */
+    content: "📏 ";
 }
 .styled-popup li:nth-child(6)::before {
     content: "🔗 ";
@@ -113,8 +113,6 @@ form {
     padding: 15px 20px;
     border: none;
     cursor: pointer;
-    position: fixed;
-    bottom: 25px;
     right: 25px;
     width: 200px;
 }

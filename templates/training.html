@@ -17,15 +17,24 @@
     <body>
         {% block body %}
 
-        <h class="text-white">This your training plan page!</h>
+        <!-- MVP+3 / EXISTING PLANS -->
+        <table class="table" id="existing-plans" style="cursor:pointer">
+            <h3>Here are all your existing training goals! Click to see the plan.</h3>
+            <thead>
+                <th>Goal ID</th>
+                <th>Training Goal</th>
+                <th>Goal Date</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!-- END EXISTING PLANS -->
         
         <!-- MVP+2 / GOAL FORM -->
-        <!-- How to show form only when athlete has no goals in db? Jinja...? -->
-        <!-- Validate date -> future date & date given! -->
-        <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
-        <button id="open-form">Open Form</button>
+        <button type="button" id="open-form">Open Form</button>
 
-        <form id="get-trng-plan">
+        <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
+        <form id="get-trng-plan" style="display: none;">
             <div class="form-title">
                 <h2>Let's get competitive!</h1>
             </div>
@@ -65,17 +74,19 @@
         </form>
         <!-- END GOAL FORM -->
 
-        <!-- MVP+2 / TRNG PLAN TABLE -->
-        <table class="table" id="custom-plan" style="display: none;">
-            <thead>
-                <th scope="col">Date</th>
-                <th scope="col">Day</th>
-                <th scope="col">Training Item</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <!-- END TRNG PLAN TABLE -->
+        <!-- MVP+3 EDIT CALENDAR ITEM -->
+        <form id="edit-item" style="display: none;">
+            <div>
+                <p>Existing activity: {insert title here}</p>
+                <p>New activity:</p>
+            </div>
+            <hr>
+            <div>
+                <input class="edit-item-input" type="text" name="item-title" id="item-title">
+            </div>
+            <button type="submit" class="btn btn-light" id="submit-edit">Confirm Changes</button>
+        </form>
+        <!-- END EDIT CALENDAR ITEM -->
 
         <!-- MVP+3 / CALENDAR -->
         <div id="calendar">

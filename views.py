@@ -72,7 +72,6 @@ def show_athlete_profile():
     return render_template("profile.html")
 
 
-# Requiring a POST method here means that data will be received/sent more securely:
 @views.route('/athlete_data.json', methods=['POST'])
 @auth.login_required
 def get_athlete_data():
@@ -95,33 +94,55 @@ def show_trng_plan():
         print("Post method has occurred...")
 
         athlete_id = session.get("athlete_id")
-        goal_name = request.form.get('name')
-        goal_date = request.form.get('date')
-        # Convert str to datetime obj:
-        goal_date = datetime.strptime(goal_date, '%Y-%m-%d')
-
-        # Store trng goal in db:
-        database.crud.create_goal(athlete_id, goal_name, goal_date)
-        # Get goal_id:
-        goal_id = database.crud.get_goal(athlete_id)[-1].goal_id
+        goal_id = request.form.get('id')
         
-        # Pass required data to db to create custom plan:
-        custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date)
+        # If user is asking for existing plan, lookup plan:
+        if goal_id:
+            custom_plan = database.crud.get_custom_trng_plan(goal_id)
+        # If user is creating a new plan (via form), create plan:
+        else:
+            goal_name = request.form.get('name')
+            goal_date = request.form.get('date')
+            goal_date = datetime.strptime(goal_date, '%Y-%m-%d') # Convert str to datetime obj
+
+            # Store trng goal in db:
+            database.crud.create_goal(athlete_id, goal_name, goal_date)
+            # Get goal_id:
+            goal_id = database.crud.get_goal(athlete_id)[-1].goal_id
+            
+            # Pass required data to db to create custom plan:
+            custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date)
 
         # Return custom_plan to JS file:
-        workout = [workout.toDict() for workout in custom_plan] # Jsonify methods requires a dict
+        workout = [workout.toDict() for workout in custom_plan] # Jsonify method requires a dict
         return jsonify(workout)
 
     return render_template("training.html")
 
 
+@views.route('/get_goals.json')
+@auth.login_required
+def get_all_trng_goals():
+    """Get & return all training goals associated with an athlete"""
+
+    athlete_id = session.get("athlete_id")
+    # Pass required data to db to get all goals:
+    goals = database.crud.get_goals(athlete_id)
+
+    # Return goals to JS file:
+    goals = [goal.toDict() for goal in goals]
+    return jsonify(goals)
+
+
 @views.route('/save_changes', methods=['POST'])
 @auth.login_required
 def save_custom_trng_plan():
+    """Save user-made changes to database"""
     
     if request.method == 'POST':
         print("Saving plan...")
 
+        # Convert JSON string into Python dict:
         modified_activity = request.form.get('modifiedActivity')
         modified_activity = json.loads(modified_activity) 
        

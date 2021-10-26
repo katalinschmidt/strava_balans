@@ -50,7 +50,7 @@ def create_goal(athlete_id, goal_name, goal_date):
     return goal
 
 
-def get_goal(athlete_id):
+def get_goals(athlete_id):
     """Return athlete's training goal(s)."""
 
     return Goal.query.filter(Goal.athlete_id == athlete_id).all()
