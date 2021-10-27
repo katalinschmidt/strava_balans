@@ -13,10 +13,6 @@ $('#open-form').click((res) => {
     openForm();
 });
 
-function showPlan() {
-    document.getElementById("custom-plan").style.display = "block";
-}
-
 // Close form on click:
 $('#form-cancel').click((res) => {
     closeForm();
@@ -230,9 +226,6 @@ function renderCalendar(customPlan) {
         },
         events: customPlan,
         editable: true,
-        eventDrop: function(calendarItem) { // Save drag & drop date changes to database
-            saveChangesToDB(calendarItem.event.toPlainObject());
-        }
     });
     calendar.render();
 }

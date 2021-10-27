@@ -1,8 +1,9 @@
 """Create Flask web app routes to render HTML pages of web app"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
+import re
 from flask import Blueprint, session, render_template, redirect, request, Response
-# 'jsonify' is used to pass the API result from Python to JS (as JSON)
+# 'jsonify' is used to pass the API api_datault from Python to JS (as JSON)
 from flask import jsonify
 # 'auth' is a file containing self-made methods to handle API connection
 import auth
@@ -38,9 +39,9 @@ def user_login():
 
     if session.get('access_token'):
         # If user in session, check for expiration:
-        if session['expires_at'] < time.time():
-            tokens = auth.refresh_tokens()
-            auth.save_tokens(tokens, refresh=True)
+        if session['expiapi_data_at'] < time.time():
+            tokens = auth.refapi_datah_tokens()
+            auth.save_tokens(tokens, refapi_datah=True)
         # If user in session, redirect directly to profile page:
         return redirect('/athlete_profile')   
     else:
@@ -78,8 +79,21 @@ def get_athlete_data():
     """Pass API data to JS file"""
 
     if request.method == 'POST':
-        res = auth.get_activities()
-        return jsonify(res)
+        # Get API data:
+        api_data = auth.get_activities()
+        
+        # Check if filter was requested:
+        requested_type = request.form.get('activityType')
+        if requested_type:
+            # Create container:
+            requested_data = []
+            # Iterate through API data & check for matching activity type:
+            for activity in api_data:
+                if activity['type'].lower() == requested_type:
+                    requested_data.append(activity)
+            return jsonify(requested_data)
+        else:
+            return jsonify(api_data)
     
     return Response(405)
 
@@ -117,7 +131,7 @@ def show_trng_plan():
             custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date, today)
 
         # Return custom_plan to JS file:
-        workout = [workout.toDict() for workout in custom_plan] # Jsonify method requires a dict
+        workout = [workout.toDict() for workout in custom_plan] # Jsonify method requiapi_data a dict
         return jsonify(workout)
 
     return render_template("training.html")

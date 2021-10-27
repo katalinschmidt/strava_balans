@@ -6,87 +6,104 @@ console.log("Connected to leaflet.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import polyline from './leaflet_poly_util.js';
 
-// Call function render map:
-renderLeaflet();
+// Customize appearance of map:
+let myFilter = [
+    'contrast:130%',
+    'grayscale:80%',
+    'hue:200deg',
+    'invert:100%',
+    'saturate:175%'
+]
 
-// Define function to render map:
-function renderLeaflet() {
-    console.log("Executing function renderLeaflet...");
+// Create tiles (tiles are the images of the map itself):
+const tileLayer = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                                    filter: myFilter});
 
-    // Create a map object:
-    // 'L' is an abbrv. for 'Leaflet' (defined in HTML script tag) & view is set to Bay Area, CA
-    const map = L.map('activities-map', {zoomControl: false}).setView([37.487846, -122.236115], 12);
+const routesLayer = L.layerGroup();
 
-    // Move map zoom controls (override default 'topleft' to allow room for navbar/sidebar):
-    L.control.zoom({ position: 'topright' }).addTo(map);
+// Populate routeLayer with all or filtered activities:
+function renderActivities(allActivities, filter) {
+    // If filtered request, remove existing routes then repopulate:
+    if (filter) {
+        routesLayer.eachLayer((layer) => {
+            layer.remove();
+        });
+    }
+    
+    // Iterate through all Strava data:
+    for (const activity of allActivities) {
+        // 'polyline.decode' is a helper function from leaflet_util.js
+        let activityPolyline = activity['map']['summary_polyline']; 
+        
+        // If activity has a polyline, decode & add to layer:
+        if (activityPolyline != null) {
+            const coordinates = polyline.decode(activityPolyline);
 
-    // Customize appearance of map:
-    let myFilter = [
-        'contrast:130%',
-        'grayscale:80%',
-        'hue:200deg',
-        'invert:100%',
-        'saturate:175%'
-   ]
+            // Customize appreance of route line:
+            const decodedRoute = L.polyline(
+                coordinates,
+                {color: "red",
+                weight: 4,
+                opacity: .7,
+                lineJoin: 'round'}
+            );
 
-    // Tiles are the images of the map itself.
-    // OpenStreetMap requires an attribution for using its tiles:
-    let tiles = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                        {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                                        filter: myFilter});
-    // Add tiles to map:
-    tiles.addTo(map);
+            // Add pop-up of activity details to route:
+            decodedRoute.bindPopup(() => {
+                const activity_date = (activity['start_date_local'].substring(0, 10));
+                const activity_name = activity['name'];
+                const activity_type = activity['type'];
+                const activity_duration = toHHMMSS(activity['elapsed_time']);
+                const activity_distance = (activity['distance'] * 0.000621).toFixed(2);
+                const activity_link = "https://www.strava.com/activities/" + activity['id'];
+                
+                return (`
+                <ul class="styled-popup">
+                    <li>${activity_date}</li>    
+                    <li>${activity_name}</li>
+                    <li>${activity_type}</li>
+                    <li>${activity_duration}</li>
+                    <li>${activity_distance} mi</li>
+                    <li><a href=${activity_link} target="_blank">See this on Strava</a></li>
+                </ul>
+                `);
+            });
 
-    // jQuery syntax -> making AJAX call to server:
-    $.post('/athlete_data.json', res => {
-        // Get API data:
-        if (res == "error code") {
-            alert("Oops! Sorry, something went wrong when loading your data!") 
-        } else {
-            const all_activities = res;
-            // Iterate through all Strava data:
-            for (const activities_array of all_activities) {
-                for (const activity of activities_array) {
-                    // Get polyline (for those activities that have one) & decode:
-                    // 'polyline.decode' is a helper function from leaflet_util.js
-                    let activity_polyline = activity['map']['summary_polyline']; 
-                    if (activity_polyline != null) {
-                        activity_polyline = polyline.decode(activity_polyline);
+            // Add route to layer group:
+            routesLayer.addLayer(decodedRoute);
 
-                        // Add each decoded polyline to map:
-                        L.polyline(
-                            activity_polyline,
-                            {color: "red",
-                            weight: 4,
-                            opacity: .7,
-                            lineJoin: 'round'}
-                        ).addTo(map)
-                        // Add pop-up of activity details to route:
-                        .bindPopup(() => {
-                            const activity_date = (activity['start_date_local'].substring(0, 10));
-                            const activity_name = activity['name'];
-                            const activity_type = activity['type'];
-                            const activity_duration = toHHMMSS(activity['elapsed_time']);
-                            const activity_distance = (activity['distance'] * 0.000621).toFixed(2);
-                            const activity_link = "https://www.strava.com/activities/" + activity['id'];
-                            
-                            return (`
-                            <ul class="styled-popup">
-                                <li>${activity_date}</li>    
-                                <li>${activity_name}</li>
-                                <li>${activity_type}</li>
-                                <li>${activity_duration}</li>
-                                <li>${activity_distance} mi</li>
-                                <li><a href=${activity_link} target="_blank">See this on Strava</a></li>
-                            </ul>
-                            `);
-                        });
-                    }
-                }
+            // If filtered request, adjust zoom to route:
+            if (filter) {
+                map.fitBounds(decodedRoute.getBounds());
+                // map.flyToBounds(decodedRoute.getBounds()); // OUTPUT = Did not zoom to activity?
+                map.zoomOut(2);
             }
         }
-    });
+    }
 }
+
+// Create map object:
+// 'L' is an abbrv. for 'Leaflet' (defined in HTML script tag)
+const map = new L.map('activities-map', {
+    center: [37.487846, -122.236115], // Center to Bay Area, CA
+    zoom: 12,
+    zoomControl: false, // Override default placement of zoom controls
+    layers: [tileLayer, routesLayer]
+});
+
+// Move map zoom controls (to allow room for navbar/sidebar):
+L.control.zoom({ position: 'topright' }).addTo(map);
+
+// Create layer controls:
+const baseMap = {
+    "Base Map": tileLayer
+};
+const overlayMap = {
+    "Strava Routes": routesLayer
+}
+
+L.control.layers(baseMap, overlayMap).addTo(map);
 
 // Helper function to format Strava activity duration:
 function toHHMMSS(activitySeconds) {
@@ -100,3 +117,77 @@ function toHHMMSS(activitySeconds) {
         .filter((v,i) => v !== "00" || i > 0)
         .join(":");
 }
+
+// On window load, make call to server to get all API data:
+$.post({
+    url: '/athlete_data.json',
+    // data: {},
+    success: (res) => {
+        const filter = false;
+        renderActivities(res, filter);
+    },
+    error: (res) => {
+        alert("Oops! Sorry, something went wrong when loading your data!") 
+    }
+});
+
+// On filter clicks, make call to server for filtered API data: 
+$('#run').click((res) => {
+    $.post({
+        url: '/athlete_data.json',
+        data: {activityType: 'run'},
+        success: (res) => {
+            console.log("Sorting for runs only....")
+            const filter = true;
+            renderActivities(res, filter);
+        },
+        error: (res) => {
+            alert("Oops! Sorry, something went wrong when loading your data!") 
+        }
+    });
+});
+
+$('#ride').click((res) => {
+    $.post({
+        url: '/athlete_data.json',
+        data: {activityType: 'ride'},
+        success: (res) => {
+            console.log("Sorting for rides only....")
+            const filter = true;
+            renderActivities(res, filter);
+        },
+        error: (res) => {
+            alert("Oops! Sorry, something went wrong when loading your data!") 
+        }
+    });
+});
+
+$('#swim').click((res) => {
+    $.post({
+        url: '/athlete_data.json',
+        data: {activityType: 'swim'},
+        success: (res) => {
+            console.log("Sorting for swim only....")
+            const filter = true;
+            renderActivities(res, filter);
+        },
+        error: (res) => {
+            alert("Oops! Sorry, something went wrong when loading your data!") 
+        }
+    });
+});
+
+$('#walk').click((res) => {
+    $.post({
+        url: '/athlete_data.json',
+        data: {activityType: 'walk'},
+        success: (res) => {
+            console.log("Sorting for walks only....")
+            const filter = true;
+            renderActivities(res, filter);
+        },
+        error: (res) => {
+            alert("Oops! Sorry, something went wrong when loading your data!") 
+        }
+    });
+});

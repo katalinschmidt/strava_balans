@@ -110,14 +110,12 @@ def save_tokens(tokens, refresh=False):
                                 tokens['athlete']['lastname'],
                                 tokens['athlete']['profile'],
                                 )
-        # FIXME: Method for updating profile photo if profile photo has changed on Strava
     
     session['access_token'] = tokens['access_token']
     session['refresh_token'] = tokens['refresh_token']
     session['expires_at'] = tokens['expires_at']
 
 
-# FIXME: Move this function to leaflet.js!
 def get_activities():
     """Get user's activities using tokens stored in database"""
 
@@ -137,9 +135,9 @@ def get_activities():
                 }
 
         res = requests.get(API_BASE_URL, headers=headers, params=params)
-        if res.status_code != 200: # FIXME: Add 201, if editing/creating activities
+        if res.status_code != 200: # Add code 201, if editing/creating activities
             print("*"*20)
-            print(res.status_code)
+            print("API Error:", res.status_code)
             print("*"*20)
             return ("error code")
         
@@ -148,7 +146,8 @@ def get_activities():
         #     break
         
         # page_num += 1
-        all_activities.append(activities)
+        # all_activities.append(activities)
+        all_activities.extend(activities)
         break # FIXME: Remove & uncomment other lines after debugging!
 
     return all_activities
