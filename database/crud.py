@@ -56,7 +56,7 @@ def get_goals(athlete_id):
     return Goal.query.filter(Goal.athlete_id == athlete_id).all()
 
 
-def create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date):
+def create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date, today):
     """Create and return athlete's custom training plan."""
 
     # Get default plan for given goal ->
@@ -81,7 +81,7 @@ def create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date):
     
     # Prep for date assignment:
     # Count days until goal_date (incl. today in count):
-    today = datetime.today()
+    # today = datetime.today()
     days_until = (goal_date - today).days + 1 # +1 to incl. today
     # Calc total num of workouts in custom_plan:
     tot_num_workouts = len(custom_trng_plan)

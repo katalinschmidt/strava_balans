@@ -96,22 +96,25 @@ def show_trng_plan():
         athlete_id = session.get("athlete_id")
         goal_id = request.form.get('id')
         
-        # If user is asking for existing plan, lookup plan:
+        # If user is requesting existing plan, lookup plan:
         if goal_id:
             custom_plan = database.crud.get_custom_trng_plan(goal_id)
-        # If user is creating a new plan (via form), create plan:
+        # If user is requesting a new plan (via form), create plan:
         else:
             goal_name = request.form.get('name')
             goal_date = request.form.get('date')
-            goal_date = datetime.strptime(goal_date, '%Y-%m-%d') # Convert str to datetime obj
+            today = request.form.get('today')
+            # Convert UTC strings to datetime objects for db:
+            goal_date = datetime.strptime(goal_date, '%a, %d %b %Y %H:%M:%S %Z')
+            today = datetime.strptime(today, '%a, %d %b %Y %H:%M:%S %Z')
 
             # Store trng goal in db:
             database.crud.create_goal(athlete_id, goal_name, goal_date)
             # Get goal_id:
-            goal_id = database.crud.get_goal(athlete_id)[-1].goal_id
+            goal_id = database.crud.get_goals(athlete_id)[-1].goal_id
             
             # Pass required data to db to create custom plan:
-            custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date)
+            custom_plan = database.crud.create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date, today)
 
         # Return custom_plan to JS file:
         workout = [workout.toDict() for workout in custom_plan] # Jsonify method requires a dict

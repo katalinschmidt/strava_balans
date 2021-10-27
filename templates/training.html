@@ -31,7 +31,7 @@
         <!-- END EXISTING PLANS -->
         
         <!-- MVP+2 / GOAL FORM -->
-        <button type="button" id="open-form">Open Form</button>
+        <button type="button" id="open-form">Create a New Plan</button>
 
         <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
         <form id="get-trng-plan" style="display: none;">
@@ -73,20 +73,6 @@
             </div>
         </form>
         <!-- END GOAL FORM -->
-
-        <!-- MVP+3 EDIT CALENDAR ITEM -->
-        <form id="edit-item" style="display: none;">
-            <div>
-                <p>Existing activity: {insert title here}</p>
-                <p>New activity:</p>
-            </div>
-            <hr>
-            <div>
-                <input class="edit-item-input" type="text" name="item-title" id="item-title">
-            </div>
-            <button type="submit" class="btn btn-light" id="submit-edit">Confirm Changes</button>
-        </form>
-        <!-- END EDIT CALENDAR ITEM -->
 
         <!-- MVP+3 / CALENDAR -->
         <div id="calendar">

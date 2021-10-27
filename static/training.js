@@ -27,16 +27,35 @@ $('#form-submit').click((res) => {
 
     // Get select radio btn value & date value:
     const goalName = document.querySelector('input[name="trng-goal"]:checked').value;
-    const goalDate = document.querySelector('input[name="trng-goal-date"]').value;
+    let goalDate = document.querySelector('input[name="trng-goal-date"]').value;
+    
+    // Format goalDate (to prevent inaccurate timezone offset by new Date method):
+    let formattedDate = "";
+    for (let i = 0; i < goalDate.length; i++) {
+        if (goalDate[i] !== "-") {
+            formattedDate += goalDate[i];
+        }
+        if (goalDate[i] == "-") {
+            formattedDate += "/";
+        }
+    }
+    goalDate = new Date(formattedDate);
+    goalDate = goalDate.toUTCString(); // Convert to UTC string for DB
+
+    // Mark user's 'today' for activity assignment calculations:
+    let today = new Date();
+    today = today.toUTCString(); // Convert to UTC string for DB
 
     // Send data to server for db manipulation:
     $.post({
         url: '/training',
         data: {
             name: goalName,
-            date: goalDate
+            date: goalDate,
+            today: today
         },
         success: (res) => {
+            console.log(res);
             renderCalendar(res.map(obj => {
                 return {
                     id: obj.day,
@@ -115,8 +134,8 @@ function populateExistingTables() {
     });
 }
 
+// On existing plan's table row click, render selected plan:
 function rowEventHandler() {
-    // Add event listener to each row:
     const rows = document.getElementsByTagName("tr");
     // Let i = 1 so that header row is not included:
     for (let i = 1; i < rows.length; i++) {
@@ -135,12 +154,13 @@ function rowEventHandler() {
                 url: '/training',
                 data: {id: clickedGoalID},
                 success: (res) => {
+                    console.log(res);
                     // Render on calendar:
                     renderCalendar(res.map(obj => {
                         return {
                             id: obj.day,
                             title: obj.trng_item,
-                            start: new Date(obj.date), // FIXME: Convert GMT/UTC to local datetime!
+                            start: new Date(obj.date),
                             allDay: true,
                             extendedProps: { custom_plan_id: obj.custom_plan_id } // extendedProp necessary for sake of having a unique identifier when passing to CRUD function / modifiedActivity
                         }
@@ -168,31 +188,7 @@ function renderCalendar(customPlan) {
         editable: true,
         eventDrop: function(calendarItem) { // Save drag & drop date changes to database
             saveChangesToDB(calendarItem.event.toPlainObject());
-        },
-        // eventClick: function(calendarItem) { // Save trng_item changes to database
-        //     console.log("Click occurred!")
-        //     // console.log(calendarItem.event.title);
-        //     openPopup();
-
-        //     $('#submit-edit').click((res) => {
-        //         console.log("Edit submitted!")
-
-        //         // On form submission, prevent default (page refresh):
-        //         res.preventDefault();
-
-        //         // Get text value:
-        //         const newTitle = document.querySelector('input[name="item-title"]').value;
-
-        //         // Update title on calendar item:
-        //         // calendarItem.setProp('title', newTitle) -> How to recognize calItem?
-
-        //         // Send data to server for db manipulation:
-        //         // saveChangesToDB();
-
-        //         // Close popup:
-        //         closePopup();
-        //     });
-        // }
+        }
     });
     calendar.render();
 }
