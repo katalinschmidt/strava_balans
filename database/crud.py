@@ -56,6 +56,16 @@ def get_goals(athlete_id):
     return Goal.query.filter(Goal.athlete_id == athlete_id).all()
 
 
+def delete_goal(goal_id):
+    """Delete athlete's training goal."""
+
+    goal = Goal.query.filter(Goal.goal_id == goal_id).all()
+    for data in goal:
+        db.session.delete(data)
+    
+    db.session.commit()
+
+
 def create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date, today):
     """Create and return athlete's custom training plan."""
 
@@ -121,6 +131,20 @@ def save_custom_trng_plan_item(custom_plan_id, trng_item=None, date=None):
     db.session.commit()
 
     return row
+
+
+def delete_custom_trng_plan(goal_id):
+    """Delete training goal & all associated training items."""
+
+    # Remove all associated plan items:
+    plan = Custom_Trng_Plan.query.filter(Custom_Trng_Plan.goal_id == goal_id).all()
+    for data in plan:
+        db.session.delete(data)
+
+    # And remove goal from db:
+    delete_goal(goal_id)
+    
+    db.session.commit()
 
 
 def create_default_trng_plan(plan_name, day, trng_item):

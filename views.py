@@ -91,7 +91,7 @@ def show_trng_plan():
     """Show athlete's training plan"""
 
     if request.method == 'POST':
-        print("Post method has occurred...")
+        print("Getting / Creating training plan...")
 
         athlete_id = session.get("athlete_id")
         goal_id = request.form.get('id')
@@ -157,4 +157,18 @@ def save_custom_trng_plan():
         # Pass req data to CRUD function so that changes are saved:
         database.crud.save_custom_trng_plan_item(custom_plan_id, trng_item, date)
     
+    return Response(405)
+
+
+@views.route('/delete_plan', methods=['POST'])
+@auth.login_required
+def delete_custom_trng_plan():
+    """Delete user-selected plan from database"""
+
+    if request.method == 'POST':
+            print("Deleting plan...")
+
+            goal_id = request.form.get('id')  
+            database.crud.delete_custom_trng_plan(int(goal_id))
+
     return Response(405)

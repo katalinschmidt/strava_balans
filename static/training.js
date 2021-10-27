@@ -108,8 +108,6 @@ function renderExistingPlans() {
     $.get({
         url: '/get_goals.json',
         success: (res) => {
-            console.log("Populate table result:")
-            console.log(res);
             // Identify table:
             const table = document.getElementById("existing-plans")
             // Clear existing table rows:
@@ -133,12 +131,19 @@ function renderExistingPlans() {
                 // Create a table cell for goal date:
                 const td_goal_date = document.createElement("td");
                 td_goal_date.textContent = new Date(dict.goal_date).toDateString(); // Format date so that timestamp does not show
-                
+
+                // Create table cells for event handling:
+                const td_view = document.createElement("td");
+                td_view.textContent = "🔍";
+                const td_delete = document.createElement("td");
+                td_delete.textContent = "🗑️";
+
                 // Append table cells to table:
                 tr.appendChild(td_goal_id);
                 tr.appendChild(td_goal_name);
                 tr.appendChild(td_goal_date);
-
+                tr.appendChild(td_view);
+                tr.appendChild(td_delete);
             });
             // Add event listener to each row:
             rowEventHandler();
@@ -155,7 +160,13 @@ function rowEventHandler() {
     const table = document.getElementById("existing-plans")
     // Let i = 1 so that header row is not included:
     for (let i = 1, row; row = table.rows[i]; i++) {
-        row.onclick = () => {
+        // Identify magnifying glass:
+        const viewPlan = $(row).find("td:nth-last-child(2)");
+        // When magnifying glass clicked, render plan:
+        viewPlan.click((res) => {
+        // });
+
+        // row.onclick = () => {
             // Remove any previous highlighting on all other rows:
             for (let i = 1, row; row = table.rows[i]; i++) {
                 row.style.backgroundColor = "";
@@ -184,7 +195,31 @@ function rowEventHandler() {
                     alert("Uh-oh! Something went wrong...");
                 }
             });
-        }; 
+        // }; 
+        });
+
+        // Identify trash can icon:
+        const deletePlan = $(row).find("td:nth-last-child(1)");
+        // When trash can icon clicked, delete goal & plan:
+        deletePlan.click((res) => {
+            // Get clicked row's goal ID: 
+            const clickedGoalID = row.querySelector('td').innerHTML;
+            
+            // Make call to server to delete custom_plan of given goal_id:
+            $.post({
+                url: '/delete_plan',
+                data: {id: clickedGoalID},
+                success: (res) => {
+                    // Re-render calendar:
+                    renderCalendar(res);
+                    // Update table:
+                    renderExistingPlans();
+                },
+                error: (res) => {
+                    alert("Uh-oh! Something went wrong...");
+                }
+            });
+        });
     }
 }
 
