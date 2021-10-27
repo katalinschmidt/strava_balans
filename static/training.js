@@ -123,8 +123,9 @@ function renderExistingPlans() {
                 // Append row to table:
                 table.appendChild(tr);
                 
-                // Create a table cell for goal id:
-                const td_goal_id = document.createElement("td");
+                // Create a hidden table cell for goal id:
+                let td_goal_id = document.createElement("td");
+                td_goal_id.style.display = 'none';
                 td_goal_id.textContent = dict.goal_id;
                 // Create a table cell for goal name:
                 const td_goal_name = document.createElement("td");
