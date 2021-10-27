@@ -6,7 +6,7 @@ console.log("Connected to training.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // Populate existingPlansTable on window load:
-populateExistingTables();
+renderExistingPlans();
 
 // Open form on click:
 $('#open-form').click((res) => {
@@ -25,7 +25,6 @@ $('#form-cancel').click((res) => {
 // Handle form data on submit:
 // Using JS to handle the form instead of Python allows us to prevent a redirect or page refresh.
 $('#form-submit').click((res) => {
-    console.log("Form submitted!");
     // On form submission, prevent default (page refresh):
     res.preventDefault();
 
@@ -60,6 +59,7 @@ $('#form-submit').click((res) => {
         },
         // If form successfully submitted, render custom training plan:
         success: (res) => {
+            console.log("Form submission result:");
             console.log(res);
             renderCalendar(res.map(obj => {
                 return {
@@ -70,6 +70,9 @@ $('#form-submit').click((res) => {
                     extendedProps: { custom_plan_id: obj.custom_plan_id } // extendedProp necessary for sake of having a unique identifier when passing to CRUD function / modifiedActivity
                 }
             }));
+            
+            // Update existing plans table:
+            renderExistingPlans();
         },
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
@@ -100,15 +103,21 @@ function closePopup() {
     document.getElementById("edit-item").style.display = "none";
 }
 
-function populateExistingTables() {
+function renderExistingPlans() {
     // Get data for table:
     $.get({
         url: '/get_goals.json',
         success: (res) => {
+            console.log("Populate table result:")
+            console.log(res);
+            // Identify table:
+            const table = document.getElementById("existing-plans")
+            // Clear existing table rows:
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
             // Parse results & append to table:
             res.forEach((dict) => {
-                // Identify table:
-                const table = document.getElementById("existing-plans")
                 // Create table row
                 const tr = document.createElement("tr");
                 // Append row to table:
@@ -141,25 +150,24 @@ function populateExistingTables() {
 
 // On existing plan's table row click, render selected plan:
 function rowEventHandler() {
-    const rows = document.getElementsByTagName("tr");
+    // Identify table:
+    const table = document.getElementById("existing-plans")
     // Let i = 1 so that header row is not included:
-    for (let i = 1; i < rows.length; i++) {
-        const selectedRow = rows[i];
-        selectedRow.onclick = () => {
+    for (let i = 1, row; row = table.rows[i]; i++) {
+        row.onclick = () => {
             // Remove any previous highlighting on all other rows:
-            for (let i = 1; i < rows.length; i++) {
-                rows[i].style.backgroundColor = "";
+            for (let i = 1, row; row = table.rows[i]; i++) {
+                row.style.backgroundColor = "";
             }
             // And highlight current / clicked row:
-            selectedRow.style.backgroundColor = "orange";
+            row.style.backgroundColor = "orange";
             // Get clicked row's goal ID: 
-            const clickedGoalID = selectedRow.querySelector('td').innerHTML;
+            const clickedGoalID = row.querySelector('td').innerHTML;
             // Make call to server for custom_plan of given goal_id:
             $.post({
                 url: '/training',
                 data: {id: clickedGoalID},
                 success: (res) => {
-                    console.log(res);
                     // Render on calendar:
                     renderCalendar(res.map(obj => {
                         return {
