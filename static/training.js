@@ -45,7 +45,7 @@ $('#form-submit').click((res) => {
     goalDate = new Date(formattedDate);
     goalDate = goalDate.toUTCString(); // Convert to UTC string for DB
 
-    // Mark user's 'today' for activity assignment calculations:
+    // Mark user's 'today' / timezone for activity assignment calculations:
     let today = new Date();
     today = today.toUTCString(); // Convert to UTC string for DB
 
@@ -65,7 +65,7 @@ $('#form-submit').click((res) => {
                 return {
                     id: obj.day,
                     title: obj.trng_item,
-                    start: new Date(obj.date), // FIXME: Convert GMT/UTC to local datetime!
+                    start: new Date(obj.date),
                     allDay: true,
                     extendedProps: { custom_plan_id: obj.custom_plan_id } // extendedProp necessary for sake of having a unique identifier when passing to CRUD function / modifiedActivity
                 }
@@ -131,7 +131,6 @@ function renderExistingPlans() {
                 // Create a table cell for goal date:
                 const td_goal_date = document.createElement("td");
                 td_goal_date.textContent = new Date(dict.goal_date).toDateString(); // Format date so that timestamp does not show
-
                 // Create table cells for event handling:
                 const td_view = document.createElement("td");
                 td_view.textContent = "🔍";
@@ -164,9 +163,6 @@ function rowEventHandler() {
         const viewPlan = $(row).find("td:nth-last-child(2)");
         // When magnifying glass clicked, render plan:
         viewPlan.click((res) => {
-        // });
-
-        // row.onclick = () => {
             // Remove any previous highlighting on all other rows:
             for (let i = 1, row; row = table.rows[i]; i++) {
                 row.style.backgroundColor = "";
@@ -195,7 +191,6 @@ function rowEventHandler() {
                     alert("Uh-oh! Something went wrong...");
                 }
             });
-        // }; 
         });
 
         // Identify trash can icon:

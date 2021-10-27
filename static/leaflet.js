@@ -14,14 +14,13 @@ function renderLeaflet() {
     console.log("Executing function renderLeaflet...");
 
     // Create a map object:
-    // Note that 'L' is an abbrv. for 'Leaflet' (defined in HTML script tag) 
-    // & view is set Bay Area, CA
+    // 'L' is an abbrv. for 'Leaflet' (defined in HTML script tag) & view is set to Bay Area, CA
     const map = L.map('activities-map', {zoomControl: false}).setView([37.487846, -122.236115], 12);
 
-    // Move map zoom controls (from default 'topleft'):
+    // Move map zoom controls (override default 'topleft' to allow room for navbar/sidebar):
     L.control.zoom({ position: 'topright' }).addTo(map);
 
-    // FIXME -> Add user manipulation here:
+    // Customize appearance of map:
     let myFilter = [
         'contrast:130%',
         'grayscale:80%',
@@ -29,40 +28,27 @@ function renderLeaflet() {
         'invert:100%',
         'saturate:175%'
    ]
-    // let myFilter = [
-    //     'blur:0px',
-    //     'brightness:95%',
-    //     'contrast:130%',
-    //     'grayscale:20%',
-    //     'hue:290deg',
-    //     'opacity:100%',
-    //     'invert:100%',
-    //     'saturate:300%',
-    //     'sepia:10%',
-    // ];
 
     // Tiles are the images of the map itself.
     // OpenStreetMap requires an attribution for using its tiles:
     let tiles = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                                         {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                                         filter: myFilter});
-
     // Add tiles to map:
     tiles.addTo(map);
 
-    // jQuery syntax -> Making AJAX call to server (w/o event listener => execute when html page renders):
+    // jQuery syntax -> making AJAX call to server:
     $.post('/athlete_data.json', res => {
         // Get API data:
         if (res == "error code") {
-            window.alert("Oops! Sorry, something went wrong when loading your data!") 
+            alert("Oops! Sorry, something went wrong when loading your data!") 
         } else {
             const all_activities = res;
-
             // Iterate through all Strava data:
             for (const activities_array of all_activities) {
                 for (const activity of activities_array) {
                     // Get polyline (for those activities that have one) & decode:
-                    // 'polyline.decode' is a helper function from leaflet_util.js (edited for accurate lat/long order)
+                    // 'polyline.decode' is a helper function from leaflet_util.js
                     let activity_polyline = activity['map']['summary_polyline']; 
                     if (activity_polyline != null) {
                         activity_polyline = polyline.decode(activity_polyline);
