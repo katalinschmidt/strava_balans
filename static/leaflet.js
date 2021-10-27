@@ -123,6 +123,7 @@ $.post({
     url: '/athlete_data.json',
     // data: {},
     success: (res) => {
+        $('.loader-wrapper').fadeOut('slow');
         const filter = false;
         renderActivities(res, filter);
     },
@@ -131,13 +132,18 @@ $.post({
     }
 });
 
-// On filter clicks, make call to server for filtered API data: 
+// Add event handlers to 'sort activities' emojis:
 $('#run').click((res) => {
+    // Display loader:
+    $('.loader-wrapper').fadeIn('slow');
+    // Make call to server for filtered API data:
     $.post({
         url: '/athlete_data.json',
         data: {activityType: 'run'},
         success: (res) => {
-            console.log("Sorting for runs only....")
+            // Fade loader out:
+            $('.loader-wrapper').fadeOut('slow');
+            // Render filtered routes on map:
             const filter = true;
             renderActivities(res, filter);
         },
@@ -148,11 +154,16 @@ $('#run').click((res) => {
 });
 
 $('#ride').click((res) => {
+    // Display loader:
+    $('.loader-wrapper').fadeIn('slow');
+    // Make call to server for filtered API data:
     $.post({
         url: '/athlete_data.json',
         data: {activityType: 'ride'},
         success: (res) => {
-            console.log("Sorting for rides only....")
+            // Fade loader out:
+            $('.loader-wrapper').fadeOut('slow');
+            // Render filtered routes on map:
             const filter = true;
             renderActivities(res, filter);
         },
@@ -163,11 +174,16 @@ $('#ride').click((res) => {
 });
 
 $('#swim').click((res) => {
+    // Display loader:
+    $('.loader-wrapper').fadeIn('slow');
+    // Make call to server for filtered API data:
     $.post({
         url: '/athlete_data.json',
         data: {activityType: 'swim'},
         success: (res) => {
-            console.log("Sorting for swim only....")
+            // Fade loader out:
+            $('.loader-wrapper').fadeOut('slow');
+            // Render filtered routes on map:            
             const filter = true;
             renderActivities(res, filter);
         },
@@ -178,11 +194,16 @@ $('#swim').click((res) => {
 });
 
 $('#walk').click((res) => {
+    // Display loader:
+    $('.loader-wrapper').fadeIn('slow');
+    // Make call to server for filtered API data:
     $.post({
         url: '/athlete_data.json',
         data: {activityType: 'walk'},
         success: (res) => {
-            console.log("Sorting for walks only....")
+            // Fade loader out:
+            $('.loader-wrapper').fadeOut('slow');
+            // Render filtered routes on map:
             const filter = true;
             renderActivities(res, filter);
         },
