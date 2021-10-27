@@ -13,6 +13,10 @@ $('#open-form').click((res) => {
     openForm();
 });
 
+function showPlan() {
+    document.getElementById("custom-plan").style.display = "block";
+}
+
 // Close form on click:
 $('#form-cancel').click((res) => {
     closeForm();
@@ -54,6 +58,7 @@ $('#form-submit').click((res) => {
             date: goalDate,
             today: today
         },
+        // If form successfully submitted, render custom training plan:
         success: (res) => {
             console.log(res);
             renderCalendar(res.map(obj => {
