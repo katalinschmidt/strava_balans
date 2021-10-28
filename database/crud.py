@@ -89,23 +89,13 @@ def create_custom_trng_plan(athlete_id, goal_id, goal_name, goal_date, today):
         custom_trng_plan.append(custom_workouts)
         db.session.add_all(custom_trng_plan)
     
-    # Prep for date assignment:
-    # Count days until goal_date (incl. today in count):
-    # today = datetime.today()
-    days_until = (goal_date - today).days + 1 # +1 to incl. today
-    # Calc total num of workouts in custom_plan:
-    tot_num_workouts = len(custom_trng_plan)
-    # Subtract daysUntil from totalWorkouts to see how many workouts are left to render:
-    render_num = tot_num_workouts - days_until
-
-    # Assign each workout a date, beginning with today:
-    activity_date = today.date()
-    for workout in custom_trng_plan:
-        # Limit date assignment to fit number of days between today & goal date: 
-        if workout.day >= render_num:
+    # Assign each workout a date, beginning with goal date:
+    activity_date = goal_date
+    for workout in reversed(custom_trng_plan):
+        if activity_date >= today:
             workout.date = activity_date
-            # Increment date for next day's activity:
-            activity_date = activity_date + timedelta(days=1)
+            # Decrement date for next day's activity:
+            activity_date = activity_date - timedelta(days=1)
 
     db.session.commit()
 

@@ -48,16 +48,60 @@
                         </a>
                         <ul class="submenu collapse" id="map-options">
                             <hr>
-                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#filter-types" class="submenu-item">Sort Activities</a></li>
+                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#filter-types" class="submenu-item">Activities by Type</a></li>
                                 <div class="collapse" id="filter-types">
                                     <a href="#" id="run">🏃</a>
                                     <a href="#" id="ride">🚴</a>
                                     <a href="#" id="swim">🏊</a>
-                                    <a href="#" id="walk">🥾</a> <!-- Note to self that Strava tracks 'walk' & 'hike' -->
+                                    <a href="#" id="walk">🥾</a> <!-- FIXME: Render 'walk' & 'hike' -->
                                 </div>
-                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#slider-container" class="submenu-item">Customize Map</a></li>
+                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#year-selector" class="submenu-item">Activities by Year</a></li>
+                                <!-- <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2021" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">2021</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2020" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">2020</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2019" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">2019</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2018" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">2018</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2017" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">2017</label>
+                                </div> -->
+                                <div class="collapse" id="year-selector">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">2021</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">2020</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">2019</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">2018</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">2017</label>
+                                    </div>
+                                </div>
+                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#slider-container" class="submenu-item">Customize Look</a></li>
                                 <div class="collapse" id="slider-container">
-                                    <input type="range">
+                                    <input type="range" value="1" name="slider" id="slider">
+                                    <output id="output"></output>
                                 </div>
                             <hr>
                         </ul>
@@ -96,9 +140,11 @@
         <!-- End MVP+1 -->
 
         <!-- MVP+3 / LOADER -->
-        <!-- Source: https://codepen.io/tashfene/pen/raEqrJ -->
+        <!-- Source: https://codepen.io/tashfene/pen/raEqrJ / Modified such that loader-inner is round logo -->
         <div class="loader-wrapper">
-            <span class="loader"><span class="loader-inner"></span></span>
+            <span class="loader rounded-circle"><img src="../static/images/balans_logo.png" class="loader-inner rounded-circle"/></span>
+            <!-- <span class="loader rounded-circle"><span class="loader-inner rounded-circle"></span></span> -->
+            <!-- <span class="loader rounded-circle"><span class="loader-inner"></span></span> -->
         </div>
         <!-- END LOADER -->
         {% endblock %}

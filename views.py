@@ -80,12 +80,11 @@ def get_athlete_data():
 
     if request.method == 'POST':
         # Get API data:
-        api_data = auth.get_activities()
+        api_data = auth.get_activities() # Add to session to prevent API rate limit exceeding
         
         # Check if filter was requested:
         requested_type = request.form.get('activityType')
         if requested_type:
-            # Create container:
             requested_data = []
             # Iterate through API data & check for matching activity type:
             for activity in api_data:

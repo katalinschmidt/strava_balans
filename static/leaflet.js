@@ -8,11 +8,11 @@ import polyline from './leaflet_poly_util.js';
 
 // Customize appearance of map:
 let myFilter = [
-    'contrast:130%',
-    'grayscale:80%',
-    'hue:200deg',
-    'invert:100%',
-    'saturate:175%'
+    'contrast: 130%',
+    'grayscale: 80%',
+    'hue: 200deg',
+    'invert: 100%',
+    'saturate: 175%'
 ]
 
 // Create tiles (tiles are the images of the map itself):
@@ -23,6 +23,7 @@ const tileLayer = L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z
 const routesLayer = L.layerGroup();
 
 // Populate routeLayer with all or filtered activities:
+// Keep this code as a function since it is called from 1+ event:
 function renderActivities(allActivities, filter) {
     // If filtered request, remove existing routes then repopulate:
     if (filter) {
@@ -76,8 +77,8 @@ function renderActivities(allActivities, filter) {
             // If filtered request, adjust zoom to route:
             if (filter) {
                 map.fitBounds(decodedRoute.getBounds());
-                // map.flyToBounds(decodedRoute.getBounds()); // OUTPUT = Did not zoom to activity?
                 map.zoomOut(2);
+                // map.flyToBounds(decodedRoute.getBounds()); // OUTPUT = Did not zoom to activity? (bike)
             }
         }
     }
@@ -212,3 +213,18 @@ $('#walk').click((res) => {
         }
     });
 });
+
+// function updateDateSlider() {
+//     const slider = document.getElementById('slider');
+//     const output = document.getElementById('output');
+
+//     slider.oninput = () => {
+//         output.innerHTML = slider.value;
+//     }
+
+//     slider.addEventListener("mousemove", () => {
+//         const percent = slider.value;
+//         const slidingColor = 'linear-gradient(90deg, orange' + percent + '%, grey' + percent + '%)';
+//         slider.style.background = slidingColor;
+//     });
+// }

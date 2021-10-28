@@ -41,6 +41,17 @@ body {
     width: 35px;
 }
 
+/* Styling date filter feature */
+.form-check {
+    color: white;
+    font-size: 0.8em;
+    line-height: normal;
+}
+
+.form-check-label {
+    padding: 4%;
+}
+
 /* Remove hyperlink formatting */
 li a, hr {
     text-decoration: none;
@@ -64,7 +75,7 @@ ul {
 
 
 /* STYLING LOADER */
-/* Source: https://codepen.io/tashfene/pen/raEqrJ */
+/* Source: https://codepen.io/tashfene/pen/raEqrJ  / Modified such that loader-inner is round logo */
 .loader-wrapper {
     width: 100%;
     height: 50%;
@@ -103,13 +114,13 @@ animation: loader-inner 2s infinite ease-in;
 75% { transform: rotate(360deg);}
 100% { transform: rotate(360deg);}
 }
-@keyframes loader-inner {
+/* @keyframes loader-inner {
 0% { height: 0%;}
 25% { height: 0%;}
 50% { height: 100%;}
 75% { height: 100%;}
 100% { height: 0%;}
-}
+} */
 /* END STYLING LOADER */
 
 
