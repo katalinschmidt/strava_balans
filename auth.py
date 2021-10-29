@@ -28,7 +28,7 @@ API_BASE_URL = "https://www.strava.com/api/v3/athlete/activities"
 
 def login_required(orig_func):
     """Protects routes from unauthorized users"""
-    print("login_required for {}".format(orig_func.__name__))
+    print(f"login_required for {orig_func.__name__}")
 
     @wraps(orig_func)
     def wrapper():

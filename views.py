@@ -81,18 +81,18 @@ def get_athlete_data():
     if request.method == 'POST':
         # Get API data:
         api_data = auth.get_activities() # Add to session to prevent API rate limit exceeding
-        
-        # Check if filter was requested:
-        requested_type = request.form.get('activityType')
-        if requested_type:
-            requested_data = []
-            # Iterate through API data & check for matching activity type:
-            for activity in api_data:
-                if activity['type'].lower() == requested_type:
-                    requested_data.append(activity)
-            return jsonify(requested_data)
-        else:
-            return jsonify(api_data)
+        return jsonify(api_data)
+        # # Check if filter was requested:
+        # requested_type = request.form.get('activityType')
+        # if requested_type:
+        #     requested_data = []
+        #     # Iterate through API data & check for matching activity type:
+        #     for activity in api_data:
+        #         if activity['type'].lower() == requested_type:
+        #             requested_data.append(activity)
+        #     return jsonify(requested_data)
+        # else:
+        #     return jsonify(api_data)
     
     return Response(405)
 
