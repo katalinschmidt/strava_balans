@@ -41,15 +41,11 @@ body {
     width: 35px;
 }
 
-/* Styling date filter feature */
+/* Styling filter features */
 .form-check {
     color: white;
     font-size: 0.8em;
     line-height: normal;
-}
-
-.form-check-label {
-    padding: 4%;
 }
 
 /* Remove hyperlink formatting */
@@ -75,7 +71,7 @@ ul {
 
 
 /* STYLING LOADER */
-/* Source: https://codepen.io/tashfene/pen/raEqrJ  / Modified such that loader-inner is round logo */
+/* Source: https://codepen.io/tashfene/pen/raEqrJ  / Modified such that loader-inner is round logo with spin only */
 .loader-wrapper {
     width: 100%;
     height: 50%;

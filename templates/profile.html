@@ -49,54 +49,52 @@
                         <ul class="submenu collapse" id="map-options">
                             <hr>
                             <li><a href="#" data-bs-toggle="collapse" data-bs-target="#filter-types" class="submenu-item">Activities by Type</a></li>
-                                <div class="collapse" id="filter-types">
+                                <!-- <div class="collapse" id="filter-types">
                                     <a href="#" id="all"><img src="../static/images/allActivities_icon.png" class="rounded-circle" width="30" height="30"></a>
                                     <a href="#" id="run">🏃</a>
                                     <a href="#" id="ride">🚴</a>
                                     <a href="#" id="swim">🏊</a>
-                                    <a href="#" id="walk">🥾</a> <!-- FIXME: Render 'walk' & 'hike' -->
+                                    <a href="#" id="walk">🥾</a>
+                                </div> -->
+                                <div class="collapse" id="filter-types">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input activity-filter" type="checkbox" id="run" checked>
+                                        <label class="form-check-label" for="run">Run</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input activity-filter" type="checkbox" id="ride" checked>
+                                        <label class="form-check-label" for="flexSwitchType">Ride</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input activity-filter" type="checkbox" id="swim" checked>
+                                        <label class="form-check-label" for="flexSwitchType">Swim</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input activity-filter" type="checkbox" id="walk" checked>
+                                        <label class="form-check-label" for="flexSwitchType">Walk</label>
+                                    </div>
                                 </div>
                             <li><a href="#" data-bs-toggle="collapse" data-bs-target="#year-selector" class="submenu-item">Activities by Year</a></li>
-                                <!-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2021" id="defaultCheck1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">2021</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2020" id="defaultCheck1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">2020</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2019" id="defaultCheck1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">2019</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2018" id="defaultCheck1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">2018</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2017" id="defaultCheck1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">2017</label>
-                                </div> -->
                                 <div class="collapse" id="year-selector">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="2021" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">2021</label>
+                                        <input class="form-check-input activity-filter" type="checkbox" id="2021" checked>
+                                        <label class="form-check-label" for="flexSwitchYear">2021</label>
                                     </div>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="2020" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">2020</label>
+                                        <input class="form-check-input activity-filter" type="checkbox" id="2020" checked>
+                                        <label class="form-check-label" for="flexSwitchYear">2020</label>
                                     </div>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="2019" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">2019</label>
+                                        <input class="form-check-input activity-filter" type="checkbox" id="2019" checked>
+                                        <label class="form-check-label" for="flexSwitchYear">2019</label>
                                     </div>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="2018" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">2018</label>
+                                        <input class="form-check-input activity-filter" type="checkbox" id="2018" checked>
+                                        <label class="form-check-label" for="flexSwitchYear">2018</label>
                                     </div>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="2017" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">2017</label>
+                                        <input class="form-check-input activity-filter" type="checkbox" id="2017" checked>
+                                        <label class="form-check-label" for="flexSwitchYear">2017</label>
                                     </div>
                                 </div>
                             <li><a href="#" data-bs-toggle="collapse" data-bs-target="#slider-container" class="submenu-item">Customize Look</a></li>
@@ -141,11 +139,9 @@
         <!-- End MVP+1 -->
 
         <!-- MVP+3 / LOADER -->
-        <!-- Source: https://codepen.io/tashfene/pen/raEqrJ / Modified such that loader-inner is round logo -->
+        <!-- Source: https://codepen.io/tashfene/pen/raEqrJ / Modified such that loader-inner is round logo with spin only -->
         <div class="loader-wrapper">
             <span class="loader rounded-circle"><img src="../static/images/balans_logo.png" class="loader-inner rounded-circle"/></span>
-            <!-- <span class="loader rounded-circle"><span class="loader-inner rounded-circle"></span></span> -->
-            <!-- <span class="loader rounded-circle"><span class="loader-inner"></span></span> -->
         </div>
         <!-- END LOADER -->
         {% endblock %}

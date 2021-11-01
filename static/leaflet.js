@@ -6,6 +6,7 @@ console.log("Connected to leaflet.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import polyline from './leaflet_poly_util.js';
 
+
 window.onload = () => {
     // Create map:
     // Customize appearance of map:
@@ -67,84 +68,95 @@ window.onload = () => {
         success: (res) => {
             // Fade out loader animation:
             $('.loader-wrapper').fadeOut('slow');
-            console.log("Calling API...")
             
-            // Assign each activity from API result a display on map attribute:
-            for (const activity of res) {
-                activity['displayOnMap'] = true;
-            }
+            // Push API result to global variable allActivities (so filter function can access it):
+            allActivities.push(...res);
 
-            // Push API result to global variable allActivites (so filter function can access all activities)
-            allActivities.push.apply(allActivities, res);
-
-            // Render activities on map:
-            const filter = false;
-            renderActivities(allActivities, filter);
+            // Render allActivities on map:
+            renderOnMap(allActivities);
         },
         error: (res) => {
             alert("Oops! Sorry, something went wrong when loading your data!") 
         }
     });
 
-    // If filtered request, sort activities by type / date:
-    function filterActivities(filterByType=null, filterByDate=null, filterOutDate=false) {
-        // Copy API result with new attr to filteredActivities, so that it can be manipulated w/o affecting API results:
-        let filteredActivities = allActivities;
+    // Create helper variables & functions for filtering allActivities:
+    const allTypes = ['run', 'ride', 'swim', 'walk'];
+    const allYears = ['2021', '2020', '2019', '2018', '2017'];
 
-        // If filterByType value given:
-        if (filterByType != null) {
-            // Look at all activities:
-            for (const activity of filteredActivities) {
-                // If activity currently displayed and is not of requested type:
-                if (activity['displayOnMap'] == true && activity['type'].toLowerCase() != filterByType) {
-                    // Hide activity / set display to false:
-                    activity['displayOnMap'] = false;
-                }
-            }
-        }
+    let currentTypesSelected = ['run', 'ride', 'swim', 'walk']; // Start with all types displayed
+    let currentYearsSelected = ['2021', '2020', '2019', '2018', '2017']; // Start with all years displayed
 
-        // If filterByDate value given && request is to hide given Date:
-        if (filterByDate != null && filterOutDate == true) {
-            // Look at all activities:
-            for (const activity of filteredActivities) {
-                // If activity currently displayed and is of requested date / year:
-                if (activity['displayOnMap'] == true && activity['start_date_local'].substring(0, 4) == filterByDate) {
-                    // Hide activity / set display to false:
-                    activity['displayOnMap'] = false;
-                }
-            }
-        }
-
-        // If filterByDate value given && request is to show given Date:
-        if (filterByDate != null && filterOutDate == false) {
-            // Look at all activities:
-            for (const activity of filteredActivities) {
-                // If activity currently not displayed and is of requested date / year:
-                if (activity['displayOnMap'] == false && activity['start_date_local'].substring(0, 4) == filterByDate) {
-                    // Show activity / set display to true:
-                    activity['displayOnMap'] = true;
-                }
-            }
-        }
-
-        // Return activities with attr 'displayOnMap' = true:
-        filteredActivities = filteredActivities.filter(activity => activity['displayOnMap'] == true);
-
-        return filteredActivities;
+    function getByType(activities, types) {
+        return activities.filter(activity => types.includes(activity['type'].toLowerCase()));
+    }
+    function getByYear(activities, years) {
+        return activities.filter(activity => years.includes(activity['start_date_local'].substring(0, 4)));
     }
 
+    function handleFilterChange(isAdd, filter) {
+        // Update global variables:
+        if (isAdd) {
+            if (allTypes.includes(filter)) {
+                currentTypesSelected.push(filter);
+            }
+            if (allYears.includes(filter)) {
+                currentYearsSelected.push(filter);
+            }
+        } 
+        else {
+            if (allTypes.includes(filter)) {
+                currentTypesSelected = currentTypesSelected.filter(currentType => currentType != filter);
+            }
+            if (allYears.includes(filter)) {
+                currentYearsSelected = currentYearsSelected.filter(year => year != filter);
+            }
+        }
+
+        // Call helper filter functions & render results on map:
+        return renderOnMap(getByYear(getByType(allActivities, currentTypesSelected), currentYearsSelected));
+    }
+    
+    // function handleFilterChange(addedTypeFilter, removedTypeFilter, addedYearFilter, removedYearFilter ) {
+    //     // Update global variables:
+    //     if (addedTypeFilter != '') {
+    //         console.log(addedTypeFilter);
+    //         // currentTypesSelected += addedTypeFilter;
+    //         currentTypesSelected.push(addedTypeFilter);
+    //     }
+    //     if (removedTypeFilter != '') {
+    //         console.log(removedTypeFilter);
+    //         // currentTypesSelected -= removedTypeFilter;
+    //         currentTypesSelected = currentTypesSelected.filter(type => type != removedTypeFilter);
+    //     }
+
+    //     if (addedYearFilter != '') {
+    //         // currentYearsSelected += addedYearFilter;
+    //         currentYearsSelected.push(addedYearFilter);
+    //     }
+    //     if (removedYearFilter != '') {
+    //         // currentYearsSelected -= removedYearFilter;
+    //         currentYearsSelected = currentYearsSelected.filter(year => year != removedYearFilter);
+    //     }
+    //     console.log("NOW currType/Year:");
+    //     console.log(currentTypesSelected);
+    //     console.log(currentYearsSelected);
+
+    //     // Call helper filter functions & render results on map:
+    //     return renderOnMap(getByYear(getByType(allActivities, currentTypesSelected), currentYearsSelected));
+    // }
+
     // Create map & render activities:
-    function renderActivities(displayActivities, filter=false) {
-        // If filtered request, remove existing routes then repopulate:
-        if (filter) {
-            routesLayer.eachLayer((route) => {
-                // console.log(route);
-                route.remove();
-            });
-        }        
+    // function renderActivities(displayActivities, filter=false) {
+    function renderOnMap(activities) {
+        // Remove any existing routes then repopulate:
+        routesLayer.eachLayer((route) => {
+            // console.log(route);
+            route.remove();
+        });      
 
         // Iterate through Strava data, decode & add to routes layer:
-        for (const activity of displayActivities) {
+        for (const activity of activities) {
             // 'polyline.decode' is a helper function from leaflet_util.js
             let activityPolyline = activity['map']['summary_polyline']; 
             
@@ -202,179 +214,7 @@ window.onload = () => {
     }
 
     // Create event listeners / handlers for filters:
-    $('#all').click(() => {
-        // Keep filter as true, so that activities are not duplicated when all activites are added back:
-        const filter = true;
-        // Render map with filtered activities:
-        renderActivities(allActivities, filter);
-    });
-
-    $('#run').click(() => {
-        // Filter activities:
-        const filter = true;
-        const filterByType = 'run';
-        const filterByDate = null;
-        const filterOutDate = false;
-        let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-        // Render map with filtered activities:
-        renderActivities(filteredActivities, filter);
-    });
-
-    $('#ride').click(() => {
-        // Filter activities:
-        const filter = true;
-        const filterByType = 'ride';
-        const filterByDate = null;
-        const filterOutDate = false;
-        let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-        // Render map with filtered activities:
-        renderActivities(filteredActivities, filter);
-    });
-
-    $('#swim').click(() => {
-        // Filter activities:
-        const filter = true;
-        const filterByType = 'swim';
-        const filterByDate = null;
-        const filterOutDate = false;
-        let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-        // Render map with filtered activities:
-        renderActivities(filteredActivities, filter);
-    });
-
-    $('#walk').click(() => {
-        // Filter activities:
-        const filter = true;
-        const filterByType = 'walk';
-        const filterByDate = null;
-        const filterOutDate = false;
-        let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-        // Render map with filtered activities:
-        renderActivities(filteredActivities, filter);
-    });
-
-    $('#2021').click((evt) => {
-        // If switch toggled off:
-        if (evt.target.checked == false) {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2021';
-            const filterOutDate = true;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-        // If switch toggled back on:
-        else {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2021';
-            const filterOutDate = false;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-    });
-
-    $('#2020').click((evt) => {
-        // If switch toggled off:
-        if (evt.target.checked == false) {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2020';
-            const filterOutDate = true;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-        // If switch toggled back on:
-        else {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2020';
-            const filterOutDate = false;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-    });
-
-    $('#2019').click((evt) => {
-        // If switch toggled off:
-        if (evt.target.checked == false) {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2019';
-            const filterOutDate = true;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-        // If switch toggled back on:
-        else {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2019';
-            const filterOutDate = false;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-    });
-
-    $('#2018').click((evt) => {
-        // If switch toggled off:
-        if (evt.target.checked == false) {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2018';
-            const filterOutDate = true;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-        // If switch toggled back on:
-        else {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2018';
-            const filterOutDate = false;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-    });
-
-    $('#2017').click((evt) => {
-        // If switch toggled off:
-        if (evt.target.checked == false) {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2017';
-            const filterOutDate = true;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
-        // If switch toggled back on:
-        else {
-            // Filter activities:
-            const filter = true;
-            const filterByType = null;
-            const filterByDate = '2017';
-            const filterOutDate = false;
-            let filteredActivities = filterActivities(filterByType, filterByDate, filterOutDate);
-            // Render map with filtered activities:
-            renderActivities(filteredActivities, filter);
-        }
+    $('.activity-filter').click( (evt) => {
+        handleFilterChange(evt.target.checked, evt.target.id);
     });
 }
