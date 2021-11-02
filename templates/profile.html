@@ -22,28 +22,28 @@
     <body>
         {% block body %}
   
-        <!-- For MVP+2 / Navbar: -->
-        <!-- Sidebar Toggler (open only)-->
+        <!-- SIDERBAR / NAVBAR -->
         <div id="toggler">
             <a href="#" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
                 <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
             </a>            
         </div>
 
-        <!-- Sidebar -->
-        <!-- Use the data-bs-scroll attribute to toggle <body> scrolling and data-bs-backdrop to toggle the backdrop. -->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="sidebar">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title text-white" id="sidebarLabel">Main Menu</h5>
-                <a href="#" class="text-reset" data-bs-dismiss="offcanvas">
+                <h4 class="offcanvas-title text-white">Main Menu</h4>
+                <!-- <div>
+                    <img src="../static/images/balans_title_nav.png" width=130 height=50/>
+                </div> -->
+                <a href="#" data-bs-dismiss="offcanvas">
                     <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
                 </a>
             </div>
             <div class="offcanvas-body">
                 <ul class="menu">
                     <hr>
-                    <li>
-                        <a href="#" data-bs-toggle="collapse" data-bs-target="#map-options">
+                    <li class="submenu-map-options">
+                        <a href="#" id="toggle-map-options" data-bs-toggle="collapse" data-bs-target="#map-options">
                             Map Options
                         </a>
                         <ul class="submenu collapse" id="map-options">
@@ -127,29 +127,28 @@
                     </li>
                 </ul>
             </div>
-        </div>   
-        <!-- End MVP+2 -->         
+        </div>  
+         <!-- END SIDEBAR / NAVBAR  -->
  
-        <!-- For MVP+1: -->
-        <!-- JS Leaflet -->
+        <!-- LEAFLET -->
         <div id="activities-map">
             <!-- Map renders here -->
         </div>
+        <!-- END LEAFLET -->
 
-        <!-- End MVP+1 -->
-
-        <!-- MVP+3 / LOADER -->
+        <!-- LOADER ANIMATION -->
         <!-- Source: https://codepen.io/tashfene/pen/raEqrJ / Modified such that loader-inner is round logo with spin only -->
         <div class="loader-wrapper">
             <span class="loader rounded-circle"><img src="../static/images/balans_logo.png" class="loader-inner rounded-circle"/></span>
         </div>
-        <!-- END LOADER -->
+        <!-- END LOADER ANIMATION -->
+
         {% endblock %}
     </body>
 
     <footer>
         {% block footer_script %}
-        <!-- MVP+1 JS Leaflet / My files -->
+        <!-- My files / Rendering JS Leaflet -->
         <script type="module" src="../static/leaflet_tile_util.js"></script>
         <script type="module" src="../static/leaflet_poly_util.js"></script>
         <script type="module" src="../static/leaflet.js"></script>

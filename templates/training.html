@@ -17,7 +17,52 @@
     <body>
         {% block body %}
 
-        <!-- MVP+3 / EXISTING PLANS -->
+        <!-- SIDERBAR / NAVBAR -->
+        <div id="toggler">
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
+            </a>            
+        </div>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="sidebar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title text-white">BALANS</h5>
+                <a href="#" data-bs-dismiss="offcanvas">
+                    <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
+                </a>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="menu">
+                    <hr>
+                    <li class="submenu-map-options">
+                        <a href="/athlete_profile">Map / Visualizer</a>
+                    </li>
+                    <li>
+                        <a href="#">Training Plan</a>
+                    </li>
+                    <li>
+                        <a href="#">Diet</a>
+                    </li>
+                    <li>
+                        <a href="#">Journal</a>
+                    </li>
+                </ul>
+                <!-- How to keep links pinned to bottom of sidebar? -->
+                <!-- <div class="separator"></div> -->
+                <ul class="links">
+                    <hr>
+                    <li>
+                        <a href="https://www.strava.com/dashboard">Go to Strava</a>
+                    </li>
+                    <li>
+                        <a href="#">About the Dev</a>
+                    </li>
+                </ul>
+            </div>
+        </div>  
+         <!-- END SIDEBAR / NAVBAR  -->
+ 
+        <!-- EXISTING PLANS TABLE -->
         <table class="table" id="existing-plans" style="cursor:pointer">
             <h3>Here are all your existing training goals! Click to see the plan.</h3>
             <thead>
@@ -28,9 +73,9 @@
             <tbody>
             </tbody>
         </table>
-        <!-- END EXISTING PLANS -->
+        <!-- END EXISTING PLANS TABLE -->
         
-        <!-- MVP+2 / GOAL FORM -->
+        <!-- GOAL FORM -->
         <button type="button" id="open-form">Create a New Plan</button>
 
         <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
@@ -74,17 +119,17 @@
         </form>
         <!-- END GOAL FORM -->
 
-        <!-- MVP+3 / CALENDAR -->
+        <!-- CALENDAR -->
         <div id="calendar">
             <!-- Calendar renders here -->
         </div>
-        <!-- END MVP+3 / CALENDAR -->
+        <!-- END CALENDAR -->
         {% endblock %}
     </body>
 
     <footer>
         {% block footer_script %}
-        <!-- MVP+2 / My files -->
+        <!-- My files / Rendering calendar & table dynamically -->
         <script type="module" src="../static/training.js"></script>
         {% endblock %}
     </footer>

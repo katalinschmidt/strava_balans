@@ -116,35 +116,6 @@ window.onload = () => {
         // Call helper filter functions & render results on map:
         return renderOnMap(getByYear(getByType(allActivities, currentTypesSelected), currentYearsSelected));
     }
-    
-    // function handleFilterChange(addedTypeFilter, removedTypeFilter, addedYearFilter, removedYearFilter ) {
-    //     // Update global variables:
-    //     if (addedTypeFilter != '') {
-    //         console.log(addedTypeFilter);
-    //         // currentTypesSelected += addedTypeFilter;
-    //         currentTypesSelected.push(addedTypeFilter);
-    //     }
-    //     if (removedTypeFilter != '') {
-    //         console.log(removedTypeFilter);
-    //         // currentTypesSelected -= removedTypeFilter;
-    //         currentTypesSelected = currentTypesSelected.filter(type => type != removedTypeFilter);
-    //     }
-
-    //     if (addedYearFilter != '') {
-    //         // currentYearsSelected += addedYearFilter;
-    //         currentYearsSelected.push(addedYearFilter);
-    //     }
-    //     if (removedYearFilter != '') {
-    //         // currentYearsSelected -= removedYearFilter;
-    //         currentYearsSelected = currentYearsSelected.filter(year => year != removedYearFilter);
-    //     }
-    //     console.log("NOW currType/Year:");
-    //     console.log(currentTypesSelected);
-    //     console.log(currentYearsSelected);
-
-    //     // Call helper filter functions & render results on map:
-    //     return renderOnMap(getByYear(getByType(allActivities, currentTypesSelected), currentYearsSelected));
-    // }
 
     // Create map & render activities:
     // function renderActivities(displayActivities, filter=false) {

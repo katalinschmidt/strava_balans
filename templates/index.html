@@ -9,7 +9,7 @@
     <body>
         {% block body %}
         
-        <!-- Flashes will show for unauthenticated users -->
+        <!-- Flashes will show for unauthenticated users only -->
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for msg in messages %}
@@ -18,23 +18,64 @@
             {% endif %}
         {% endwith %}
 
-        <h1>This is the homepage!</h1>
-        
-        <div class="container">
-            <a href="/login" > 
-            <!-- <button class="btn" onclick="strava_login();"> -->
-                <img src="../static/images/connect_with_strava.png" class="img-fluid" alt="Connect with Strava" id="strava-btn" />
-            <!-- </button> -->
+        <!-- Web app title -->
+        <div id="title">
+            <img src="../static/images/balans_title.png/" alt="BALANS" width=350 height=100/>
+        </div>
+        <div id="subtitle">
+            <img src="../static/images/powered-by-strava.png" alt="Powered By Strava" width=150 height=25/>
+        </div>
+
+        <div class="placeholder"></div>
+
+        <!-- Splitview image -->
+        <div class="splitview" id="splitview-wrapper">
+            <!-- Mat & gear on top -->
+            <div class="layer top">
+                <div class="content-wrap">
+                    <div class="content">
+                    <h1>Just You</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
+                    </div>
+                    <img src="../static/images/mat-and-gear.png" id="mat-and-gear">
+                </div>
+            </div>
+            <!-- Demo on bottom -->
+            <div class="layer bottom">
+                <div class="content-wrap">
+                    <div class="content">
+                    <h1>And the Numbers</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
+                    </div>
+                    <img src="../static/images/demo.png" id="demo">
+                </div>
+            </div>
+            <!-- Handle as visual tool -->
+            <div class="handle"></div>
+        </div>
+
+        <div class="placeholder"></div>
+
+        <div id="connect-btn">
+            <a href="/login"> 
+                <img src="../static/images/connect_with_strava.png" alt="Connect with Strava" width=350 height=70/>
             </a>
         </div>
 
-        {% endblock %}
+        <div class="placeholder"></div>
 
-        <!-- JavaScript here -->
-        {% block script %}
-        <script>
-
-        </script>
+        <div id="github">
+            <a href="https://github.com/katalinschmidt/strava_balans">
+                <img src="../static/images/github-logo.png" alt="Github" width=45 height=45/>
+            </a>
+        </div>
         {% endblock %}
     </body>
+
+    <footer>
+        {% block footer_script %}
+        <!-- My files / Splitview img -->
+        <script src="../static/index.js"></script>
+        {% endblock %}
+    </footer>
 </html>

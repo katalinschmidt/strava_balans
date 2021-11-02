@@ -1,3 +1,136 @@
+/* BASIC STYLING FOR ALL PAGES */
+body {
+    background-color: #101E29;
+}
+/* END BASIC STYLING */
+
+
+
+/* LANDING PAGE STYLING */
+#title, #subtitle {
+    display: flex;
+    justify-content: center;
+}
+
+.placeholder {
+    height: 10vh;
+}
+
+/* Styling splitview divs */
+#splitview-wrapper {
+    height: 40vw;
+    width: 100vw;
+    position: relative; /* Prevent handle from exceeding wrapper div */
+    overflow: hidden; /* Prevent handle from exceeding wrapper div */
+}
+
+.layer {  
+    height: 40vw;
+    width: 100vw;
+    position: absolute; /* Prevent img from 'sticking' */
+    overflow: hidden; /* Prevent img from 'sticking' */
+}
+
+/* Styling splitview text */
+.layer .content-wrap {
+    height: 40vw;
+    width: 100vw; /* vw keeps the image & text in place while handle moves */
+}
+
+.layer .content {
+    text-align: center;
+    position: absolute; /* Fix text in place */
+    transform: translateY(-50%); /* Bring text up so that it is centered on wrapper */
+    width: 20%; /* Contain each text block to its own half */
+    top: 50%;
+}
+
+.layer h1 {
+    font-size: 2em; /* Reduce font size slightly */
+}
+
+.top {
+    background-color: #B6CCD7;
+    z-index: 2; /* Place above bottom layer */
+}
+
+.top .content {
+    color: black;
+    left: 5%; /* Create padding */
+}
+
+.bottom {
+    background: #222222;
+    z-index: 1; /* Place below top layer */
+}
+
+.bottom .content {
+    color: white;
+    right: 5%; /* Create padding */
+}
+
+.bottom h1 {
+    color: #FC4C02;
+}
+
+/* Styling splitview images */
+.layer img{
+    position: absolute; /* Fix imgs in place */
+    transform: translate(-50%, -50%); /* Center imgs on wrapper */
+    width: 35%;
+    top: 50%;
+    left: 50%;
+}
+
+#demo {
+    width: 55%; /* Resize demo to be more visually appropriate */
+    left: 45%;
+}
+
+/* Styling splitview handle */
+.handle {
+    background-color: #FC4C02;
+    position: absolute;
+    display: block;
+    transform: rotate(30deg) translateY(-50%);
+    transform-origin: top;
+    height: 200%;
+    width: 5px;
+    top: 50%;
+    left: 50%;
+    z-index:3; /* Place handle above both image layers */
+}
+
+.top {
+    transform: skew(-30deg);
+    margin-left: -1000px; /* Matching width of wrapper */
+    width: calc(50vw + 1000px);
+}
+
+.splitview .top .content-wrap {
+    transform: skew(30deg); /* Prevent top layer from moving with handle */
+    margin-left: 1000px;
+}
+
+/* Styling 'Connect with Strava' btn */
+#connect-btn {
+    display: flex;
+    justify-content: center;
+}
+
+#connect-btn img {
+    border-radius: 10px; /* Round corners of img */
+}
+
+#github {
+    bottom: 0;
+    right: 0;
+    padding: 2%;
+}
+/* END LANDING PAGE STYLING */
+
+
+
 /* STYLING FULL SCREEN MAP */
 /* Resize map to be fullscreen and place under toggler/sidebar */
 #activities-map {
@@ -6,15 +139,11 @@
     position: fixed;
     z-index: 1;
 }
-
-body {
-    background-color: black;
-}
 /* END STYLING FULL SCREEN MAP */
 
 
 
-/* STYLING NAVBAR */
+/* STYLING SIDEBAR / NAVBAR */
 /* Customize size of offcanvas sidebar */
 .offcanvas-backdrop {
     width: 15%;
@@ -35,8 +164,6 @@ body {
 
 /* Match sizing of both logos using shared id */
 #logo {
-    /* height: 4vh;
-    width: 2vw; */
     height: 35px;
     width: 35px;
 }
@@ -67,31 +194,34 @@ ul {
 .links li:nth-child(3)::before {
     content: "👩‍💻 ";
 }
-/* END STYLING NAVBAR */
+/* END STYLING SIDEBAR / NAVBAR */
 
 
 /* STYLING LOADER */
 /* Source: https://codepen.io/tashfene/pen/raEqrJ  / Modified such that loader-inner is round logo with spin only */
 .loader-wrapper {
-    width: 100%;
-    height: 50%;
+    background-color: #242f3f;
     opacity: 0.8;
     position: absolute; /* Place loader above Leaflet */
     z-index: 3;
-    background-color: #242f3f;
-    margin: auto; /* Center loader div on page horizontally */
-    margin-top: 25%; /* Center loader div on page vertically */
-    display: flex; /* Center loader icon on div */
+    height: 50%;
+    width: 100%; /* Span wrapper across whole page */
+    margin: auto;
+    top: 0; /* Center loader wrapper div horizontally & vertically on page */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex; /* Center loader icon on wrapper div */
     justify-content: center;
     align-items: center;
 }
 
 .loader {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     position: relative;
-    border: 4px solid #Fff;
+    border: 4px solid #fff;
     animation: loader 2s infinite ease;
 }
 
