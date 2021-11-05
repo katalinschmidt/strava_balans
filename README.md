@@ -8,9 +8,11 @@
 
 
 ## Overview
-This is a full-stack Python Flask web application that allows Strava users to to visualize and filter their activities (by type and/or date) on an interactive Javascript Leaflet map as well as to create, read, update, delete training goals and the respective training plans with Javascript FullCalendar. The goal of this web application was to remove the competitive nature of the original Strava platform and, instead, allow a user to focus exclusively on their own athletic accomplishments and all-around well-being.
+This is a full-stack Python Flask web application that allows Strava users to to visualize and filter their activities (by type and/or date) on an interactive Javascript Leaflet map as well as to create, read, update, delete training goals and the respective training plans with Javascript FullCalendar. 
 
-# Tech Stack: 
+The goal of this web application was to remove the competitive nature of the original Strava platform and, instead, allow a user to focus exclusively on their own athletic accomplishments and all-around well-being.
+
+## Tech Stack: 
 * Python, Flask, SQLAlchemy, JavaScript (AJAX, JSON), jQuery, Bootstrap, HTML, CSS
 * Strava REST API
 
@@ -37,7 +39,7 @@ This is a full-stack Python Flask web application that allows Strava users to to
     * Form to create training goals
     * Store user-input in database
     * Create custom training plan by matching user-input with default plans' data
-    * Render user's given goal's training items on table 
+    * Render user's given goal's training items on table:
         * Training item & day (e.g. days 1-56, as stored in default plan's DB table)
 5. Given goal's training plan rendered on a FullCalendar calendar
 6. Extend CRUD functions:
