@@ -12,7 +12,7 @@ This is a full-stack Python Flask web application that allows Strava users to to
 
 The goal of this web application was to remove the competitive nature of the original Strava platform and, instead, allow a user to focus exclusively on their own athletic accomplishments and all-around well-being.
 
-## Tech Stack: 
+## Tech Stack
 * Python, Flask, SQLAlchemy, JavaScript (AJAX, JSON), jQuery, Bootstrap, HTML, CSS
 * Strava REST API
 
@@ -23,11 +23,9 @@ The goal of this web application was to remove the competitive nature of the ori
     * `pip3 install -r requirements.txt`
 2. Seed the database with default training plans:
     * `cd database`
-    * `python3 seed_db.py`
+    * `python3 seed_database.py`
 3. To view contents of database (PostgreSQL):
     * `psql strava_balans`
-    * `\dt` to view the database schema
-
 
 ## Project Development / Iterations:
 1. Strava API authentication & API data rendered on a sortable table
