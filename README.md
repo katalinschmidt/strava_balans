@@ -3,7 +3,7 @@
 ## Table Of Contents
 1. [Overview](#overview)
 2. [Set-Up Instructions](#set-up-instructions)
-3. [MVP](#mvp)
+3. [Project Development / Iterations](#project-development-/-iterations)
 4. [Future Features](#future-features)
 
 
