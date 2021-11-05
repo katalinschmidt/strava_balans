@@ -31,28 +31,28 @@ This is a full-stack Python Flask web application that allows Strava users to to
 1. Strava API authentication & API data rendered on a sortable table
 2. Strava API data rendered on a Javascript Leaflet map
 3. Interactive Leaflet functionality:
-    --> Click route for details pop-up (e.g. activity type, name, mileage, etc.)
-    --> Filter routes by type or year
+    * Click route for details pop-up (e.g. activity type, name, mileage, etc.)
+    * Filter routes by type or year
 4. Database set-up & CRUD functions:
-    --> Form to create training goals
-    --> Store user-input in database
-    --> Create custom training plan by matching user-input with default plans' data
-    --> Render user's given goal's training items on table 
-        --> Training item & day (e.g. days 1-56, as stored in default plan's DB table)
+    * Form to create training goals
+    * Store user-input in database
+    * Create custom training plan by matching user-input with default plans' data
+    * Render user's given goal's training items on table 
+        * Training item & day (e.g. days 1-56, as stored in default plan's DB table)
 5. Given goal's training plan rendered on a FullCalendar calendar
 6. Extend CRUD functions:
     -> Allow user to drag & drop activities, and record those changes in database
 7. "Nav" Table to allow user to view all of their existing training goals:
-    --> Click to show a goal / associated plan on the calendar, or
-    --> Click to delete goal / associated plan from database
+    * Click to show a goal / associated plan on the calendar, or
+    * Click to delete goal / associated plan from database
 8. Extend interactive Leaflet functionality:
-    --> Filter routes by type & year
+    * Filter routes by type & year
 
 ## Future Features:
 1. Allow user to customize map appearance
 2. Create diet page
-    --> Allow user entries, recorded per day & time
+    * Allow user entries, recorded per day & time
 3. Create journal page
-    --> Allow user entries, recorder per day
-    --> Provide journal prompts
+    * Allow user entries, recorder per day
+    * Provide journal prompts
 4. Extended data visualization features on Leaflet, e.g. num of countries you've run/biked/swam in
