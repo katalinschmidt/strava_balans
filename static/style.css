@@ -17,6 +17,7 @@ body {
 }
 
 /* Styling splitview divs */
+/* Source: https://codepen.io/bradtraversy/pen/NaKxdP */
 #splitview-wrapper {
     height: 40vw;
     width: 100vw;
@@ -34,7 +35,7 @@ body {
 /* Styling splitview text */
 .layer .content-wrap {
     height: 40vw;
-    width: 100vw; /* vw keeps the image & text in place while handle moves */
+    width: 100vw;
 }
 
 .layer .content {
@@ -83,8 +84,8 @@ body {
 }
 
 #demo {
-    width: 55%; /* Resize demo to be more visually appropriate */
-    left: 45%;
+    width: 63%; /* Resize demo to be more visually appropriate */
+    left: 40%;
 }
 
 /* Styling splitview handle */
@@ -103,7 +104,7 @@ body {
 
 .top {
     transform: skew(-30deg);
-    margin-left: -1000px; /* Matching width of wrapper */
+    margin-left: -1000px; /* Matching width of wrapper / Keeps top layer left */
     width: calc(50vw + 1000px);
 }
 
@@ -118,14 +119,15 @@ body {
     justify-content: center;
 }
 
-#connect-btn img {
-    border-radius: 10px; /* Round corners of img */
-}
-
 #github {
     bottom: 0;
     right: 0;
     padding: 2%;
+}
+
+#connect-btn img, #github img {
+    border-radius: 10px; /* Round corners of img */
+    box-shadow: 2px 2px 20px 3px rgb(44, 44, 44); /* offset-x | offset-y | blur-radius | spread-radius | color */
 }
 /* END LANDING PAGE STYLING */
 
@@ -181,6 +183,11 @@ li a, hr {
     color: white;
 }
 
+a:hover {   
+  text-decoration: none;
+  color: white;
+}
+
 /* Left-align main menu list items & add spacing */
 ul {
     padding: 0;
@@ -198,7 +205,7 @@ ul {
 
 
 /* STYLING LOADER */
-/* Source: https://codepen.io/tashfene/pen/raEqrJ  / Modified such that loader-inner is round logo with spin only */
+/* Inspiration: https://codepen.io/tashfene/pen/raEqrJ */
 .loader-wrapper {
     background-color: #242f3f;
     opacity: 0.8;
@@ -221,7 +228,6 @@ ul {
     width: 35px;
     height: 35px;
     position: relative;
-    border: 4px solid #fff;
     animation: loader 2s infinite ease;
 }
 
@@ -240,13 +246,6 @@ animation: loader-inner 2s infinite ease-in;
 75% { transform: rotate(360deg);}
 100% { transform: rotate(360deg);}
 }
-/* @keyframes loader-inner {
-0% { height: 0%;}
-25% { height: 0%;}
-50% { height: 100%;}
-75% { height: 100%;}
-100% { height: 0%;}
-} */
 /* END STYLING LOADER */
 
 
@@ -285,38 +284,86 @@ animation: loader-inner 2s infinite ease-in;
 
 
 /* STYLING TRAINING PLANS PAGE */
-form {
+.row {
     background-color: grey;
-    margin: auto; /* Center form on page horizontally */
-    margin-top: 5%; /* Center form on page vertically */
-    width: 30%;
-    padding: 2%; /* Create space between text & div border */
 }
 
-#open-form {
+.form-btn-container {
+    background-color: #B6CCD7;
+    padding: 1%;
+}
+
+#calendar-container {
     background-color: grey;
+}
+
+#calendar {
+    margin-top: 50px;
     color: white;
-    padding: 15px 20px;
-    border: none;
-    cursor: pointer;
-    right: 25px;
-    width: 200px;
 }
 
-.btn-container {
+/* Remove hyperlink formatting */
+#calendar a {
+    text-decoration: none;
+    color: white;
+}
+
+#calendar .fc-day-today {
+    background: #B6CCD7 !important;
+    opacity: 0.8;
+    z-index: -1;
+}
+
+#calendar .fc-col-header-cell {
+    background-color: #2C3E4F;
+}
+
+/* Table styling */
+.table>:not(:first-child) {
+    border-top: 0.5px solid;
+}
+
+#table-wrapper {
+    background-color: #2C3E4F;
+    /* background: linear-gradient(#2C3E4F, grey); */
+    height: 705px;
+    margin-top: 45px; /* Bring table in-line with calendar's days of the week */
+}
+
+#existing-plans {
+    color: white;
+}
+
+#table-title {
     text-align: center;
-    padding: 2%;
+    padding: 3%;
 }
 
-#goal-date {
-    width: 100px;
+/* Pop-up form styling */
+#open-form {
+    background-color: #004BAD;
+    color: white;
+    border-radius: 10px; /* Round corners of img */
+    box-shadow: 2px 2px 20px 3px rgb(44, 44, 44); /* offset-x | offset-y | blur-radius | spread-radius | color */
+    margin-top: 0.3%;
+    margin-left: 80%;
+}
+
+.modal {
     color: black;
 }
 
-#custom-plan {
-    border-style: double;
-    margin: auto;
-    width: 30%;
-    text-align: center;
+.modal-body label {
+    color: black;
+}
+
+.modal #goal-date {
+    width: 140px; /* Resize datepicker input so that whole default text shows */
+    height: 30px;
+    color: black;
+}
+
+.modal-footer {
+    display: block;
 }
 /* END STYLING TRAINING PLANS PAGE */

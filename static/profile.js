@@ -185,7 +185,7 @@ window.onload = () => {
     }
 
     // Create event listeners / handlers for filters:
-    $('.activity-filter').click( (evt) => {
+    $('.activity-filter').click((evt) => {
         handleFilterChange(evt.target.checked, evt.target.id);
     });
 }

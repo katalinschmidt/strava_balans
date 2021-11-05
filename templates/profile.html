@@ -32,9 +32,6 @@
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="sidebar">
             <div class="offcanvas-header">
                 <h4 class="offcanvas-title text-white">Main Menu</h4>
-                <!-- <div>
-                    <img src="../static/images/balans_title_nav.png" width=130 height=50/>
-                </div> -->
                 <a href="#" data-bs-dismiss="offcanvas">
                     <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
                 </a>
@@ -43,20 +40,17 @@
                 <ul class="menu">
                     <hr>
                     <li class="submenu-map-options">
-                        <a href="#" id="toggle-map-options" data-bs-toggle="collapse" data-bs-target="#map-options">
-                            Map Options
-                        </a>
+                        <div>
+                            <a href="#" id="toggle-map-options-text" data-bs-toggle="collapse" data-bs-target="#map-options">
+                                Map Options
+                            </a>
+                            <a href="#" id="toggle-map-options-arrow" data-bs-toggle="collapse" data-bs-target="#map-options">
+                                <img src="../static/images/white_arrow.png" class="rounded-circle" width=25 height=25/>
+                            </a>
+                        </div>
                         <ul class="submenu collapse" id="map-options">
-                            <hr>
-                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#filter-types" class="submenu-item">Activities by Type</a></li>
-                                <!-- <div class="collapse" id="filter-types">
-                                    <a href="#" id="all"><img src="../static/images/allActivities_icon.png" class="rounded-circle" width="30" height="30"></a>
-                                    <a href="#" id="run">🏃</a>
-                                    <a href="#" id="ride">🚴</a>
-                                    <a href="#" id="swim">🏊</a>
-                                    <a href="#" id="walk">🥾</a>
-                                </div> -->
-                                <div class="collapse" id="filter-types">
+                            <li><a href="#" class="submenu-item">Activities by Type</a></li>
+                                <div id="filter-types">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input activity-filter" type="checkbox" id="run" checked>
                                         <label class="form-check-label" for="run">Run</label>
@@ -74,8 +68,8 @@
                                         <label class="form-check-label" for="flexSwitchType">Walk</label>
                                     </div>
                                 </div>
-                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#year-selector" class="submenu-item">Activities by Year</a></li>
-                                <div class="collapse" id="year-selector">
+                            <li><a href="#" class="submenu-item">Activities by Year</a></li>
+                                <div id="year-selector">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input activity-filter" type="checkbox" id="2021" checked>
                                         <label class="form-check-label" for="flexSwitchYear">2021</label>
@@ -97,11 +91,11 @@
                                         <label class="form-check-label" for="flexSwitchYear">2017</label>
                                     </div>
                                 </div>
-                            <li><a href="#" data-bs-toggle="collapse" data-bs-target="#slider-container" class="submenu-item">Customize Look</a></li>
-                                <div class="collapse" id="slider-container">
+                            <!-- <li><a href="#" class="submenu-item">Customize Look</a></li>
+                                <div id="slider-container">
                                     <input type="range" value="1" name="slider" id="slider">
                                     <output id="output"></output>
-                                </div>
+                                </div> -->
                             <hr>
                         </ul>
                     </li>
@@ -137,7 +131,7 @@
         <!-- END LEAFLET -->
 
         <!-- LOADER ANIMATION -->
-        <!-- Source: https://codepen.io/tashfene/pen/raEqrJ / Modified such that loader-inner is round logo with spin only -->
+        <!-- Inspiration: https://codepen.io/tashfene/pen/raEqrJ -->
         <div class="loader-wrapper">
             <span class="loader rounded-circle"><img src="../static/images/balans_logo.png" class="loader-inner rounded-circle"/></span>
         </div>
@@ -151,7 +145,7 @@
         <!-- My files / Rendering JS Leaflet -->
         <script type="module" src="../static/leaflet_tile_util.js"></script>
         <script type="module" src="../static/leaflet_poly_util.js"></script>
-        <script type="module" src="../static/leaflet.js"></script>
+        <script type="module" src="../static/profile.js"></script>
         {% endblock %}
     </footer>
 </html>

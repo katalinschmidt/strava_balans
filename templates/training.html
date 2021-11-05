@@ -26,7 +26,7 @@
 
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="sidebar">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title text-white">BALANS</h5>
+                <h4 class="offcanvas-title text-white">Main Menu</h4>
                 <a href="#" data-bs-dismiss="offcanvas">
                     <img id="logo" src="../static/images/balans_logo.png" class="rounded-circle"/>
                 </a>
@@ -35,7 +35,7 @@
                 <ul class="menu">
                     <hr>
                     <li class="submenu-map-options">
-                        <a href="/athlete_profile">Map / Visualizer</a>
+                        <a href="/athlete_profile">Activities Map</a>
                     </li>
                     <li>
                         <a href="#">Training Plan</a>
@@ -60,70 +60,94 @@
                 </ul>
             </div>
         </div>  
-         <!-- END SIDEBAR / NAVBAR  -->
- 
-        <!-- EXISTING PLANS TABLE -->
-        <table class="table" id="existing-plans" style="cursor:pointer">
-            <h3>Here are all your existing training goals! Click to see the plan.</h3>
-            <thead>
-                <th style="display: none;">Goal ID</th>
-                <th>Training Goal</th>
-                <th>Goal Date</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <!-- END EXISTING PLANS TABLE -->
+        <!-- END SIDEBAR / NAVBAR  -->
+        
+        <div class="placeholder"></div>
+
+        <!-- Bootstrap Grid -->
+        <div class="container">
+            <div class="row">
+                <!-- OPEN FORM BUTTON -->
+                <div class="form-btn-container">
+                    <a data-bs-toggle="modal" data-bs-target="#get-trng-plan">
+                        <img src="../static/images/make-new-plan.png" id="open-form" width=250 height=40 style="cursor: pointer">
+                    </a>
+                </div>
+                <!-- END OPEN FORM BUTTON -->
+            </div>
+            <div class="row">
+                <div class="col-8" id="calendar-container">
+                    <!-- CALENDAR -->
+                    <div id="calendar">
+                        <!-- Calendar renders here -->
+                    </div>
+                    <!-- END CALENDAR -->
+                </div>
+                <div class="col-4">
+                    <!-- EXISTING PLANS TABLE -->
+                    <div id="table-wrapper">
+                        <table class="table" id="existing-plans" style="cursor:default">
+                            <h4 class="text-white" id="table-title">Your Existing Plans</h4>
+                            <thead>
+                                <th style="display: none;">Goal ID</th> <!-- Must be on table for CRUD functions but hide from user -->
+                                <th>Training Goal</th>
+                                <th>Goal Date</th>
+                            </thead>
+                            <!-- JS will render body content here -->
+                        </table>
+                    </div>
+                    <!-- END EXISTING PLANS TABLE -->
+                </div>
+            </div>
+        </div>
+        <!-- End Bootstrap Grid -->
         
         <!-- GOAL FORM -->
-        <button type="button" id="open-form">Create a New Plan</button>
-
+        <!-- Using Bootstrap modal to create popup on top of calendar -->
         <!-- Omitting action & request type specification here so JS can handle form instead of Python -->
-        <form id="get-trng-plan" style="display: none;">
-            <div class="form-title">
-                <h2>Let's get competitive!</h1>
-            </div>
-            <hr>
-            <div class="form-content">
-                <h4>Pick a training goal:</h2>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="trng-goal" value="5K run" id="5k-run">
-                    <label class="form-check-label" for="5k-run">5K run</label>
+        <div class="modal" id="get-trng-plan" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Let's get competitive!</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="trng-goal" value="10K run" id="10k-run">
-                    <label class="form-check-label" for="10k-run">10K run</label>
+                <div class="modal-body">
+                    <div class="form-content">
+                        <h5>Pick a training goal:</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trng-goal" value="5K run" id="5k-run">
+                            <label class="form-check-label" for="5k-run">5K run</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trng-goal" value="10K run" id="10k-run">
+                            <label class="form-check-label" for="10k-run">10K run</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trng-goal" value="Half marathon" id="half-marathon" disabled>
+                            <label class="form-check-label" for="half-marathon">Half marathon</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trng-goal" value="Full marathon" id="full-marathon" disabled>
+                            <label class="form-check-label" for="full-marathon">Full marathon</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5>When is <b><i>mission accomplished</i></b>?</h5>
+                        <input class="form-check-input" type="date" name="trng-goal-date" id="goal-date">
+                        <label class="form-check-label" for="goal-date"></label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="trng-goal" value="Half marathon" id="half-marathon" disabled>
-                    <label class="form-check-label" for="half-marathon">Half marathon</label>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="form-submit" >Build my plan! 🔥</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="form-cancel">Actually, I'm good with where I'm at! 💪</button>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="trng-goal" value="Full marathon" id="full-marathon" disabled>
-                    <label class="form-check-label" for="full-marathon">Full marathon</label>
                 </div>
             </div>
-            <hr>
-            <div>
-                <h4>When is "mission accomplished"?</h4>
-                <input class="form-check-input" type="date" name="trng-goal-date" id="goal-date">
-                <label class="form-check-label" for="goal-date"></label>
-            </div>
-            <hr>
-            <div class="btn-container">
-                <button type="submit" class="btn btn-light" id="form-submit">OK, build my Custom Plan! 🔥</button>
-            </div>
-            <div class="btn-container">
-                <button type="button" class="btn btn-light" id="form-cancel">Actually, I'm good with where I'm at! 💪</button>                
-            </div>
-        </form>
-        <!-- END GOAL FORM -->
-
-        <!-- CALENDAR -->
-        <div id="calendar">
-            <!-- Calendar renders here -->
         </div>
-        <!-- END CALENDAR -->
+
+        <div class="placeholder"></div>
         {% endblock %}
     </body>
 

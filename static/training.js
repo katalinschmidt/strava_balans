@@ -5,8 +5,9 @@
 console.log("Connected to training.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Populate existingPlansTable on window load:
+// Populate existingPlansTable & FullCalendar on window load:
 renderExistingPlans();
+renderCalendar();
 
 // Open form on click:
 $('#open-form').click((res) => {
@@ -130,8 +131,10 @@ function renderExistingPlans() {
                 // Create table cells for event handling:
                 const td_view = document.createElement("td");
                 td_view.textContent = "🔍";
+                td_view.style.cursor = "pointer";
                 const td_delete = document.createElement("td");
                 td_delete.textContent = "🗑️";
+                td_delete.style.cursor = "pointer";
 
                 // Append table cells to table:
                 tr.appendChild(td_goal_id);
@@ -164,7 +167,7 @@ function rowEventHandler() {
                 row.style.backgroundColor = "";
             }
             // And highlight current / clicked row:
-            row.style.backgroundColor = "orange";
+            row.style.backgroundColor = "#3588D8";
             // Get clicked row's goal ID: 
             const clickedGoalID = row.querySelector('td').innerHTML;
             // Make call to server for custom_plan of given goal_id:

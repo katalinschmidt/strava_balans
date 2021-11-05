@@ -1,7 +1,6 @@
 """Create Flask web app routes to render HTML pages of web app"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-import re
 from flask import Blueprint, session, render_template, redirect, request, Response
 # 'jsonify' is used to pass the API api_datault from Python to JS (as JSON)
 from flask import jsonify
