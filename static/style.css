@@ -148,7 +148,7 @@ body {
 /* STYLING SIDEBAR / NAVBAR */
 /* Customize size of offcanvas sidebar */
 .offcanvas-backdrop {
-    width: 15%;
+    width: 250px;
 }
 #sidebar {
     background-color: #152828;
@@ -289,12 +289,12 @@ animation: loader-inner 2s infinite ease-in;
 }
 
 .form-btn-container {
-    background-color: #B6CCD7;
+    /* background-color: #B6CCD7; */
     padding: 1%;
 }
 
 #calendar-container {
-    background-color: grey;
+    /* background-color: grey; */
 }
 
 #calendar {
@@ -308,6 +308,7 @@ animation: loader-inner 2s infinite ease-in;
     color: white;
 }
 
+/* Override default color / highlighting of today's date */
 #calendar .fc-day-today {
     background: #B6CCD7 !important;
     opacity: 0.8;

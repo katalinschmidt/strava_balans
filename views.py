@@ -38,9 +38,9 @@ def user_login():
 
     if session.get('access_token'):
         # If user in session, check for expiration:
-        if session['expiapi_data_at'] < time.time():
-            tokens = auth.refapi_datah_tokens()
-            auth.save_tokens(tokens, refapi_datah=True)
+        if session['expires_at'] < time.time():
+            tokens = auth.refresh_tokens()
+            auth.save_tokens(tokens, refresh_tokens=True)
         # If user in session, redirect directly to profile page:
         return redirect('/athlete_profile')   
     else:

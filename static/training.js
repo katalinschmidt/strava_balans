@@ -69,7 +69,8 @@ $('#form-submit').click((res) => {
             }));
             
             // Update existing plans table:
-            renderExistingPlans();
+            const isFormSubmit = true;
+            renderExistingPlans(isFormSubmit);
         },
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
@@ -100,7 +101,7 @@ function closePopup() {
     document.getElementById("edit-item").style.display = "none";
 }
 
-function renderExistingPlans() {
+function renderExistingPlans(isFormSubmit) {
     // Get data for table:
     $.get({
         url: '/get_goals.json',
@@ -144,7 +145,7 @@ function renderExistingPlans() {
                 tr.appendChild(td_delete);
             });
             // Add event listener to each row:
-            rowEventHandler();
+            rowEventHandler(isFormSubmit);
         },
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
@@ -152,14 +153,16 @@ function renderExistingPlans() {
     });
 }
 
-// On existing plans table row click, render selected plan:
-function rowEventHandler() {
+// On existing plans table row click and form-submit, highlight table row & render selected plan:
+function rowEventHandler(isFormSubmit) {
     // Identify table:
     const table = document.getElementById("existing-plans")
     // Let i = 1 so that header row is not included:
     for (let i = 1, row; row = table.rows[i]; i++) {
-        // Highlight last row in table (upon form submit):
-        $('#existing-plans tr').last().css('backgroundColor', '#3588D8');
+        // Highlight last row in table (only upon form submit, not initial window load):
+        if (isFormSubmit) {
+            $('#existing-plans tr').last().css('backgroundColor', '#3588D8');
+        }
 
         // Create event listener for magnifying glass / trash bin:
 

@@ -142,12 +142,11 @@ def get_activities():
             return ("error code")
         
         activities = res.json()
-        # if len(activities) == 0:
-        #     break
+        if len(activities) == 0:
+            break
         
-        # page_num += 1
-        # all_activities.append(activities)
+        page_num += 1
+        all_activities.append(activities)
         all_activities.extend(activities)
-        break # FIXME: Remove & uncomment other lines after debugging!
 
     return all_activities

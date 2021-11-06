@@ -81,17 +81,17 @@ window.onload = () => {
     });
 
     // Create helper variables & functions for filtering allActivities:
-    const allTypes = ['run', 'ride', 'swim', 'walk'];
+    const allTypes = ['run', 'ride', 'swim', 'hike', 'walk'];
     const allYears = ['2021', '2020', '2019', '2018', '2017'];
 
-    let currentTypesSelected = ['run', 'ride', 'swim', 'walk']; // Start with all types displayed
+    let currentTypesSelected = ['run', 'ride', 'swim', 'hike', 'walk']; // Start with all types displayed
     let currentYearsSelected = ['2021', '2020', '2019', '2018', '2017']; // Start with all years displayed
 
     function getByType(activities, types) {
-        return activities.filter(activity => types.includes(activity['type'].toLowerCase()));
+        return activities.filter(activity => (typeof activity['type'] !== 'undefined' && types.includes(activity['type'].toLowerCase())));
     }
     function getByYear(activities, years) {
-        return activities.filter(activity => years.includes(activity['start_date_local'].substring(0, 4)));
+        return activities.filter(activity => (years.includes(activity['start_date_local'].substring(0, 4))));
     }
 
     function handleFilterChange(isAdd, filter) {
