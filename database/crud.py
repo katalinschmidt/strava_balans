@@ -108,15 +108,11 @@ def get_custom_trng_plan(goal_id):
     return Custom_Trng_Plan.query.filter(Custom_Trng_Plan.goal_id == goal_id).all()
 
 
-def save_custom_trng_plan_item(custom_plan_id, trng_item=None, date=None):
+def save_custom_trng_plan_item(custom_plan_id, new_item):
     """Save changes to a specific training item in the athlete's custom training plan."""
 
     row = Custom_Trng_Plan.query.filter(Custom_Trng_Plan.custom_plan_id == custom_plan_id).one()
-    
-    if date:
-        row.date = date
-    if trng_item:
-        row.trng_item = trng_item
+    row.trng_item = new_item
 
     db.session.commit()
 

@@ -55,7 +55,7 @@
                         <a href="https://www.strava.com/dashboard">Go to Strava</a>
                     </li>
                     <li>
-                        <a href="#">About the Dev</a>
+                        <a href="www.linkedin.com/in/katalin-schmidt">About the Dev</a>
                     </li>
                 </ul>
             </div>
@@ -142,6 +142,31 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="form-submit" >Build my plan! 🔥</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="form-cancel">Actually, I'm good with where I'm at! 💪</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- END GOAL FORM -->
+
+        <!-- EDIT TRAINING ITEM FORM -->
+        <div class="modal" id="edit-trng-plan" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Edit Training Item</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-content">
+                        <h6>The current training item for this day is:</h6>
+                        <p id="curr_trng_item"></p>
+                        <h6>What would you like to do instead?</h6>
+                        <input class="form-control" id="edited-item" placeholder="Your activity name here">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="edit-submit" >Make the changes! ✅</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="edit-cancel">Cancel the changes! ❌</button>
                 </div>
                 </div>
             </div>

@@ -61,7 +61,7 @@ body {
 }
 
 .bottom {
-    background: #222222;
+    background: #333333;  /* #222222; */
     z-index: 1; /* Place below top layer */
 }
 

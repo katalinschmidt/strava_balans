@@ -2,9 +2,10 @@
 
 ## Table Of Contents
 1. [Overview](#overview)
-2. [Set-Up Instructions](#set-up-instructions)
-3. [Project Development / Iterations](#project-development-/-iterations)
-4. [Future Features](#future-features)
+2. [Tech Stack](#tech-stack)
+3. [Set-Up Instructions](#set-up-instructions)
+4. [Project Development / Iterations](#project-development-/-iterations)
+5. [Future Features](#future-features)
 
 
 ## Overview
@@ -39,14 +40,15 @@ The goal of this web application was to remove the competitive nature of the ori
     * Create custom training plan by matching user-input with default plans' data
     * Render user's given goal's training items on table:
         * Training item & day (e.g. days 1-56, as stored in default plan's DB table)
-5. Given goal's training plan rendered on a FullCalendar calendar
+5. Given goal's training plan rendered on a FullCalendar calendar:
+        * Training item & date
 6. Extend CRUD functions:
     -> Allow user to drag & drop activities, and record those changes in database
 7. "Nav" Table to allow user to view all of their existing training goals:
     * Click to show a goal / associated plan on the calendar, or
     * Click to delete goal / associated plan from database
 8. Extend interactive Leaflet functionality:
-    * Filter routes by type & year
+    * Filter routes by type and year
 
 ## Future Features:
 1. Allow user to customize map appearance

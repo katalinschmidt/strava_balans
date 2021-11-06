@@ -162,12 +162,11 @@ def save_custom_trng_plan():
         modified_activity = json.loads(modified_activity) 
        
         # Parse JSON for req data:
-        custom_plan_id = modified_activity['extendedProps']['custom_plan_id']
-        trng_item = modified_activity['title']
-        date = modified_activity['start']
-       
+        custom_plan_id = modified_activity['event']['extendedProps']['custom_plan_id']
+        new_item = modified_activity['new_item']
+
         # Pass req data to CRUD function so that changes are saved:
-        database.crud.save_custom_trng_plan_item(custom_plan_id, trng_item, date)
+        database.crud.save_custom_trng_plan_item(custom_plan_id, new_item) # , date)
     
     return Response(405)
 

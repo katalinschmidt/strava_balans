@@ -56,15 +56,15 @@ $('#form-submit').click((res) => {
         },
         // If form successfully submitted, render custom training plan:
         success: (res) => {
-            console.log("Form submission result:");
-            console.log(res);
+            // Render on calendar:
             renderCalendar(res.map(obj => {
                 return {
                     id: obj.day,
                     title: obj.trng_item,
                     start: new Date(obj.date),
                     allDay: true,
-                    extendedProps: { custom_plan_id: obj.custom_plan_id } // extendedProp necessary for sake of having a unique identifier when passing to CRUD function / modifiedActivity
+                    // extendedProp necessary for sake of having a unique identifier when passing modified activities to CRUD function
+                    extendedProps: { custom_plan_id: obj.custom_plan_id, goal_id: obj.goal_id }
                 }
             }));
             
@@ -152,13 +152,13 @@ function renderExistingPlans() {
     });
 }
 
-// On existing plan's table row click, render selected plan:
+// On existing plans table row click, render selected plan:
 function rowEventHandler() {
     // Identify table:
     const table = document.getElementById("existing-plans")
     // Let i = 1 so that header row is not included:
     for (let i = 1, row; row = table.rows[i]; i++) {
-        // Identify magnifying glass:
+        // Identify magnifying glass in row:
         const viewPlan = $(row).find("td:nth-last-child(2)");
         // When magnifying glass clicked, render plan:
         viewPlan.click((res) => {
@@ -182,7 +182,8 @@ function rowEventHandler() {
                             title: obj.trng_item,
                             start: new Date(obj.date),
                             allDay: true,
-                            extendedProps: { custom_plan_id: obj.custom_plan_id } // extendedProp necessary for sake of having a unique identifier when passing to CRUD function / modifiedActivity
+                            // extendedProp necessary for sake of having a unique identifier when passing modified activities to CRUD function
+                            extendedProps: { custom_plan_id: obj.custom_plan_id, goal_id: obj.goal_id }
                         }
                     }));
                 },
@@ -192,7 +193,7 @@ function rowEventHandler() {
             });
         });
 
-        // Identify trash can icon:
+        // Identify trash can icon in row:
         const deletePlan = $(row).find("td:nth-last-child(1)");
         // When trash can icon clicked, delete goal & plan:
         deletePlan.click((res) => {
@@ -219,6 +220,7 @@ function rowEventHandler() {
 
 // Render plan in calendar:
 function renderCalendar(customPlan) {
+    console.log(customPlan);
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -229,21 +231,53 @@ function renderCalendar(customPlan) {
         },
         events: customPlan,
         editable: true,
+        eventClick: function(calendarItem) {
+            // On click, show pop-up populated with existing training item name:
+            $('#curr_trng_item').empty().append(calendarItem.title);
+            $('#edit-trng-plan').modal('show');
+
+            // On submit, get user input:
+            $('#edit-submit').click(() => {
+                calendarItem.new_item = $('#edited-item').val();
+                // Save changes to DB:
+                saveChangesToDB(calendarItem); 
+            });
+        }
     });
     calendar.render();
 }
 
 // Save changes to databse:
-function saveChangesToDB(modifiedActivity) {
+function saveChangesToDB(calendarItem) {
+    console.log(calendarItem);
     $.post({
         url: "/save_changes",
-        data: {modifiedActivity: JSON.stringify(modifiedActivity)},
+        data: {modifiedActivity: JSON.stringify(calendarItem)},
         success: (res) => {
             console.log("Activity successfully modified in DB!");
+            // Re-render calendar with saved changed:
+            $.post({
+                url: "/training",
+                data: {id: JSON.stringify(calendarItem.event.extendedProps.goal_id)},
+                success: (res) => {
+                    renderCalendar(res.map(obj => {
+                        return {
+                            id: obj.day,
+                            title: obj.trng_item,
+                            start: new Date(obj.date),
+                            allDay: true,
+                            // extendedProp necessary for sake of having a unique identifier when passing modified activities to CRUD function
+                            extendedProps: { custom_plan_id: obj.custom_plan_id, goal_id: obj.goal_id }
+                        }
+                    }));
+                },
+                error: (res) => {
+                    alert("Failed to automatically refresh the page. Please refresh manually.")
+                }
+            })
         },
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
-            console.log("Changes to activity were not saved in DB...")
         }
         });
 }
