@@ -9,16 +9,6 @@ console.log("Connected to training.js!");
 renderExistingPlans();
 renderCalendar();
 
-// Open form on click:
-$('#open-form').click((res) => {
-    openForm();
-});
-
-// Close form on click:
-$('#form-cancel').click((res) => {
-    closeForm();
-});
-
 // Handle form data on submit:
 // Using JS to handle the form instead of Python allows us to prevent a redirect or page refresh.
 $('#form-submit').click((res) => {
@@ -76,30 +66,7 @@ $('#form-submit').click((res) => {
             alert("Uh-oh! Something went wrong...");
         }
     });
-
-    // Close form after submission:
-    closeForm();
 });
-
-function showPlan() {
-    document.getElementById("custom-plan").style.display = "block";
-}
-
-function openForm() {
-    document.getElementById("get-trng-plan").style.display = "block";
-}
-
-function closeForm() {
-    document.getElementById("get-trng-plan").style.display = "none";
-}
-
-function openPopup() {
-    document.getElementById("edit-item").style.display = "block";
-}
-
-function closePopup() {
-    document.getElementById("edit-item").style.display = "none";
-}
 
 function renderExistingPlans(isFormSubmit) {
     // Get data for table:
@@ -165,7 +132,6 @@ function rowEventHandler(isFormSubmit) {
         }
 
         // Create event listener for magnifying glass / trash bin:
-
         // Identify magnifying glass in row:
         const viewPlan = $(row).find("td:nth-last-child(2)");
         // When magnifying glass clicked, render plan:

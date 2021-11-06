@@ -34,7 +34,7 @@ def user_login():
     """Check if user is in session & handle login accordingly"""
 
     # Remove this line after debugging:
-    session.clear()
+    # session.clear()
 
     if session.get('access_token'):
         # If user in session, check for expiration:
@@ -78,20 +78,7 @@ def get_athlete_data():
     """Pass API data to JS file"""
 
     if request.method == 'POST':
-        # Get API data:
-        api_data = auth.get_activities() # Add to session to prevent API rate limit exceeding
-        return jsonify(api_data)
-        # # Check if filter was requested:
-        # requested_type = request.form.get('activityType')
-        # if requested_type:
-        #     requested_data = []
-        #     # Iterate through API data & check for matching activity type:
-        #     for activity in api_data:
-        #         if activity['type'].lower() == requested_type:
-        #             requested_data.append(activity)
-        #     return jsonify(requested_data)
-        # else:
-        #     return jsonify(api_data)
+        return jsonify(auth.get_activities())
     
     return Response(405)
 
@@ -183,3 +170,13 @@ def delete_custom_trng_plan():
             database.crud.delete_custom_trng_plan(int(goal_id))
 
     return Response(405)
+
+
+@views.route('/logout')
+@auth.login_required
+def logout():
+    """Clear session (so that user must authorize Strava API again to reach routes)"""
+
+    session.clear()
+
+    return redirect('/')

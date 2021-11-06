@@ -195,10 +195,10 @@ ul {
 }
 
 /* Customize bullet pts for links */
-.links li:nth-child(2)::before {
+.links li:nth-child(3)::before {
     content: "🔗 ";
 }
-.links li:nth-child(3)::before {
+.links li:nth-child(4)::before {
     content: "👩‍💻 ";
 }
 /* END STYLING SIDEBAR / NAVBAR */
