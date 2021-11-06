@@ -10,10 +10,14 @@
         {% block body %}
         
         <!-- Flashes will show for unauthenticated users only -->
+        <!-- Styling of the flash message utilizes the Bootstrap alert component -->
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for msg in messages %}
-                    <p>{{ msg }}</p>
+                    <div class="alert alert-warning fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        {{ msg }}
+                    </div>    
                 {% endfor %}
             {% endif %}
         {% endwith %}
