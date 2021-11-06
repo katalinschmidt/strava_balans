@@ -158,6 +158,11 @@ function rowEventHandler() {
     const table = document.getElementById("existing-plans")
     // Let i = 1 so that header row is not included:
     for (let i = 1, row; row = table.rows[i]; i++) {
+        // Highlight last row in table (upon form submit):
+        $('#existing-plans tr').last().css('backgroundColor', '#3588D8');
+
+        // Create event listener for magnifying glass / trash bin:
+
         // Identify magnifying glass in row:
         const viewPlan = $(row).find("td:nth-last-child(2)");
         // When magnifying glass clicked, render plan:
@@ -220,7 +225,6 @@ function rowEventHandler() {
 
 // Render plan in calendar:
 function renderCalendar(customPlan) {
-    console.log(customPlan);
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -247,7 +251,7 @@ function renderCalendar(customPlan) {
     calendar.render();
 }
 
-// Save changes to databse:
+// Save changes to database:
 function saveChangesToDB(calendarItem) {
     console.log(calendarItem);
     $.post({
