@@ -194,6 +194,16 @@ ul {
     line-height: 3em;
 }
 
+/* Style range slider for customizing map appearance */
+#slider-container p {
+    color: white;
+    font-size: 0.8em;
+}
+
+#contrast-slider:hover {
+    opacity: 1;
+}
+
 /* Customize bullet pts for links */
 .links li:nth-child(3)::before {
     content: "🔗 ";
@@ -289,12 +299,7 @@ animation: loader-inner 2s infinite ease-in;
 }
 
 .form-btn-container {
-    /* background-color: #B6CCD7; */
     padding: 1%;
-}
-
-#calendar-container {
-    /* background-color: grey; */
 }
 
 #calendar {
@@ -326,7 +331,6 @@ animation: loader-inner 2s infinite ease-in;
 
 #table-wrapper {
     background-color: #2C3E4F;
-    /* background: linear-gradient(#2C3E4F, grey); */
     height: 705px;
     margin-top: 45px; /* Bring table in-line with calendar's days of the week */
 }

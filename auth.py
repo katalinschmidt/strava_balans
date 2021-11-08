@@ -37,8 +37,7 @@ def login_required(orig_func):
         if auth_given:
             return orig_func()
         else:
-            # flash("Please log in with Strava to access this page.")
-            flash("Please log in with Strava to access the desired page.", "error")
+            flash("Please log in with Strava to access the desired page.")
             return redirect('/')
     
     return wrapper
@@ -85,6 +84,10 @@ def exchange_tokens(oauth_code):
 
 def refresh_tokens():
     """Refresh tokens"""
+
+    print("*"*20)
+    print("Refreshing tokens...")
+    print("*"*20)
 
     data = {
             'client_id': CLIENT_ID,

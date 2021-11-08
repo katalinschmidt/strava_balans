@@ -206,7 +206,7 @@ function renderCalendar(customPlan) {
         editable: true,
         eventClick: function(calendarItem) {
             // On click, show pop-up populated with existing training item name:
-            $('#curr_trng_item').empty().append(calendarItem.title);
+            $('#curr_trng_item').empty().append(calendarItem.event.title);
             $('#edit-trng-plan').modal('show');
 
             // On submit, get user input:
