@@ -97,9 +97,15 @@
                                 </div>
                             <li><a href="#" class="submenu-item">Customize Look</a></li>
                                 <div id="slider-container">
-                                    <input type="range" min="50" max="200" value="130" name="slider" id="contrast-slider" style="cursor: pointer;">
-                                    <p>Contrast: <span id="custom-contrast">130</span></p>
-                                </div>
+                                    <div>
+                                        <input type="range" min="100" max="200" value="130" name="slider" id="contrast-slider" style="cursor: pointer;">
+                                        <p>Contrast: <span id="custom-contrast">130%</span></p>
+                                    </div>
+                                    <div>
+                                        <input type="range" min="0" max="100" value="80" name="slider" id="grayscale-slider" style="cursor: pointer;">
+                                        <p>Grayscale: <span id="custom-grayscale">80%</span></p>
+                                    </div>
+                                </div>    
                             <hr>
                         </ul>
                     </li>
@@ -113,8 +119,6 @@
                         <a href="#">Journal</a>
                     </li>
                 </ul>
-                <!-- How to keep links pinned to bottom of sidebar? -->
-                <!-- <div class="separator"></div> -->
                 <ul class="links">
                     <hr>
                     <li>
@@ -143,7 +147,9 @@
         <!-- LOADER ANIMATION -->
         <!-- Inspiration: https://codepen.io/tashfene/pen/raEqrJ -->
         <div class="loader-wrapper">
-            <span class="loader rounded-circle"><img src="../static/images/balans_logo.png" class="loader-inner rounded-circle"/></span>
+            <div class="loader rounded-circle">
+                <img src="../static/images/balans_logo.png" class="loader-logo rounded-circle"/>
+            </div>
         </div>
         <!-- END LOADER ANIMATION -->
 

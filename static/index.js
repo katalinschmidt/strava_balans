@@ -1,24 +1,12 @@
-// Source: https://codepen.io/bradtraversy/pen/NaKxdP
-window.onload = () => {
-    const splitviewWrapper = document.getElementById('splitview-wrapper');
-    const top = splitviewWrapper.querySelector('.top');
-    const handle = splitviewWrapper.querySelector('.handle');
-    let skew = 0;
-    let delta = 0;
+// Inspiration: https://codepen.io/bradtraversy/pen/NaKxdP
+window.onload = () => { 
+    // Create event listener for handle:
+    $('.splitview').on('mousemove', (evt) => {
+        // Move the handle:
+        $('.handle').css('left', `${evt.clientX}px`);
 
-    // Set skew of slpitview wrapper:
-    if(splitviewWrapper.className.indexOf('splitview') != -1) {
-        skew = 1000;
-    }
-      
-    // Get the delta between the mouse position and center point:
-    splitviewWrapper.addEventListener('mousemove', function(evt){
-        delta = (evt.clientX - window.innerWidth / 2) * 0.5;
-        
-        // Move handle by result:
-        handle.style.left = evt.clientX + delta + 'px';
-        
-        // Adjust top layer width to match:
-        top.style.width= evt.clientX + skew + delta + 'px';
+        // Match top panel to handle position:
+        const skew = 1000; // 1000 so that top layer continues to show on mousemove
+        $('.top').css('width', `${evt.clientX + skew}px`);
     });
 }

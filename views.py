@@ -1,7 +1,7 @@
 """Create Flask web app routes to render HTML pages of web app"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import Blueprint, session, render_template, redirect, request, Response
+from flask import Blueprint, Markup, flash, session, render_template, redirect, request, Response
 # 'jsonify' is used to pass the API api_datault from Python to JS (as JSON)
 from flask import jsonify
 # 'auth' is a file containing self-made methods to handle API connection
@@ -178,5 +178,6 @@ def logout():
     """Clear session (so that user must authorize Strava API again to reach routes)"""
 
     session.clear()
+    flash(Markup("You've been logged out of Balans! To log out of Strava, please visit their <a href='https://www.strava.com/dashboard'>site</a>."))
 
     return redirect('/')

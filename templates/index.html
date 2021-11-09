@@ -32,15 +32,17 @@
 
         <div class="placeholder"></div>
 
-        <!-- Splitview image -->
-        <!-- Source: https://codepen.io/bradtraversy/pen/NaKxdP -->
-        <div class="splitview" id="splitview-wrapper">
+        <!-- Create splitview container (3 parts: image on top, bottom, and handle)-->
+        <!-- Inspiration: https://webdesign.tutsplus.com/tutorials/how-to-create-a-split-screen-slider-with-javascript--cms-28844 & https://codepen.io/bradtraversy/pen/NaKxdP -->
+        <div class="splitview skew">
             <!-- Mat & gear on top -->
             <div class="layer top">
-                <div class="content-wrap">
+                <!-- Create divs to wrap content -->
+                <!-- Content includes: header, paragraph, image -->
+                <div class="content-wrapper">
                     <div class="content">
-                    <h1>Just You</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
+                        <h2>Just You</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
                     </div>
                     <!-- Photo by <a href="https://unsplash.com/@schimiggy?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Alexandra Tran</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> -->
                     <img src="../static/images/mat-and-gear.png" id="mat-and-gear">
@@ -48,10 +50,10 @@
             </div>
             <!-- Demo on bottom -->
             <div class="layer bottom">
-                <div class="content-wrap">
+                <div class="content-wrapper">
                     <div class="content">
-                    <h1>And the Numbers</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
+                        <h2>And the Numbers</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quisquam temporibus dolore vero reiciendis atque debitis. Sequi at consequatur deserunt?</p>
                     </div>
                     <img src="../static/images/demo.png" id="demo">
                 </div>

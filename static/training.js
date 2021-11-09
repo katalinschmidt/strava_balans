@@ -6,8 +6,10 @@ console.log("Connected to training.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // Populate existingPlansTable & FullCalendar on window load:
-renderExistingPlans();
-renderCalendar();
+window.onload = () => {
+    renderExistingPlans();
+    renderCalendar();
+}
 
 // Handle form data on submit:
 // Using JS to handle the form instead of Python allows us to prevent a redirect or page refresh.

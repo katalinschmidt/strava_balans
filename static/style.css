@@ -16,66 +16,63 @@ body {
     height: 10vh;
 }
 
-/* Styling splitview divs */
-/* Source: https://codepen.io/bradtraversy/pen/NaKxdP */
-#splitview-wrapper {
-    height: 40vw;
-    width: 100vw;
-    position: relative; /* Prevent handle from exceeding wrapper div */
-    overflow: hidden; /* Prevent handle from exceeding wrapper div */
-}
-
-.layer {  
-    height: 40vw;
-    width: 100vw;
-    position: absolute; /* Prevent img from 'sticking' */
-    overflow: hidden; /* Prevent img from 'sticking' */
-}
-
-/* Styling splitview text */
-.layer .content-wrap {
-    height: 40vw;
+/* SPLITVIEW SCREENSLIDER STYLING */
+.splitview {
+    position: relative; /* Combo of 'relative' and hidden overflow prevent top layer from expanding beyond splitview layer div */    
+    overflow: hidden;
+    min-height: 40vw; /* Allow height & width to change according to screen width */
     width: 100vw;
 }
 
-.layer .content {
-    text-align: center;
-    position: absolute; /* Fix text in place */
-    transform: translateY(-50%); /* Bring text up so that it is centered on wrapper */
-    width: 20%; /* Contain each text block to its own half */
-    top: 50%;
+/* Size the layers as desired */
+.layer {
+    position: absolute; /* Use absolute to force stacking */
+    overflow: hidden; /* Prevent image from 'sticking', i.e. allow handle to show/hid image */
+    min-height: 40vw;
+    width: 100vw;
 }
 
-.layer h1 {
-    font-size: 2em; /* Reduce font size slightly */
-}
-
+/* Stack the layers on top of each other (using z-index & reduced width on top layer for better visual) */
 .top {
     background-color: #B6CCD7;
-    z-index: 2; /* Place above bottom layer */
+    z-index: 2; /* Use z-index to 'reveal' placement above bottom layer */
+    width: 50vw;
 }
-
-.top .content {
-    color: black;
-    left: 5%; /* Create padding */
-}
-
 .bottom {
-    background: #333333;  /* #222222; */
-    z-index: 1; /* Place below top layer */
+    background-color: #333333;
+    z-index: 1;
 }
 
-.bottom .content {
-    color: white;
-    right: 5%; /* Create padding */
+/* Style the handle */
+.handle {
+    background-color: #FC4C02;
+    position: absolute; /* Use absolute & z-index to force placement above layers */
+    z-index: 4;
+    height: 40vw; /* Match height to spliview layer size */
+    width: 5px;
+    left: 50%; /* Push handle to middle of splitview div */
 }
 
-.bottom h1 {
-    color: #FC4C02;
+/* Style splitview content */
+.splitview .content-wrapper {
+    position: absolute; /* Fix text, i.e. don't allow shrinking/growing panel size to affect its position */
+    height: 40vw;
+    width: 100vw;
 }
 
-/* Styling splitview images */
-.layer img{
+.splitview .content {
+    position: absolute; /* Fix content to center of div / page */
+    width: 25%;
+    top: 50%; /* Push text to center of div */
+    transform: translateY(-50%); /* Keep text fixed at center as window grows/shrinks */
+    text-align: center;
+}
+
+.splitview .bottom .content {
+    right: 1%; /* Pull bottom layer text to the right */
+}
+
+.layer img {
     position: absolute; /* Fix imgs in place */
     transform: translate(-50%, -50%); /* Center imgs on wrapper */
     width: 35%;
@@ -84,34 +81,45 @@ body {
 }
 
 #demo {
-    width: 63%; /* Resize demo to be more visually appropriate */
+    width: 63%; /* Resize width & placement of demo to be more visually appropriate */
     left: 40%;
 }
 
-/* Styling splitview handle */
-.handle {
-    background-color: #FC4C02;
-    position: absolute;
-    display: block;
-    transform: rotate(30deg) translateY(-50%);
-    transform-origin: top;
-    height: 200%;
-    width: 5px;
-    top: 50%;
-    left: 50%;
-    z-index:3; /* Place handle above both image layers */
+.splitview .top .content {
+    color: black;
 }
 
+.splitview .bottom .content {
+    color: white;
+}
+
+.splitview .bottom h2 {
+    color: #FC4C02;
+}
+
+/* Skew the top layer and handle */
 .top {
-    transform: skew(-30deg);
-    margin-left: -1000px; /* Matching width of wrapper / Keeps top layer left */
-    width: calc(50vw + 1000px);
+    transform: skew(-30deg); /* Can be either neg. or pos. depending on desired direction of skew */
+    margin-left: -1000px; /* Fill corner in the top left */
+    width: calc(50vw + 1000px); /* Show top layer on window load */
 }
 
-.splitview .top .content-wrap {
-    transform: skew(30deg); /* Prevent top layer from moving with handle */
-    margin-left: 1000px;
+.handle {
+    transform: skew(-30deg);
 }
+
+/* Undo skew on the content (text, imgs) */
+.top .content-wrapper {
+    transform: skew(30deg);
+    margin-left: 1000px;
+    color: white;
+}
+
+.bottom .content-wrapper {
+    transform: skew(0deg);
+    color: white;
+}
+/* END SPLITVIEW SCREENSLIDER STYLING */
 
 /* Styling 'Connect with Strava' btn */
 #connect-btn {
@@ -219,10 +227,10 @@ ul {
 .loader-wrapper {
     background-color: #242f3f;
     opacity: 0.8;
-    position: absolute; /* Place loader above Leaflet */
+    position: absolute; /* Combo of 'absolute' & z-index places loader above Leaflet */
     z-index: 3;
     height: 50%;
-    width: 100%; /* Span wrapper across whole page */
+    width: 100%;
     margin: auto;
     top: 0; /* Center loader wrapper div horizontally & vertically on page */
     left: 0;
@@ -234,27 +242,29 @@ ul {
 }
 
 .loader {
+    position: relative;
     display: inline-block;
     width: 35px;
     height: 35px;
-    position: relative;
     animation: loader 2s infinite ease;
 }
 
-.loader-inner {
-vertical-align: top;
-display: inline-block;
-width: 100%;
-background-color: #fff;
-animation: loader-inner 2s infinite ease-in;
+/* Fill loader div completely with logo */
+/* Logo must be wrapped in two divs so that it rotates in place, as opposed to around an axis */
+.loader-logo {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    animation: loader-inner 2s infinite ease-in;
 }
 
+/* Rotate loader div until Javascript command fades it out */
 @keyframes loader {
-0% { transform: rotate(0deg);}
-25% { transform: rotate(180deg);}
-50% { transform: rotate(180deg);}
-75% { transform: rotate(360deg);}
-100% { transform: rotate(360deg);}
+    0% {transform: rotate(0deg);}
+    25% {transform: rotate(180deg);}
+    50% {transform: rotate(180deg);}
+    75% {transform: rotate(360deg);}
+    100% {transform: rotate(360deg);}
 }
 /* END STYLING LOADER */
 
@@ -326,7 +336,7 @@ animation: loader-inner 2s infinite ease-in;
 
 /* Table styling */
 .table>:not(:first-child) {
-    border-top: 0.5px solid;
+    border-top: 0.5px solid; /* Resize row lines & hide line above header row */
 }
 
 #table-wrapper {

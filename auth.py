@@ -85,10 +85,6 @@ def exchange_tokens(oauth_code):
 def refresh_tokens():
     """Refresh tokens"""
 
-    print("*"*20)
-    print("Refreshing tokens...")
-    print("*"*20)
-
     data = {
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,

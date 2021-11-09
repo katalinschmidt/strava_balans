@@ -164,11 +164,11 @@ window.onload = () => {
     
     /* * * * * * * * * * * * * * * * */
     // Re-render map w/new tile filter:
-    function customizeTiles(userCustomizedVal) {
+    function customizeTiles(customContrast='130%', customGrayscale='80%') {
         // Re-customize appearance of map:
         const userCustomFilter = [
-            `contrast: ${userCustomizedVal}`,
-            'grayscale: 80%',
+            `contrast: ${customContrast}`,
+            `grayscale: ${customGrayscale}`,
             'hue: 200deg',
             'invert: 100%',
             'saturate: 175%'
@@ -253,10 +253,28 @@ window.onload = () => {
     /* * * * * * * * * * * * * * * * */
     // Handle tile filter:
     $('#contrast-slider').on('input', () => {
-        // Get new contrast value:
-        $('#custom-contrast').html($('#contrast-slider').val());
-        let userCustomizedVal = `${$('#custom-contrast').text()}%`;
+        // Get new contrast value & output to user:
+        $('#custom-contrast').html(`${$('#contrast-slider').val()}%`);
+        const customContrast = `${$('#custom-contrast').text()}`;
+
+        // Read current grayscale value & output to user:
+        $('#custom-grayscale').html(`${$('#grayscale-slider').val()}%`);
+        const customGrayscale = `${$('#custom-grayscale').text()}`;
+
         // Create new tile layer:
-        customizeTiles(userCustomizedVal);
+        customizeTiles(customContrast, customGrayscale);
+    });
+
+    $('#grayscale-slider').on('input', () => {
+        // Read current contrast value & output to user:
+        $('#custom-contrast').html(`${$('#contrast-slider').val()}%`);
+        const customContrast = `${$('#custom-contrast').text()}`;
+
+        // Get new grayscale value & output to user:
+        $('#custom-grayscale').html(`${$('#grayscale-slider').val()}%`);
+        const customGrayscale = `${$('#custom-grayscale').text()}`;
+
+        // Create new tile layer:
+        customizeTiles(customContrast, customGrayscale);
     });
 }

@@ -1,0 +1,417 @@
+[
+    {
+        "plan_name": "50mi ride",
+        "day": "1",
+        "trng_item": "1mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "2",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "3",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "4",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "5",
+        "trng_item": "3mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "6",
+        "trng_item": "7mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "7",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "8",
+        "trng_item": "3mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "9",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "10",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "11",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "12",
+        "trng_item": "5mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "13",
+        "trng_item": "10mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "14",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "15",
+        "trng_item": "5mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "16",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "17",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "18",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "19",
+        "trng_item": "7mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "20",
+        "trng_item": "15mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "21",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "22",
+        "trng_item": "3mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "23",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "24",
+        "trng_item": "Cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "25",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "26",
+        "trng_item": "5mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "27",
+        "trng_item": "10mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "28",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "29",
+        "trng_item": "7mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "30",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "31",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "32",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "33",
+        "trng_item": "10mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "34",
+        "trng_item": "20mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "35",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "36",
+        "trng_item": "10mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "37",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "38",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "39",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "40",
+        "trng_item": "12mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "41",
+        "trng_item": "25mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "42",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "43",
+        "trng_item": "12mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "44",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "45",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "46",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "47",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "48",
+        "trng_item": "30mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "49",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "50",
+        "trng_item": "10mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "51",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "52",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "53",
+        "trng_item": "Cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "54",
+        "trng_item": "12mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "55",
+        "trng_item": "20mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "56",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "57",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "58",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "59",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "60",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "61",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "62",
+        "trng_item": "35mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "63",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "64",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "65",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "66",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "67",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "68",
+        "trng_item": "18mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "69",
+        "trng_item": "40mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "70",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "71",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "72",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "73",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "74",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "75",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "76",
+        "trng_item": "35mi moderate-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "77",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "78",
+        "trng_item": "15mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "79",
+        "trng_item": "Active recovery"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "80",
+        "trng_item": "1hr cross training"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "81",
+        "trng_item": "Rest"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "82",
+        "trng_item": "10mi low-intensity ride"
+    },
+    {
+        "plan_name": "50mi ride",
+        "day": "83",
+        "trng_item": "50-mile ride!"
+    }
+]
