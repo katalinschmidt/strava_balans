@@ -37,7 +37,7 @@ def login_required(orig_func):
         if auth_given:
             return orig_func()
         else:
-            flash("Please log in with Strava to access the desired page.")
+            flash("Please connect with Strava to access the desired page.")
             return redirect('/')
     
     return wrapper

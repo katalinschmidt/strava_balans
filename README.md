@@ -25,13 +25,13 @@ The goal of this web application was to remove the competitive nature of the ori
 2. Seed the database with default training plans:
     * `cd database`
     * `python3 seed_database.py`
-    * To add new default training plans:
-        * Create a new json file in the `default_trng_plans` directory
-        * Add the json file's name to line 22 in `seed_database.py`
-        * Add the new plan as an option on the training goals form in `training.html`
-        * Seed / Re-seed the database
 3. To view contents of database (PostgreSQL):
     * `psql strava_balans`
+4. To add new default training plans to the database:
+    * Create a new json file in the `default_trng_plans` directory
+    * Add the json file's name to line 22 in `seed_database.py`
+    * Add the new plan as an option on the training goals form in `training.html`
+    * Seed / Re-seed the database (see step 2.)
 
 ## Project Development / Iterations:
 1. Strava API authentication & API data rendered on a sortable table

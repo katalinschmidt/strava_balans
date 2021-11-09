@@ -178,6 +178,6 @@ def logout():
     """Clear session (so that user must authorize Strava API again to reach routes)"""
 
     session.clear()
-    flash(Markup("You've been logged out of Balans! To log out of Strava, please visit their <a href='https://www.strava.com/dashboard'>site</a>."))
+    flash(Markup("You've successfully logged out of Balans! To log out of Strava, please visit their <a href='https://www.strava.com/dashboard'>site</a>."))
 
     return redirect('/')
