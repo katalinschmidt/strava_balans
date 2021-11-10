@@ -117,47 +117,49 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-content">
-                        <h5>Pick a training goal:</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="5K run" id="5k-run">
-                            <label class="form-check-label" for="5k-run">5K run</label>
+                    <form id="trng-goal-form">
+                        <div class="goal-radio-btns">
+                            <h5>Pick a training goal:</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="5K run" id="5k-run">
+                                <label class="form-check-label" for="5k-run">5K run</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="10K run" id="10k-run">
+                                <label class="form-check-label" for="10k-run">10K run</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="Half marathon" id="half-marathon">
+                                <label class="form-check-label" for="half-marathon">Half marathon</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="Full marathon" id="full-marathon">
+                                <label class="form-check-label" for="full-marathon">Full marathon</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="50mi ride" id="50mi-ride">
+                                <label class="form-check-label" for="50mi-ride">50mi ride</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="100mi ride" id="100mi-ride">
+                                <label class="form-check-label" for="100mi-ride">100mi ride</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="1500m swim" id="1500m-swim">
+                                <label class="form-check-label" for="1500m-swim">1500m swim</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trng-goal" value="5000m swim" id="5000m-swim">
+                                <label class="form-check-label" for="5000m-swim">5000m swim</label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="10K run" id="10k-run">
-                            <label class="form-check-label" for="10k-run">10K run</label>
+                        <hr>
+                        <div class="goal-date-input">
+                            <h5>When is <b><i>mission accomplished</i></b>?</h5>
+                            <input class="form-check-input" type="date" name="trng-goal-date" id="goal-date">
+                            <label class="form-check-label" for="goal-date"></label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="Half marathon" id="half-marathon">
-                            <label class="form-check-label" for="half-marathon">Half marathon</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="Full marathon" id="full-marathon">
-                            <label class="form-check-label" for="full-marathon">Full marathon</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="50mi ride" id="50mi-ride">
-                            <label class="form-check-label" for="50mi-ride">50mi ride</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="100mi ride" id="100mi-ride">
-                            <label class="form-check-label" for="100mi-ride">100mi ride</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="1500m swim" id="1500m-swim">
-                            <label class="form-check-label" for="1500m-swim">1500m swim</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trng-goal" value="5000m swim" id="5000m-swim">
-                            <label class="form-check-label" for="5000m-swim">5000m swim</label>
-                        </div>
-                    </div>
-                    <hr>
-                    <div>
-                        <h5>When is <b><i>mission accomplished</i></b>?</h5>
-                        <input class="form-check-input" type="date" name="trng-goal-date" id="goal-date">
-                        <label class="form-check-label" for="goal-date"></label>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="form-submit" >Build my plan! 🔥</button>

@@ -54,6 +54,7 @@ window.onload = () => {
             success: (res) => {
                 // Close form:
                 $('#get-trng-plan').modal('toggle');
+                $('#trng-goal-form').trigger('reset');
 
                 // Render on calendar:
                 renderCalendar(res.map(obj => {

@@ -373,7 +373,7 @@ ul {
 }
 
 .modal #goal-date {
-    width: 140px; /* Resize datepicker input so that whole default text shows */
+    width: 145px; /* Resize datepicker input so that whole default text shows */
     height: 30px;
     color: black;
 }
