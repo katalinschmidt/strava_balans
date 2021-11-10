@@ -52,7 +52,7 @@ window.onload = () => {
                 today: today
             },
             success: (res) => {
-                // Close form:
+                // Close & reset form:
                 $('#get-trng-plan').modal('toggle');
                 $('#trng-goal-form').trigger('reset');
 
@@ -238,7 +238,9 @@ window.onload = () => {
             url: "/save_changes",
             data: {modifiedActivity: JSON.stringify(calendarItem)},
             success: (res) => {
-                console.log("Activity successfully modified in DB!");
+                // Reset form:
+                $('#edit-item-form').trigger('reset');
+
                 // Re-render calendar with saved changed:
                 $.post({
                     url: "/training",
