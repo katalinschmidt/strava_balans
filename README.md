@@ -58,10 +58,10 @@ The goal of this web application was to remove the competitive nature of the ori
     * Allow user to customize map appearance
 
 ## Future Features:
-1. Reduce lag in user customization of map appearance
-2. Create diet page
+1. Diet page
     * Allow user entries, recorded per day & time
-3. Create journal page
+2. Journal page
     * Allow user entries, recorder per day
     * Provide journal prompts
-4. Extended data visualization features on Leaflet, e.g. num of countries you've run/biked/swam in
+3. Extended data visualization features on Leaflet, e.g. num of countries you've run/biked/swam in
+4. Stretching recommendations based on frequency data aggregated from Strava API

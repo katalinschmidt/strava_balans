@@ -14,14 +14,21 @@ window.onload = () => {
 // Handle form data on submit:
 // Using JS to handle the form instead of Python allows us to prevent a redirect or page refresh.
 $('#form-submit').click((res) => {
-    // On form submission, prevent default (page refresh):
-    res.preventDefault();
+    // Validate form input:
+    const goalName = $('input[name="trng-goal"]:checked').val();
+    let goalDate = $('input[name="trng-goal-date"]').val();
 
-    // Get select radio btn value & date value:
-    const goalName = document.querySelector('input[name="trng-goal"]:checked').value;
-    let goalDate = document.querySelector('input[name="trng-goal-date"]').value;
-    
-    // Format goalDate (to prevent inaccurate timezone offset by new Date method):
+    if (goalName == null) {
+        alert("Please select a goal!");
+        return;
+    }
+    if (goalDate == '') {
+        alert("Please select a date!");
+        return;
+    }
+
+    // If form successfully submitted, pass data to server:
+    // Format goalDate for database:
     let formattedDate = "";
     for (let i = 0; i < goalDate.length; i++) {
         if (goalDate[i] !== "-") {
@@ -31,14 +38,13 @@ $('#form-submit').click((res) => {
             formattedDate += "/";
         }
     }
-    goalDate = new Date(formattedDate);
-    goalDate = goalDate.toUTCString(); // Convert to UTC string for DB
+    goalDate = new Date(formattedDate);  // String manipulation required to prevent inaccurate timezone offset by new Date method
+    goalDate = goalDate.toUTCString();
 
     // Mark user's 'today' / timezone for activity assignment calculations:
     let today = new Date();
-    today = today.toUTCString(); // Convert to UTC string for DB
+    today = today.toUTCString();
 
-    // Send data to server for db manipulation:
     $.post({
         url: '/training',
         data: {
@@ -46,8 +52,10 @@ $('#form-submit').click((res) => {
             date: goalDate,
             today: today
         },
-        // If form successfully submitted, render custom training plan:
         success: (res) => {
+            // Close form:
+            $('#get-trng-plan').modal('toggle');
+
             // Render on calendar:
             renderCalendar(res.map(obj => {
                 return {
@@ -76,7 +84,7 @@ function renderExistingPlans(isFormSubmit) {
         url: '/get_goals.json',
         success: (res) => {
             // Identify table:
-            const table = document.getElementById("existing-plans")
+            const table = document.getElementById('existing-plans');
             // Clear existing table rows:
             while (table.rows.length > 1) {
                 table.deleteRow(1);
@@ -125,7 +133,7 @@ function renderExistingPlans(isFormSubmit) {
 // On existing plans table row click and form-submit, highlight table row & render selected plan:
 function rowEventHandler(isFormSubmit) {
     // Identify table:
-    const table = document.getElementById("existing-plans")
+    const table = document.getElementById('existing-plans');
     // Let i = 1 so that header row is not included:
     for (let i = 1, row; row = table.rows[i]; i++) {
         // Highlight last row in table (only upon form submit, not initial window load):
@@ -144,8 +152,10 @@ function rowEventHandler(isFormSubmit) {
             }
             // And highlight current / clicked row:
             row.style.backgroundColor = "#3588D8";
+
             // Get clicked row's goal ID: 
             const clickedGoalID = row.querySelector('td').innerHTML;
+            
             // Make call to server for custom_plan of given goal_id:
             $.post({
                 url: '/training',
@@ -224,7 +234,6 @@ function renderCalendar(customPlan) {
 
 // Save changes to database:
 function saveChangesToDB(calendarItem) {
-    console.log(calendarItem);
     $.post({
         url: "/save_changes",
         data: {modifiedActivity: JSON.stringify(calendarItem)},
@@ -254,5 +263,5 @@ function saveChangesToDB(calendarItem) {
         error: (res) => {
             alert("Uh-oh! Something went wrong...");
         }
-        });
+    });
 }

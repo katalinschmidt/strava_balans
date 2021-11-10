@@ -51,7 +51,7 @@ window.onload = () => {
     } 
     
     // Customize map appearance:
-    const defaultCustomFilter = [
+    const defaultTileFilter = [
         'contrast: 130%',
         'grayscale: 80%',
         'hue: 200deg',
@@ -63,14 +63,14 @@ window.onload = () => {
     const tilesLayer = L.layerGroup();
     
     // Create default custom tiles:
-    const defaultCustomTiles = L.tileLayer.colorFilter(
+    const defaultTiles = L.tileLayer.colorFilter(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        filter: defaultCustomFilter}
+        filter: defaultTileFilter}
     );
 
     // Add default custom tiles to layer group:
-    tilesLayer.addLayer(defaultCustomTiles);
+    tilesLayer.addLayer(defaultTiles);
 
     // Create routes layer:
     const routesLayer = L.layerGroup();
@@ -164,17 +164,16 @@ window.onload = () => {
     
     /* * * * * * * * * * * * * * * * */
     // Re-render map w/new tile filter:
-    function customizeTiles(customContrast='130%', customGrayscale='80%') {
+    function customizeTiles(customContrast, customGrayscale) {
         // Re-customize appearance of map:
         const userCustomFilter = [
-            `contrast: ${customContrast}`,
-            `grayscale: ${customGrayscale}`,
+            `contrast: ${customContrast}%`,
+            `grayscale: ${customGrayscale}%`,
             'hue: 200deg',
             'invert: 100%',
             'saturate: 175%'
         ]
 
-        // Create user custom tiles:
         const userCustomTiles = L.tileLayer.colorFilter(
             'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -252,29 +251,33 @@ window.onload = () => {
     }
     /* * * * * * * * * * * * * * * * */
     // Handle tile filter:
-    $('#contrast-slider').on('input', () => {
-        // Get new contrast value & output to user:
-        $('#custom-contrast').html(`${$('#contrast-slider').val()}%`);
-        const customContrast = `${$('#custom-contrast').text()}`;
+    $('#slider-container').on('input', (evt) => {
+        // Mark which slider was moved:
+        if (evt.target.id == 'contrast-slider') {
+            updateTileFilter(evt.target.value, '');
+        }
 
-        // Read current grayscale value & output to user:
-        $('#custom-grayscale').html(`${$('#grayscale-slider').val()}%`);
-        const customGrayscale = `${$('#custom-grayscale').text()}`;
-
-        // Create new tile layer:
-        customizeTiles(customContrast, customGrayscale);
+        if (evt.target.id == 'grayscale-slider') {
+            updateTileFilter('', evt.target.value);
+        }
     });
 
-    $('#grayscale-slider').on('input', () => {
-        // Read current contrast value & output to user:
-        $('#custom-contrast').html(`${$('#contrast-slider').val()}%`);
-        const customContrast = `${$('#custom-contrast').text()}`;
+    // Create helper variables for tile filtering:
+    let currentContrast = '130';
+    let currentGrayscale = '80';
+ 
+    function updateTileFilter(newContrast, newGrayscale) {
+        // Update global variables & range slider output:
+        if (newContrast != '') {
+            currentContrast = newContrast;
+            $('#custom-contrast').html(`${currentContrast}%`);
+        }
+        if (newGrayscale != '') {
+            currentGrayscale = newGrayscale;
+            $('#custom-grayscale').html(`${currentGrayscale}%`);
+        }
 
-        // Get new grayscale value & output to user:
-        $('#custom-grayscale').html(`${$('#grayscale-slider').val()}%`);
-        const customGrayscale = `${$('#custom-grayscale').text()}`;
-
-        // Create new tile layer:
-        customizeTiles(customContrast, customGrayscale);
-    });
+        // Render new tile filter on map:
+        customizeTiles(currentContrast, currentGrayscale);
+    }
 }
