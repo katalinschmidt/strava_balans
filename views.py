@@ -33,9 +33,6 @@ def show_homepage():
 def user_login():
     """Check if user is in session & handle login accordingly"""
 
-    # Remove this line after debugging:
-    # session.clear()
-
     if session.get('access_token'):
         # If user in session, check for expiration:
         if session['expires_at'] < time.time():
@@ -90,8 +87,6 @@ def show_trng_plan():
     """Show athlete's training plan"""
 
     if request.method == 'POST':
-        print("Getting / Creating training plan...")
-
         athlete_id = session.get("athlete_id")
         goal_id = request.form.get('id')
         
@@ -142,8 +137,6 @@ def save_custom_trng_plan():
     """Save user-made changes to database"""
     
     if request.method == 'POST':
-        print("Saving plan...")
-
         # Convert JSON string into Python dict:
         modified_activity = request.form.get('modifiedActivity')
         modified_activity = json.loads(modified_activity) 
@@ -164,8 +157,6 @@ def delete_custom_trng_plan():
     """Delete user-selected plan from database"""
 
     if request.method == 'POST':
-            print("Deleting plan...")
-
             goal_id = request.form.get('id')  
             database.crud.delete_custom_trng_plan(int(goal_id))
 

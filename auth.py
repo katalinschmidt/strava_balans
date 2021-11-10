@@ -1,7 +1,7 @@
 """This file contains the methods for handling low-level access to the Strava API"""
 
 # 'flask' is the micro web app framework, from which you can import useful classes and functions
-from flask import flash, Response, redirect, request, session
+from flask import flash, redirect, request, session
 # 'functools' is Flask's preferred library for decorators / wrappers (see login_required)
 from functools import wraps
 # 'crud' contains the self-made functions that add data to the database
@@ -44,20 +44,20 @@ def login_required(orig_func):
 
 
 def prompt_strava_login():
-        """Prompt user to authorize connection to Strava"""
+    """Prompt user to authorize connection to Strava"""
 
-        params = {
-            'client_id': CLIENT_ID,
-            'response_type': 'code',
-            'redirect_uri': REDIRECT_URI,
-            'approval_prompt': 'force',
-            'scope': 'activity:read_all'
-            }
+    params = {
+        'client_id': CLIENT_ID,
+        'response_type': 'code',
+        'redirect_uri': REDIRECT_URI,
+        'approval_prompt': 'force',
+        'scope': 'activity:read_all'
+        }
 
-        return redirect("{}?{}".format(
-            STRAVA_AUTH_URL,
-            urllib.parse.urlencode(params)
-        )) 
+    return redirect("{}?{}".format(
+        STRAVA_AUTH_URL,
+        urllib.parse.urlencode(params)
+    )) 
 
 
 def get_oauth_code():

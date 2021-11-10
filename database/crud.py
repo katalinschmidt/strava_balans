@@ -10,7 +10,7 @@ sys.path.append(BASE_PATH)
 # from database.model import connect_to_db
 from database.model import db, Athlete, Goal, Custom_Trng_Plan, Default_Trng_Plan
 # Use the 'datetime' module to count the days until a given training goal
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 def create_athlete(athlete_id, fname, lname, profile_photo):
@@ -156,7 +156,6 @@ def get_default_trng_plan(plan_name):
 
 # Execute the following only when 'crud.py' is called directly / run directly from the terminal:
 if __name__ == "__main__":
-    # This code is for connecting nested directories/files/making variables accessable:
     from database.model import connect_to_db
     from server import app
     connect_to_db(app)

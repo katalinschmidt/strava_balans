@@ -1,10 +1,12 @@
-"""Script to seed database."""
+"""Script to seed database"""
 
+# # # This code is for connecting nested directories/files/making variables accessable # # #
 import os
 import sys
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_PATH)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 from server import app
 from model import db, connect_to_db

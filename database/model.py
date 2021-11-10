@@ -32,7 +32,7 @@ class Goal(db.Model):
     __tablename__ = "goals"
 
     goal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    athlete_id = db.Column(db.Integer, db.ForeignKey("athletes.athlete_id")) # Foreign Keys must go in the child class. 
+    athlete_id = db.Column(db.Integer, db.ForeignKey("athletes.athlete_id")) 
     goal_name = db.Column(db.String)
     goal_date = db.Column(db.DateTime)
 
