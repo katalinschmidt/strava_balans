@@ -1,4 +1,3 @@
-// Inspiration: https://codepen.io/bradtraversy/pen/NaKxdP
 window.onload = () => { 
     // Create event listener for handle:
     $('.splitview').on('mousemove', (evt) => {

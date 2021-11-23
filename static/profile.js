@@ -6,34 +6,6 @@ console.log("Connected to leaflet.js!");
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 import polyline from './leaflet_poly_util.js';
 
-// PLANNING:
-// window.onload = () => {
-    // Render map (w/o activities):
-
-    // Re-render map w/activities:
-
-    // Re-render map w/new tile filter:
-
-    // CATALYSTS FOR RE-RENDERING MAP:
-    // Get Strava API data:
-
-    // Handle activities filter:
-
-    // Handle tile filter:
-
-    // THUS, GLOBAL VARS MUST BE:
-    // map =>
-        // tileLayer
-            // defaultTileFilter
-            // currTileFilter
-        // routesLayer
-            // allActivities
-            // allTypes
-            // allYears
-            // currTypes
-            // currYears
-// }
-
 window.onload = () => {
     /* * * * * * * * * * * * * * * * */
     // Render map (w/o activities):
