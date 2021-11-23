@@ -1,6 +1,6 @@
 # BALANS
 
-[![Watch the demo on Youtube](https://user-images.githubusercontent.com/89751654/143115159-93c5eaec-053d-4da8-83a9-f52683a742c4.png)](https://www.youtube.com/watch?v=ppz3B9MGhh8&ab_channel=Katalin)
+[![Watch the demo on Youtube](https://user-images.githubusercontent.com/89751654/143115159-93c5eaec-053d-4da8-83a9-f52683a742c4.png)](https://youtu.be/vDR7UKrjt9I)
 
 ## Table Of Contents
 1. [Project Description](#project-description)
