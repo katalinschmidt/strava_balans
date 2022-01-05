@@ -44,7 +44,8 @@ With the future diet and journal components, a user will be able to record and t
     * `virtualenv env`
     * `source env/bin/activate`
     * `pip3 install -r requirements.txt`
-3. Create an API account with [Strava](https://developers.strava.com/docs/getting-started/#:~:text=If%20you%20have%20not%20already,My%20API%20Application%E2%80%9D%20page%20now):
+3. Create an API account with Strava:
+    * Strava's instructions found [here](https://developers.strava.com/docs/getting-started/#:~:text=If%20you%20have%20not%20already,My%20API%20Application%E2%80%9D%20page%20now):
     * Update `auth.py` with your personal API information:
         * `CLIENT_ID = <your_client_ID>`
         * `CLIENT_SECRET = <your_client_secret`
