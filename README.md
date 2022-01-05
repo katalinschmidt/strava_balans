@@ -37,19 +37,24 @@ With the future diet and journal components, a user will be able to record and t
 * Strava REST API
 
 ## Set-Up
-1. Clone this repo:
+1. Create an API account with Strava:
+    * Follow the Strava documentation found [here] (https://developers.strava.com/docs/getting-started/#:~:text=If%20you%20have%20not%20already,My%20API%20Application%E2%80%9D%20page%20now)
+    * Update the file `auth.py` with your personal API information:
+        * `CLIENT_ID = <your_client_ID>`
+        * `CLIENT_SECRET = <your_client_secret`
+2. Clone this repo:
     * `cd <your_desired_directory>`
     * `git clone https://github.com/katalinschmidt/strava_balans.git`
-2. Set-up the virtual environment:
+3. Set-up the virtual environment:
     * `virtualenv env`
     * `source env/bin/activate`
     * `pip3 install -r requirements.txt`
-3. Seed the database with default training plans:
+4. Seed the database with default training plans:
     * `cd database`
     * `python3 seed_database.py`
-4. To view the contents of the database (PostgreSQL):
+5. To view the contents of the database (PostgreSQL):
     * `psql strava_balans`
-5. To add new default training plans to the database:
+6. To add new default training plans to the database:
     * Create a new json file in the `default_trng_plans` directory
     * Add the json file's name to line 24 in `seed_database.py`
     * Add the new plan as an option on the training goals form in `training.html`
