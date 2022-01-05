@@ -49,10 +49,10 @@ With the future diet and journal components, a user will be able to record and t
     * Update `auth.py` with your personal API information:
         * `CLIENT_ID = <your_client_ID>`
         * `CLIENT_SECRET = <your_client_secret`>
-4. Seed the database with default training plans:
+4. Seed the database with default training plans (prereq = PostgreSQL):
     * `cd database`
     * `python3 seed_database.py`
-5. To view the contents of the database (PostgreSQL):
+5. To view the contents of the database:
     * `psql strava_balans`
 6. To add new default training plans to the database:
     * Create a new json file in the `default_trng_plans` directory
